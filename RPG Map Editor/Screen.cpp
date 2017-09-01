@@ -28,10 +28,14 @@ sf::RectangleShape createTileBox(unsigned int width, unsigned int height, sf::Co
 }
 
 void Screen::render() {
+
+
 	window.clear();
-	
-	//Renders left tile viewer
-	sf::RectangleShape tileViewer = createTileBox(304, window.getSize().y - 20,sf::Color(100,250,50));
+	sf::RectangleShape tileViewer(sf::Vector2f(304, window.getSize().y - 20));
+	tileViewer.setFillColor(sf::Color(255, 242, 226));
+	tileViewer.setOutlineThickness(3);
+	tileViewer.setOutlineColor(sf::Color(119, 119, 119));
+
 	tileViewer.setPosition(10, 10);
 	window.draw(tileViewer);
 
