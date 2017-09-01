@@ -12,7 +12,7 @@ public:
 	~Tile();
 	void setFlag();
 private:
-	//Texture texture;
+	sf::Texture texture;
 	unsigned int size;
 	std::string name;
 	sf::Color color;
