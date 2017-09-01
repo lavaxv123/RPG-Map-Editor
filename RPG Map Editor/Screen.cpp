@@ -1,6 +1,6 @@
 #include "Screen.h"
 #include <iostream>
-
+#include "SpriteSheet.h"
 
 Screen::Screen(unsigned int width, unsigned int height,std::string title)
 {
@@ -8,16 +8,23 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	Screen::height = height;
 	window.create(sf::VideoMode(width, height), title);
 	isFullscreen = false;
+	tileMap = new TileMap();
+	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
 }
 
 
 Screen::~Screen()
 {
+	delete tileMap;
 }
 
 
-void Screen::load(std::string filepath) {
-	
+void Screen::load(std::string spritesheet_path, std::string data_path) {
+
+	//TODO: FIX THIS
+	SpriteSheet sheet(tileMap);
+	sheet.load(spritesheet_path, data_path);
+	std::cout << (tileMap->getTile(0)).name << std::endl;
 }
 
 
@@ -51,9 +58,8 @@ void Screen::render() {
 		tile.setPosition(25, i);
 		window.draw(tile);
 	}
-
-	sf::View grid(sf::FloatRect(0, 0, 3*(window.getSize().x / 4), window.getSize().y));
-	grid.setViewport(sf::FloatRect(.25f, 0, 1.f, 1.f));
+	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, window.getSize().x, window.getSize().y));
+	grid.setViewport(sf::FloatRect((316.f / window.getSize().x), 0, 1.f, 1.f));
 	grid.move(x_offset, y_offset);
 	grid.zoom(1.f);
 	window.setView(grid);
@@ -101,16 +107,16 @@ void Screen::input() {
 	}
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		x_offset += .3f;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		x_offset -= .3f;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		x_offset += .3f;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		y_offset += .3f;
+		y_offset -= .3f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)	|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		y_offset -= .3f;
+		y_offset += .3f;
 	}
 }
 

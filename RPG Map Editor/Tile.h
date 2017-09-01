@@ -1,4 +1,4 @@
-#ifndef TILE_H
+/*#ifndef TILE_H
 #define TILE_H
 
 #include <string>
@@ -7,16 +7,17 @@
 class Tile
 {
 public:
+	Tile();
 	Tile(std::string name, sf::Texture texture, unsigned int size);
 	Tile(std::string name, sf::Color color, unsigned int size);
 	~Tile();
 	void setFlag();
 private:
-	//Texture texture;
+	Texture texture;
 	unsigned int size;
 	std::string name;
 	sf::Color color;
 	//byte flag
 };
 
-#endif
+#endif*/

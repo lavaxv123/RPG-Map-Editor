@@ -2,14 +2,15 @@
 #define SCREEN_H
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Tile.h"
+#include "TileMap.h"
+
 
 class Screen
 {
 public:
 	Screen(unsigned int width, unsigned int height,std::string title);
 	~Screen();
-	void load(std::string filepath);
+	void load(std::string spritesheet_path, std::string data_path);
 	void render();
 	void input();
 	bool isOpen();
@@ -18,7 +19,8 @@ private:
 	bool isFullscreen;
 	unsigned int width;
 	unsigned int height;
-	std::vector<Tile> tiles;
+	std::vector<TILE> tiles;
+	TileMap* tileMap;
 	
 	float x_offset = 0.f;
 	float y_offset = 0.f;
