@@ -1,6 +1,8 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "Tile.h"
 
 class Screen
 {
@@ -16,6 +18,7 @@ private:
 	bool isFullscreen;
 	unsigned int width;
 	unsigned int height;
+	std::vector<Tile> tiles;
 };
 
 #endif
