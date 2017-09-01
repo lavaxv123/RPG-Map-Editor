@@ -40,7 +40,7 @@ int main() {
 		
 		render(&window);
 
-		//some changes
+		
 		
     }
 
