@@ -4,7 +4,6 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-
 void render(sf::RenderWindow* window) {
 	window->clear();
 	sf::RectangleShape tileHolder(sf::Vector2f(304, window->getSize().y - 20));
