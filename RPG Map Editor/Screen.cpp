@@ -48,6 +48,9 @@ void Screen::render() {
 		window.draw(tile);
 	}
 
+	sf::View grid(sf::FloatRect(0, 0, window.getSize().x / 2, window.getSize().y));
+	grid.setViewport(sf::FloatRect(.5f, 0, 1.f, 1.f));
+	window.setView(grid);
 	window.display();
 }
 

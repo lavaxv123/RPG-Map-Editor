@@ -19,6 +19,11 @@ private:
 	unsigned int width;
 	unsigned int height;
 	std::vector<Tile> tiles;
+
+	//TODO: don't hard code these
+	unsigned int grid_width = 100;
+	unsigned int grid_height = 100;
+	unsigned int tile_size = 16;
 };
 
 #endif

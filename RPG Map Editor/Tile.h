@@ -1,6 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
-
+#include <string>
+#include <SFML/Graphics.hpp>
 class Tile
 {
 public:
