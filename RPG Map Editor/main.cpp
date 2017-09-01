@@ -4,7 +4,6 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-
 void render(sf::RenderWindow* window) {
 	window->clear();
 	sf::RectangleShape tileHolder(sf::Vector2f(304, window->getSize().y - 20));
@@ -35,6 +34,8 @@ int main() {
 			// Leave FullScreen
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) 
 				window.create(sf::VideoMode(WIDTH, HEIGHT), "My window");
+			if (event.type == sf::Event::Resized)
+				window.setView(sf::View(sf::FloatRect(0.f,0.f,window.getSize().x,window.getSize().y)));
 			
         }
 		
