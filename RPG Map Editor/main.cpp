@@ -16,7 +16,7 @@ void render(sf::RenderWindow* window) {
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(WIDTH , HEIGHT), "My window");
-	
+	bool isFullscreen = false;
 	
     // run the program as long as the window is open
     while (window.isOpen())
@@ -29,11 +29,15 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
 			// Enter FullScreen
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) 
-				window.create(sf::VideoMode().getDesktopMode(), "My Window",sf::Style::Fullscreen);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && isFullscreen == false) {
+				window.create(sf::VideoMode().getDesktopMode(), "My Window", sf::Style::Fullscreen);
+				isFullscreen = true;
+			}
 			// Leave FullScreen
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) 
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::F11) )&& isFullscreen == true ) {
 				window.create(sf::VideoMode(WIDTH, HEIGHT), "My window");
+				isFullscreen = false;
+			}
 			if (event.type == sf::Event::Resized)
 				window.setView(sf::View(sf::FloatRect(0.f,0.f,window.getSize().x,window.getSize().y)));
 			
