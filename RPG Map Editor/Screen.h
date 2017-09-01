@@ -19,7 +19,10 @@ private:
 	unsigned int width;
 	unsigned int height;
 	std::vector<Tile> tiles;
-
+	
+	float x_offset = 0.f;
+	float y_offset = 0.f;
+	float zoom = 1.f;
 	//TODO: don't hard code these
 	unsigned int grid_width = 100;
 	unsigned int grid_height = 100;
