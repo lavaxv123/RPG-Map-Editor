@@ -6,10 +6,10 @@
 
 void render(sf::RenderWindow* window) {
 	window->clear();
-	sf::RectangleShape tileHolder(sf::Vector2f(304, window->getSize().y - 20));
-	tileHolder.setFillColor(sf::Color(100, 250, 50));
-	tileHolder.setPosition(10, 10);
-	window->draw(tileHolder);
+	sf::RectangleShape tileViewer(sf::Vector2f(304, window->getSize().y - 20));
+	tileViewer.setFillColor(sf::Color(100, 250, 50));
+	tileViewer.setPosition(10, 10);
+	window->draw(tileViewer);
 	window->display();
 }
 
