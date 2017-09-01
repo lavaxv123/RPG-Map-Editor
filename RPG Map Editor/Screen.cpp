@@ -21,9 +21,11 @@ void Screen::load(std::string filepath) {
 }
 
 
-sf::RectangleShape createTileBox(unsigned int width, unsigned int height, sf::Color color) {
+sf::RectangleShape createTileBox(unsigned int width, unsigned int height, sf::Color color, sf::Color outlineColor) {
 	sf::RectangleShape tile(sf::Vector2f(width, height));
 	tile.setFillColor(color);
+	tile.setOutlineThickness(2);
+	tile.setOutlineColor(outlineColor);
 	return tile;
 }
 
@@ -41,7 +43,7 @@ void Screen::render() {
 
 	//Renders sections within tile viewer
 	for (unsigned int i = 25; i < height - 100; i += 100) {
-		sf::RectangleShape tile = createTileBox(274, 75, sf::Color(255, 0, 0));
+		sf::RectangleShape tile = createTileBox(274, 75, sf::Color(255, 255, 255), sf::Color(0, 0, 0));
 		tile.setPosition(25, i);
 		window.draw(tile);
 	}
