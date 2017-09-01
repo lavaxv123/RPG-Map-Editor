@@ -22,18 +22,25 @@ void Screen::load(std::string filepath) {
 
 
 sf::RectangleShape createTileBox(unsigned int width, unsigned int height, sf::Color color) {
-	sf::RectangleShape tile(sf::Vector2f(274, 75));
-	tile.setFillColor(sf::Color(255, 0, 0));
+	sf::RectangleShape tile(sf::Vector2f(width, height));
+	tile.setFillColor(color);
 	return tile;
 }
 
 void Screen::render() {
 	window.clear();
-	sf::RectangleShape tileViewer(sf::Vector2f(304, window.getSize().y - 20));
-	tileViewer.setFillColor(sf::Color(100, 250, 50));
-	tileViewer.setPosition(10, 10);
 	
+	//Renders left tile viewer
+	sf::RectangleShape tileViewer = createTileBox(304, window.getSize().y - 20,sf::Color(100,250,50));
+	tileViewer.setPosition(10, 10);
 	window.draw(tileViewer);
+
+	//Renders sections within tile viewer
+	for (unsigned int i = 25; i < height - 100; i += 100) {
+		sf::RectangleShape tile = createTileBox(274, 75, sf::Color(255, 0, 0));
+		tile.setPosition(25, i);
+		window.draw(tile);
+	}
 
 	window.display();
 }
