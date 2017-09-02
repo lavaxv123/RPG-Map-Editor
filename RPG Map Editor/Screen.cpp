@@ -1,12 +1,14 @@
 #include "Screen.h"
 #include <iostream>
 #include "SpriteSheet.h"
+#include <array>
 
 Screen::Screen(unsigned int width, unsigned int height,std::string title)
 {
 	Screen::width = width;
 	Screen::height = height;
 	window.create(sf::VideoMode(width, height), title);
+	window.setFramerateLimit(60);
 	isFullscreen = false;
 	tileMap = new TileMap();
 	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
@@ -16,6 +18,7 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 Screen::~Screen()
 {
 	delete tileMap;
+
 }
 
 
@@ -25,6 +28,9 @@ void Screen::load(std::string spritesheet_path, std::string data_path) {
 	SpriteSheet sheet(tileMap);
 	sheet.load(spritesheet_path, data_path);
 	std::cout << (tileMap->getTile(0)).name << std::endl;
+	for(int i = 0; i <sizeof(tile_ids)/sizeof(TILE_ID); i++){
+		tile_ids[i] = { (unsigned short int) 0x0000,'0' };
+	}
 }
 
 
@@ -63,11 +69,12 @@ void Screen::render() {
 	grid.move(x_offset, y_offset);
 	grid.zoom(1.f);
 	window.setView(grid);
-	for (int i = 306; i < 3000; i+=16) {
-		sf::RectangleShape shape(sf::Vector2f(16, 16));
-		shape.setFillColor(sf::Color(i % 256, i % 256, i % 256));
-		shape.setPosition(i, 30);
-		window.draw(shape);
+
+	sf::Sprite sprite;
+	for (int i = 0; i < sizeof(tile_ids) / sizeof(TILE_ID); i++) {
+		sprite.setTexture(*(tileMap->getTile(tile_ids[i].TILE_HASH).texture));
+		sprite.setPosition((i%100) * 16, (i/100) * 16);
+		window.draw(sprite);
 	}
 	
 
@@ -107,16 +114,16 @@ void Screen::input() {
 	}
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		x_offset -= .3f;
+		x_offset -= 2.f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		x_offset += .3f;
+		x_offset += 2.f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		y_offset -= .3f;
+		y_offset -= 2.f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)	|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		y_offset += .3f;
+		y_offset += 2.f;
 	}
 }
 

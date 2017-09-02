@@ -4,6 +4,10 @@
 #include <vector>
 #include "TileMap.h"
 
+struct TILE_ID {
+	unsigned short int TILE_HASH;
+	char flag;
+};
 
 class Screen
 {
@@ -19,7 +23,7 @@ private:
 	bool isFullscreen;
 	unsigned int width;
 	unsigned int height;
-	std::vector<TILE> tiles;
+	TILE_ID tile_ids[10000];
 	TileMap* tileMap;
 	
 	float x_offset = 0.f;

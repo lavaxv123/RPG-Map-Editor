@@ -6,7 +6,7 @@
 #include <SFML\Graphics.hpp>
 struct TILE {
 	std::string name;
-	sf::Texture texture;
+	sf::Texture* texture;
 	unsigned short int size;
 };
 
@@ -17,7 +17,7 @@ public:
 	~TileMap();
 
 	TILE getTile(unsigned short int key);
-	void add(std::string name, sf::Texture texture, unsigned short int size);
+	void add(std::string name, sf::Texture* texture, unsigned short int size);
 private:
 	unsigned short int top_unused_key;
 	std::map<unsigned short int, TILE> tiles;
