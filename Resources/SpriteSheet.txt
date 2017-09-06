@@ -1,2 +1,4 @@
 16 0 0 normal_grass
 16 1 0 pink_flower_grass
+16 2 0 tree_top 
+16 3 0 beach_water_left

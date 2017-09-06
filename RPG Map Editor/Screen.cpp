@@ -1,7 +1,6 @@
 #include "Screen.h"
 #include <iostream>
 #include "SpriteSheet.h"
-#include <array>
 
 Screen::Screen(unsigned int width, unsigned int height,std::string title)
 {
@@ -65,7 +64,7 @@ void Screen::render() {
 		window.draw(tile);
 	}
 	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, window.getSize().x, window.getSize().y));
-	grid.setViewport(sf::FloatRect((316.f / window.getSize().x), 0, 1.f, 1.f));
+	grid.setViewport(sf::FloatRect((321.f / window.getSize().x), 0, 1.f, 1.f));
 	grid.move(x_offset, y_offset);
 	grid.zoom(1.f);
 	window.setView(grid);
@@ -73,7 +72,7 @@ void Screen::render() {
 	sf::Sprite sprite;
 	for (int i = 0; i < sizeof(tile_ids) / sizeof(TILE_ID); i++) {
 		sprite.setTexture(*(tileMap->getTile(tile_ids[i].TILE_HASH).texture));
-		sprite.setPosition((i%100) * 16, (i/100) * 16);
+		sprite.setPosition((i%grid_width) * tile_size, (i/grid_width) * 16);
 		window.draw(sprite);
 	}
 	
@@ -89,6 +88,15 @@ void Screen::input() {
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
+		if (event.type == sf::Event::MouseButtonPressed) {
+			if (event.mouseButton.x > 321) {
+				int x_s = (event.mouseButton.x - 321 + x_offset)/tile_size;
+				int y_s = (event.mouseButton.y + y_offset) / tile_size;
+				if (x_s >= 0 && y_s >= 0 && x_s < grid_width && y_s < grid_height && (event.mouseButton.x - 321 + x_offset) >= 0 && (event.mouseButton.y + y_offset) >= 0) {
+					tile_ids[(y_s * grid_width) + x_s].TILE_HASH = 1;
+				}
+			}
+		}
 		// "close requested" event: we close the window
 		if (event.type == sf::Event::Closed)
 			window.close();
@@ -114,16 +122,16 @@ void Screen::input() {
 	}
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		x_offset -= 2.f;
+		x_offset += 5.f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		x_offset += 2.f;
+		x_offset -= 5.f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		y_offset -= 2.f;
+		y_offset += 5.f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)	|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		y_offset += 2.f;
+		y_offset -= 5.f;
 	}
 }
 
