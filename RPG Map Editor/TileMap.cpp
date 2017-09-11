@@ -16,6 +16,8 @@ TileMap::~TileMap()
 
 
 TILE TileMap::getTile(unsigned short int key) {
+	if (top_unused_key <= key)
+		return {"",NULL,0};
 	return tiles[key];
 }
 

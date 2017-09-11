@@ -63,7 +63,15 @@ void Screen::render() {
 	for (unsigned int i = 25; i < height - 100; i += 100) {
 		sf::RectangleShape tile = createTileBox(274, 75, sf::Color(255, 255, 255), sf::Color(0, 0, 0));
 		tile.setPosition(25, (float)i);
+		sf::Sprite tile_sprite;
+		TILE tile_w_texture = tileMap->getTile((i / 100) + (((height - 25)/100)* pageNum));
+		if (tile_w_texture.size == 0)
+			break;
+		tile_sprite.setTexture(*tile_w_texture.texture);
+		tile_sprite.scale(sf::Vector2f(4.0f, 4.0f));
+		tile_sprite.setPosition(30, (float)(i + 4));
 		window.draw(tile);
+		window.draw(tile_sprite);
 	}
 	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, (float)window.getSize().x, (float)window.getSize().y));
 	grid.setViewport(sf::FloatRect((321.f / window.getSize().x), 0, 1.f, 1.f));

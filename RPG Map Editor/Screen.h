@@ -65,6 +65,9 @@ private:
 
 	//Pointer to the tile map, used to convert tile hashes into textures
 	TileMap* tileMap;
+
+	//Offset the tiles shown by the tile selector
+	unsigned int pageNum = 0;
 	
 	//The offset of the grid, changed with arrow keys or wasd
 	float x_offset = 0.f;
@@ -82,6 +85,7 @@ private:
 
 	//standard tile size
 	unsigned int tile_size = 16;
+
 
 
 	//mouse button is currently down if true
