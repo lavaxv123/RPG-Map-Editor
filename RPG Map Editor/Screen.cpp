@@ -36,18 +36,12 @@ void Screen::load(std::string spritesheet_path, std::string data_path) {
 }
 
 
-sf::RectangleShape createTileBox(unsigned int width, unsigned int height, sf::Color color, sf::Color outlineColor) {
-	sf::RectangleShape tile(sf::Vector2f((float)width,(float)height));
-	tile.setFillColor(color);
-	tile.setOutlineThickness(2);
-	tile.setOutlineColor(outlineColor);
-	return tile;
-}
-
 void Screen::render() {
 
 
 	window.clear();
+
+	//Renders the Tile selector on the left side of the screen, these coordinates are hard coded
 	sf::View tileView(sf::FloatRect(0, 0, (float)window.getSize().x, (float)window.getSize().y));
 	tileView.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 
@@ -60,6 +54,8 @@ void Screen::render() {
 	window.setView(tileView);
 	window.draw(tileViewer);
 
+	sf::RectangleShape* shape;
+	shape = new sf::RectangleShape(sf::Vector2f(10, 10));
 
 	//Left and Right arrow buttons to swap through textures
 	sf::RectangleShape pageRight(sf::Vector2f(60, 20));
@@ -81,22 +77,29 @@ void Screen::render() {
 
 	//Renders sections within tile viewer
 	for (unsigned int i = 25; i < height - 100; i += 100) {
-		sf::RectangleShape tile = createTileBox(274, 75, sf::Color(255, 255, 255), sf::Color(0, 0, 0));
-		tile.setPosition(25, (float)i);
-		sf::Sprite tile_sprite;
+		sf::RectangleShape tile(sf::Vector2f(274, 75));
+			tile.setFillColor(sf::Color(255, 255, 255));
+			tile.setOutlineThickness(2);
+			tile.setOutlineColor(sf::Color(0, 0, 0));
+			tile.setPosition(25, (float)i);
+			
+		
 		TILE tile_w_texture = tileMap->getTile((i / 100) + (((height - 25)/100)* pageNum));
 		if (tile_w_texture.size == 0)
 			break;
-		tile_sprite.setTexture(*tile_w_texture.texture);
-		tile_sprite.scale(sf::Vector2f(4.0f, 4.0f));
-		tile_sprite.setPosition(30, (float)(i + 4));
+
+		sf::Sprite tile_sprite;
+			tile_sprite.setTexture(*tile_w_texture.texture);
+			tile_sprite.scale(sf::Vector2f(4.0f, 4.0f));
+			tile_sprite.setPosition(30, (float)(i + 4));
 		
 		sf::Text text;
-		text.setFont(arial);
-		text.setString(tile_w_texture.name);
-		text.setCharacterSize(24);
-		text.setFillColor(sf::Color(0, 0, 0));
-		text.setPosition(100, (float)(i + 4));
+			text.setFont(arial);
+			text.setString(tile_w_texture.name);
+			text.setCharacterSize(24);
+			text.setFillColor(sf::Color(0, 0, 0));
+			text.setPosition(100, (float)(i + 4));
+
 		window.draw(tile);
 		window.draw(tile_sprite);
 		window.draw(text);
@@ -110,7 +113,7 @@ void Screen::render() {
 	sf::Sprite sprite;
 	for (int i = 0; i < sizeof(tile_ids) / sizeof(TILE_ID); i++) {
 		sprite.setTexture(*(tileMap->getTile(tile_ids[i].TILE_HASH).texture));
-		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i/grid_width) * 16));
+		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i/grid_width) * tile_size));
 		window.draw(sprite);
 	}
 	
@@ -157,17 +160,18 @@ void Screen::input() {
 			window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
 		}
 		
-
-	}
-	// Enter FullScreen
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && isFullscreen == false) {
-		window.create(sf::VideoMode().getDesktopMode(), "My Window", sf::Style::Fullscreen);
-		isFullscreen = true;
-	}
-	// Leave FullScreen
-	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) && isFullscreen == true) {
-		window.create(sf::VideoMode(width, height), "My window");
-		isFullscreen = false;
+		//Sets screen to fullscreen when f11 is pressed
+		if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F11) && isFullscreen == false) {
+			window.create(sf::VideoMode().getDesktopMode(), "My Window", sf::Style::Fullscreen);
+			isFullscreen = true;
+			std::cout << "Entering Fullscreen" << std::endl;
+		}
+		//leaves fullscreen mode on f11 or escape
+		else if (event.type == sf::Event::KeyPressed && (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F11)) && isFullscreen) {
+			window.create(sf::VideoMode(width, height), "My Window");
+			isFullscreen = false;
+			std::cout << "Leaving Fullscreen" << std::endl;
+		}
 	}
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
@@ -182,6 +186,7 @@ void Screen::input() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)	|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		y_offset -= OFFSET;
 	}
+
 	
 }
 
