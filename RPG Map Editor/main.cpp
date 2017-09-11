@@ -18,6 +18,7 @@ int main() {
     while (screen.isOpen())
     {
 		screen.input();
+		screen.update();
 		screen.render();
     }
 

@@ -15,7 +15,7 @@ SpriteSheet::~SpriteSheet()
 std::vector<std::string> split(std::string str, char splitAt) {
 	std::vector<std::string> data;
 	std::string curr_str;
-	for (int i = 0; i < str.length(); i++) {
+	for (unsigned int i = 0; i < str.length(); i++) {
 		if(str[i] != splitAt){
 			curr_str += str[i];
 		}
@@ -46,6 +46,13 @@ bool SpriteSheet::load(std::string spritesheet_path, std::string detail_path) {
 			return false;
 		}
 		sf::Texture* texture = new sf::Texture();
+
+		/**
+		data[0] = size
+		data[1] = x
+		data[2] = y
+		data[3] = name
+		*/
 		texture->loadFromImage(spritesheet, sf::IntRect(std::stoi(data[0]) * std::stoi(data[1]), 
 													   std::stoi(data[0]) * std::stoi(data[2]),
 													   std::stoi(data[0]),

@@ -82,6 +82,20 @@ void Screen::render() {
 	window.display();
 }
 
+void Screen::update() {
+	
+	if (isMouseDown) {
+		if (sf::Mouse::getPosition(window).x > 321) {
+			int x_s = (sf::Mouse::getPosition(window).x - 321 + x_offset) / tile_size;
+			int y_s = (sf::Mouse::getPosition(window).y + y_offset) / tile_size;
+			if (x_s >= 0 && y_s >= 0 && x_s < grid_width && y_s < grid_height 
+					&& (sf::Mouse::getPosition(window).x - 321 + x_offset) >= 0 
+					&& (sf::Mouse::getPosition(window).y + y_offset) >= 0) {
+				tile_ids[(y_s * grid_width) + x_s].TILE_HASH = 1;
+			}
+		}
+	}
+}
 
 
 void Screen::input() {
@@ -89,13 +103,10 @@ void Screen::input() {
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::MouseButtonPressed) {
-			if (event.mouseButton.x > 321) {
-				int x_s = (event.mouseButton.x - 321 + x_offset)/tile_size;
-				int y_s = (event.mouseButton.y + y_offset) / tile_size;
-				if (x_s >= 0 && y_s >= 0 && x_s < grid_width && y_s < grid_height && (event.mouseButton.x - 321 + x_offset) >= 0 && (event.mouseButton.y + y_offset) >= 0) {
-					tile_ids[(y_s * grid_width) + x_s].TILE_HASH = 1;
-				}
-			}
+			isMouseDown = true;
+		}
+		if (event.type == sf::Event::MouseButtonReleased) {
+			isMouseDown = false;
 		}
 		// "close requested" event: we close the window
 		if (event.type == sf::Event::Closed)
@@ -133,6 +144,7 @@ void Screen::input() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)	|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		y_offset -= 5.f;
 	}
+	
 }
 
 bool Screen::isOpen() {

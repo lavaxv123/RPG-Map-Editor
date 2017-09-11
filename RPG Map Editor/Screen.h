@@ -35,6 +35,9 @@ public:
 	*/
 	void render();
 
+
+	void update();
+
 	/**
 	Checks for input
 	includes quitting, resizing, keyboard, and mouse presses
@@ -79,6 +82,10 @@ private:
 
 	//standard tile size
 	unsigned int tile_size = 16;
+
+
+	//mouse button is currently down if true
+	bool isMouseDown = false;
 };
 
 #endif
