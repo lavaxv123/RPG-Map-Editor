@@ -28,7 +28,7 @@ void Screen::load(std::string spritesheet_path, std::string data_path) {
 	sheet.load(spritesheet_path, data_path);
 	std::cout << (tileMap->getTile(0)).name << std::endl;
 	for(int i = 0; i <sizeof(tile_ids)/sizeof(TILE_ID); i++){
-		tile_ids[i] = { (unsigned short int) 0x0000,'0' };
+		tile_ids[i] = { (unsigned short int) 0x0004,'0' };
 	}
 }
 

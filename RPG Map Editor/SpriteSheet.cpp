@@ -47,9 +47,9 @@ bool SpriteSheet::load(std::string spritesheet_path, std::string detail_path) {
 		}
 		sf::Texture* texture = new sf::Texture();
 		texture->loadFromImage(spritesheet, sf::IntRect(std::stoi(data[0]) * std::stoi(data[1]), 
-													   std::stoi(data[0]) * std::stoi(data[1]),
-													  (std::stoi(data[0]) * std::stoi(data[1])) + std::stoi(data[0]),
-													  (std::stoi(data[0]) * std::stoi(data[1])) + std::stoi(data[0])));
+													   std::stoi(data[0]) * std::stoi(data[2]),
+													   std::stoi(data[0]),
+													   std::stoi(data[0])));
 		tileMap->add(data[3],texture,std::stoi(data[0]));
 	}
 	in.close();
