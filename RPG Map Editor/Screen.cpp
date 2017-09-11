@@ -78,7 +78,7 @@ void Screen::render() {
 		window.draw(sprite);
 	}
 	
-
+	 
 	
 	
 	window.display();
