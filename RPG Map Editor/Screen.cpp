@@ -88,6 +88,11 @@ void Screen::render() {
 		tile_sprite.setTexture(*tile_w_texture.texture);
 		tile_sprite.scale(sf::Vector2f(4.0f, 4.0f));
 		tile_sprite.setPosition(30, (float)(i + 4));
+		sf::Text text;
+		text.setString(tile_w_texture.name);
+		text.setCharacterSize(24);
+		text.setFillColor(sf::Color(0, 0, 0));
+		text.setPosition(100, (float)(i + 4));
 		window.draw(tile);
 		window.draw(tile_sprite);
 	}
@@ -103,9 +108,6 @@ void Screen::render() {
 		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i/grid_width) * 16));
 		window.draw(sprite);
 	}
-	
-	 
-	
 	
 	window.display();
 }
