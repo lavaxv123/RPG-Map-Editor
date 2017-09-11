@@ -77,6 +77,7 @@ private:
 	//Holds the current zoom value of the grid
 	float zoom = 1.f;
 
+	sf::Font arial;
 
 	//TODO: don't hard code these
 	//tile_ids should be equal to grid_width * grid_height
@@ -86,7 +87,8 @@ private:
 	//standard tile size
 	unsigned int tile_size = 16;
 
-
+	sf::RectangleShape* next;
+	sf::RectangleShape* previous;
 
 	//mouse button is currently down if true
 	bool isMouseDown = false;

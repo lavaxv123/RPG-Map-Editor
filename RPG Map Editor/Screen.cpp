@@ -12,14 +12,18 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	window.setFramerateLimit(60);
 	isFullscreen = false;
 	tileMap = new TileMap();
+	next = new sf::RectangleShape(sf::Vector2f(60, 20));
+	previous = new sf::RectangleShape(sf::Vector2f(62, 20));
 	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
+	arial.loadFromFile("../Resources/arial.ttf");
 }
 
 
 Screen::~Screen()
 {
 	delete tileMap;
-
+	delete next;
+	delete previous;
 }
 
 
@@ -61,26 +65,29 @@ void Screen::render() {
 
 
 	//Left and Right arrow buttons to swap through textures
-	sf::RectangleShape pageRight(sf::Vector2f(60, 20));
-	pageRight.setFillColor(sf::Color(255, 242, 226));
-	pageRight.setOutlineThickness(1);
-	pageRight.setOutlineColor(sf::Color(119, 119, 119));
+	next->setFillColor(sf::Color(255, 242, 226));
+	next->setOutlineThickness(1);
+	next->setOutlineColor(sf::Color(119, 119, 119));
+	next->setPosition(244, (float)(window.getSize().y - 40));
 
-	sf::Text nextTXT;
-	nextTXT.setString("Next");
-	sf::Text previousTXT;
-	previousTXT.setString("Previous");
+	sf::Text nextTXT("Next", arial, 16);
+	nextTXT.setPosition(255, (float)(window.getSize().y - 40));
+	nextTXT.setFillColor(sf::Color(0, 0, 0));
+	
+	
+	previous->setFillColor(sf::Color(255, 242, 226));
+	previous->setOutlineThickness(1);
+	previous->setOutlineColor(sf::Color(119, 119, 119));
+	previous->setPosition(20, (float)(window.getSize().y - 40));
 
-	pageRight.setPosition(244, (float)(window.getSize()).y - 40);
-	window.draw(pageRight);
+	sf::Text previousTXT("Previous", arial, 16);
+	previousTXT.setPosition(20, (float)(window.getSize().y - 40));
+	previousTXT.setFillColor(sf::Color(0, 0, 0));
 
-	sf::RectangleShape pageLeft(sf::Vector2f(60, 20));
-	pageLeft.setFillColor(sf::Color(255, 242, 226));
-	pageLeft.setOutlineThickness(1);
-	pageLeft.setOutlineColor(sf::Color(119, 119, 119));
-
-	pageLeft.setPosition(20, (float)(window.getSize()).y - 40);
-	window.draw(pageLeft);
+	window.draw(*next);
+	window.draw(nextTXT);
+	window.draw(*previous);
+	window.draw(previousTXT);
 
 	//Renders sections within tile viewer
 	for (unsigned int i = 25; i < height - 100; i += 100) {
@@ -93,8 +100,16 @@ void Screen::render() {
 		tile_sprite.setTexture(*tile_w_texture.texture);
 		tile_sprite.scale(sf::Vector2f(4.0f, 4.0f));
 		tile_sprite.setPosition(30, (float)(i + 4));
+		
+		sf::Text text;
+		text.setFont(arial);
+		text.setString(tile_w_texture.name);
+		text.setCharacterSize(24);
+		text.setFillColor(sf::Color(0, 0, 0));
+		text.setPosition(100, (float)(i + 4));
 		window.draw(tile);
 		window.draw(tile_sprite);
+		window.draw(text);
 	}
 	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, (float)window.getSize().x, (float)window.getSize().y));
 	grid.setViewport(sf::FloatRect((321.f / window.getSize().x), 0, 1.f, 1.f));
@@ -108,9 +123,6 @@ void Screen::render() {
 		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i/grid_width) * 16));
 		window.draw(sprite);
 	}
-	
-	 
-	
 	
 	window.display();
 }
@@ -155,7 +167,14 @@ void Screen::input() {
 			window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
 		}
 		
-
+		if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (next->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))))) {
+			pageNum++;
+			std::cout << pageNum << std::endl;
+		}
+		if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && previous->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) {
+			pageNum--;
+			std::cout << pageNum << std::endl;
+		}
 	}
 	// Enter FullScreen
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && isFullscreen == false) {
@@ -180,7 +199,8 @@ void Screen::input() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)	|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		y_offset -= OFFSET;
 	}
-	
+
+
 }
 
 bool Screen::isOpen() {
