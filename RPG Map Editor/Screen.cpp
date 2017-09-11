@@ -66,7 +66,10 @@ void Screen::render() {
 	pageRight.setOutlineThickness(1);
 	pageRight.setOutlineColor(sf::Color(119, 119, 119));
 
-	sf::
+	sf::Text nextTXT;
+	nextTXT.setString("Next");
+	sf::Text previousTXT;
+	previousTXT.setString("Previous");
 
 	pageRight.setPosition(244, (float)(window.getSize()).y - 40);
 	window.draw(pageRight);
