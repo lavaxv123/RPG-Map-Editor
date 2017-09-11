@@ -2,6 +2,8 @@
 #include <iostream>
 #include "SpriteSheet.h"
 
+#define OFFSET 5.f
+
 Screen::Screen(unsigned int width, unsigned int height,std::string title)
 {
 	Screen::width = width;
@@ -66,7 +68,7 @@ void Screen::render() {
 	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, window.getSize().x, window.getSize().y));
 	grid.setViewport(sf::FloatRect((321.f / window.getSize().x), 0, 1.f, 1.f));
 	grid.move(x_offset, y_offset);
-	grid.zoom(1.f);
+	grid.zoom(zoom);
 	window.setView(grid);
 
 	sf::Sprite sprite;
@@ -83,15 +85,12 @@ void Screen::render() {
 }
 
 void Screen::update() {
-	
 	if (isMouseDown) {
 		if (sf::Mouse::getPosition(window).x > 321) {
-			int x_s = (sf::Mouse::getPosition(window).x - 321 + x_offset) / tile_size;
-			int y_s = (sf::Mouse::getPosition(window).y + y_offset) / tile_size;
-			if (x_s >= 0 && y_s >= 0 && x_s < grid_width && y_s < grid_height 
-					&& (sf::Mouse::getPosition(window).x - 321 + x_offset) >= 0 
-					&& (sf::Mouse::getPosition(window).y + y_offset) >= 0) {
-				tile_ids[(y_s * grid_width) + x_s].TILE_HASH = 1;
+			sf::Vector2f temp_v = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+			sf::Vector2i w_v((int)temp_v.x, (int)temp_v.y);
+			if (w_v.x/16 >= 0 && w_v.y/16 >= 0 && w_v.x/16 < grid_width && w_v.y/16 < grid_height && w_v.x >= 0 && w_v.y >= 0) {
+				tile_ids[(int)(((w_v.y/16) * grid_width) + (w_v.x/16))].TILE_HASH = 1;
 			}
 		}
 	}
@@ -108,6 +107,12 @@ void Screen::input() {
 		if (event.type == sf::Event::MouseButtonReleased) {
 			isMouseDown = false;
 		}
+		if (event.type == sf::Event::MouseWheelMoved) {
+			
+			zoom -= event.mouseWheel.delta * .2f;
+			zoom = zoom < .2f ? .2f: zoom;
+		}
+
 		// "close requested" event: we close the window
 		if (event.type == sf::Event::Closed)
 			window.close();
@@ -133,16 +138,16 @@ void Screen::input() {
 	}
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		x_offset += 5.f;
+		x_offset += OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		x_offset -= 5.f;
+		x_offset -= OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		y_offset += 5.f;
+		y_offset += OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)	|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		y_offset -= 5.f;
+		y_offset -= OFFSET;
 	}
 	
 }
