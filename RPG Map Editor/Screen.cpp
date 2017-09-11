@@ -30,13 +30,13 @@ void Screen::load(std::string spritesheet_path, std::string data_path) {
 	sheet.load(spritesheet_path, data_path);
 	std::cout << (tileMap->getTile(0)).name << std::endl;
 	for(int i = 0; i <sizeof(tile_ids)/sizeof(TILE_ID); i++){
-		tile_ids[i] = { (unsigned short int) 0x0004,'0' };
+		tile_ids[i] = { (unsigned short int) 0x0004,0};
 	}
 }
 
 
 sf::RectangleShape createTileBox(unsigned int width, unsigned int height, sf::Color color, sf::Color outlineColor) {
-	sf::RectangleShape tile(sf::Vector2f(width, height));
+	sf::RectangleShape tile(sf::Vector2f((float)width,(float)height));
 	tile.setFillColor(color);
 	tile.setOutlineThickness(2);
 	tile.setOutlineColor(outlineColor);
@@ -47,10 +47,10 @@ void Screen::render() {
 
 
 	window.clear();
-	sf::View tileView(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+	sf::View tileView(sf::FloatRect(0, 0, (float)window.getSize().x, (float)window.getSize().y));
 	tileView.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 
-	sf::RectangleShape tileViewer(sf::Vector2f(304, window.getSize().y - 20));
+	sf::RectangleShape tileViewer(sf::Vector2f(304, (float)(window.getSize().y - 20)));
 	tileViewer.setFillColor(sf::Color(255, 242, 226));
 	tileViewer.setOutlineThickness(3);
 	tileViewer.setOutlineColor(sf::Color(119, 119, 119));
@@ -62,10 +62,10 @@ void Screen::render() {
 	//Renders sections within tile viewer
 	for (unsigned int i = 25; i < height - 100; i += 100) {
 		sf::RectangleShape tile = createTileBox(274, 75, sf::Color(255, 255, 255), sf::Color(0, 0, 0));
-		tile.setPosition(25, i);
+		tile.setPosition(25, (float)i);
 		window.draw(tile);
 	}
-	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, window.getSize().x, window.getSize().y));
+	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, (float)window.getSize().x, (float)window.getSize().y));
 	grid.setViewport(sf::FloatRect((321.f / window.getSize().x), 0, 1.f, 1.f));
 	grid.move(x_offset, y_offset);
 	grid.zoom(zoom);
@@ -74,7 +74,7 @@ void Screen::render() {
 	sf::Sprite sprite;
 	for (int i = 0; i < sizeof(tile_ids) / sizeof(TILE_ID); i++) {
 		sprite.setTexture(*(tileMap->getTile(tile_ids[i].TILE_HASH).texture));
-		sprite.setPosition((i%grid_width) * tile_size, (i/grid_width) * 16);
+		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i/grid_width) * 16));
 		window.draw(sprite);
 	}
 	
@@ -89,8 +89,8 @@ void Screen::update() {
 		if (sf::Mouse::getPosition(window).x > 321) {
 			sf::Vector2f temp_v = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 			sf::Vector2i w_v((int)temp_v.x, (int)temp_v.y);
-			if (w_v.x/16 >= 0 && w_v.y/16 >= 0 && w_v.x/16 < grid_width && w_v.y/16 < grid_height && w_v.x >= 0 && w_v.y >= 0) {
-				tile_ids[(int)(((w_v.y/16) * grid_width) + (w_v.x/16))].TILE_HASH = 1;
+			if (w_v.x/tile_size >= 0 && w_v.y/tile_size >= 0 && w_v.x/tile_size < grid_width && w_v.y/tile_size < grid_height && w_v.x >= 0 && w_v.y >= 0) {
+				tile_ids[(((w_v.y/tile_size) * grid_width) + (w_v.x/tile_size))].TILE_HASH = 1;
 			}
 		}
 	}
