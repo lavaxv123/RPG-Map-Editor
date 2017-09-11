@@ -13,6 +13,7 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	isFullscreen = false;
 	tileMap = new TileMap();
 	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
+	arial.loadFromFile("../Resources/arial.ttf");
 }
 
 
@@ -66,7 +67,6 @@ void Screen::render() {
 	pageRight.setOutlineThickness(1);
 	pageRight.setOutlineColor(sf::Color(119, 119, 119));
 
-	sf::
 
 	pageRight.setPosition(244, (float)(window.getSize()).y - 40);
 	window.draw(pageRight);
@@ -90,13 +90,16 @@ void Screen::render() {
 		tile_sprite.setTexture(*tile_w_texture.texture);
 		tile_sprite.scale(sf::Vector2f(4.0f, 4.0f));
 		tile_sprite.setPosition(30, (float)(i + 4));
+		
 		sf::Text text;
+		text.setFont(arial);
 		text.setString(tile_w_texture.name);
 		text.setCharacterSize(24);
 		text.setFillColor(sf::Color(0, 0, 0));
 		text.setPosition(100, (float)(i + 4));
 		window.draw(tile);
 		window.draw(tile_sprite);
+		window.draw(text);
 	}
 	sf::View grid(sf::FloatRect((316.0f / window.getSize().x), 0, (float)window.getSize().x, (float)window.getSize().y));
 	grid.setViewport(sf::FloatRect((321.f / window.getSize().x), 0, 1.f, 1.f));
