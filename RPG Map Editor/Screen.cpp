@@ -59,6 +59,24 @@ void Screen::render() {
 	window.setView(tileView);
 	window.draw(tileViewer);
 
+
+	//Left and Right arrow buttons to swap through textures
+	sf::RectangleShape pageRight(sf::Vector2f(20, 20));
+	pageRight.setFillColor(sf::Color(255, 242, 226));
+	pageRight.setOutlineThickness(1);
+	pageRight.setOutlineColor(sf::Color(119, 119, 119));
+
+	pageRight.setPosition(280, (float)(window.getSize()).y - 40);
+	window.draw(pageRight);
+
+	sf::RectangleShape pageLeft(sf::Vector2f(20, 20));
+	pageLeft.setFillColor(sf::Color(255, 242, 226));
+	pageLeft.setOutlineThickness(1);
+	pageLeft.setOutlineColor(sf::Color(119, 119, 119));
+
+	pageLeft.setPosition(250, (float)(window.getSize()).y - 40);
+	window.draw(pageLeft);
+
 	//Renders sections within tile viewer
 	for (unsigned int i = 25; i < height - 100; i += 100) {
 		sf::RectangleShape tile = createTileBox(274, 75, sf::Color(255, 255, 255), sf::Color(0, 0, 0));
