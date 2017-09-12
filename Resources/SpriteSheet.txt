@@ -3,3 +3,4 @@
 16 2 0 tree_top 
 16 3 0 beach_water_left
 16 2 3 orb_tile
+16 3 3 beach_left

@@ -1,5 +1,7 @@
 #pragma once
-#include "Screen.h"
+#include <vector>
+#include "TileMap.h"
+
 
 class TileSelector
 {
@@ -10,12 +12,19 @@ public:
 	void render();
 	void update();
 	void input();
+	unsigned short int getSelected();
+
 private:
 	void renderSelectors();
+	void renderButtons();
 	sf::RenderWindow* window;
+	sf::RectangleShape* next;
+	sf::RectangleShape* previous;
 	TileMap* tileMap;
 	sf::Font arial;
+	std::vector<sf::RectangleShape> shapes;
 
 	unsigned int page_numbers;
+	unsigned short int current_selected;
 };
 

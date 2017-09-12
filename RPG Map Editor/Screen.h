@@ -3,16 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "TileMap.h"
+#include "TileSelector.h"
+#include "Grid.h"
 
-/**
-each tile in the grid is contained as a tile_id which is a hash and a flag
-The hash value is for looking up tile texture, name, and size
-flag is used for setting whether the tile is an event, solid, interactive, etc. 
-*/
-struct TILE_ID {
-	unsigned short int TILE_HASH;
-	char flag;
-};
+
 
 class Screen
 {
@@ -59,39 +53,11 @@ private:
 	unsigned int width;
 	unsigned int height;
 
-	//TODO: don't hard code this
-	//Holds the tile identifiers in the tile grid
-	TILE_ID tile_ids[10000];
-
 	//Pointer to the tile map, used to convert tile hashes into textures
 	TileMap* tileMap;
 
-	//Offset the tiles shown by the tile selector
-	unsigned int pageNum = 0;
-	
-	//The offset of the grid, changed with arrow keys or wasd
-	float x_offset = 0.f;
-	float y_offset = 0.f;
-
-	//TODO: implement the zoom feature
-	//Holds the current zoom value of the grid
-	float zoom = 1.f;
-
-	sf::Font arial;
-
-	//TODO: don't hard code these
-	//tile_ids should be equal to grid_width * grid_height
-	unsigned int grid_width = 100;
-	unsigned int grid_height = 100;
-
-	//standard tile size
-	unsigned int tile_size = 16;
-
-	sf::RectangleShape* next;
-	sf::RectangleShape* previous;
-
-	//mouse button is currently down if true
-	bool isMouseDown = false;
+	TileSelector* tileSelector;
+	Grid* grid;
 };
 
 #endif
