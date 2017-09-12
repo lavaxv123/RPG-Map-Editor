@@ -30,6 +30,8 @@ void Grid::render()
 {
 	//Creates a view for the grid
 	
+	
+	
 	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0, 1.f, 1.f));
 	window->setView(*grid);
 
@@ -77,8 +79,10 @@ void Grid::input(unsigned short int key)
 
 
 void Grid::zoom(float delta) {
-	zoom_index += (delta*ZOOM_OFFSET);
+	zoom_index -= (delta*ZOOM_OFFSET);
+	
+	sf::Vector2f temp_v = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
 	grid->setSize(original_size * zoom_index);
-	grid->move(-x_offset, -y_offset);
+	grid->move(temp_v);
 }
