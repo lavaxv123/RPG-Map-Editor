@@ -59,7 +59,7 @@ void TileSelector::renderSelectors()
 	}
 
 	//Finds the maximum number of pages for the Tile Viewer
-	maxPageNumber = ((100 * tileMap->getSize())/window->getSize().y);
+	maxPageNumber = ((100 * tileMap->getSize())/(window->getSize().y - 100));
 }
 
 
