@@ -29,14 +29,11 @@ public:
 	TILE getTile(unsigned short int key);
 
 	//Return the top unused key.
-
 	unsigned short int getSize();
 
 	//adds a new TILE struct to the map
 	void add(std::string name, sf::Texture* texture, unsigned short int size);
 
-	//gets the size of the map
-	unsigned short int getSize();
 private:
 	//Next key to be used
 	unsigned short int top_unused_key;
