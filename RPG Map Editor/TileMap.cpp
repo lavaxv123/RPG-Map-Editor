@@ -25,3 +25,7 @@ void TileMap::add(std::string name, sf::Texture* texture, unsigned short int siz
 	tiles[top_unused_key] = {name,texture,size};
 	top_unused_key++;
 }
+
+unsigned short int TileMap::getSize() {
+	return top_unused_key;
+}

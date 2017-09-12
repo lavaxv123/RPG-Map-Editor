@@ -169,11 +169,13 @@ void Screen::input() {
 		
 		if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (next->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))))) {
 			pageNum++;
-			std::cout << pageNum << std::endl;
+			std::cout << "Page: " << pageNum << std::endl;
 		}
 		if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && previous->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) {
-			pageNum--;
-			std::cout << pageNum << std::endl;
+			if (pageNum > 0) {
+				pageNum--;
+				std::cout << "Page: " << pageNum << std::endl;
+			}
 		}
 	}
 	// Enter FullScreen
