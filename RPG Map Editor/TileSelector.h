@@ -24,6 +24,7 @@ private:
 	sf::Font arial;
 	std::vector<sf::RectangleShape> shapes;
 
+	unsigned short int maxPageNumber;
 	unsigned int page_numbers;
 	unsigned short int current_selected;
 };

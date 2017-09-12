@@ -57,6 +57,9 @@ void TileSelector::renderSelectors()
 		window->draw(tile_sprite);
 		window->draw(text);
 	}
+
+	//Finds the maximum number of pages for the Tile Viewer
+	maxPageNumber = ((100 * tileMap->getSize())/window->getSize().y);
 }
 
 
@@ -119,12 +122,18 @@ void TileSelector::update()
 void TileSelector::input()
 {
 	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (next->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))))) {
-		page_numbers++;
-		std::cout << page_numbers << std::endl;
+		if (page_numbers < maxPageNumber) {
+			page_numbers++;
+			std::cout << page_numbers << std::endl;
+		}
+
 	}
 	else if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && previous->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
-		page_numbers--;
-		std::cout << page_numbers << std::endl;
+		if (page_numbers > 0) {
+			page_numbers--;
+			std::cout << page_numbers << std::endl;
+		}
+
 	}
 	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && sf::Mouse::getPosition(*window).x <= 321) {
 		for (unsigned int i = 25; i < window->getSize().y - 100; i += 100) {
