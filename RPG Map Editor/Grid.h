@@ -18,9 +18,7 @@ public:
 	~Grid();
 
 	void render();
-	void input();
-	void update(unsigned short int key);
-	void setMouseButton(bool isDown);
+	void input(unsigned short int key);
 	void zoom(float delta);
 private:
 	sf::RenderWindow* window;
@@ -29,11 +27,13 @@ private:
 	//Holds the tile identifiers in the tile grid
 	TILE_ID* tile_ids;
 
-	int x_offset;
-	int y_offset;
+	sf::View* grid;
+
+	sf::Vector2f original_size;
+	float x_offset;
+	float y_offset;
 	float zoom_index;
 	unsigned int grid_height;
 	unsigned int grid_width;
-	bool isMouseDown;
 };
 
