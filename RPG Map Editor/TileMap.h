@@ -28,6 +28,10 @@ public:
 	//Gets mapping in tiles with the associated key
 	TILE getTile(unsigned short int key);
 
+	//Return the top unused key.
+
+	unsigned short int getSize();
+
 	//adds a new TILE struct to the map
 	void add(std::string name, sf::Texture* texture, unsigned short int size);
 
