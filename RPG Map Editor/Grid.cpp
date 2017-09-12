@@ -49,19 +49,15 @@ void Grid::input(unsigned short int key)
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		grid->move(OFFSET, 0.f);
-		x_offset += OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		grid->move(-OFFSET, 0.f);
-		x_offset -= OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		grid->move(0.f, OFFSET);
-		y_offset += OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		grid->move(0.f, -OFFSET);
-		y_offset -= OFFSET;
 	}
 
 	//Changes tiles on the grid
@@ -80,9 +76,13 @@ void Grid::input(unsigned short int key)
 
 void Grid::zoom(float delta) {
 	zoom_index -= (delta*ZOOM_OFFSET);
-	
-	sf::Vector2f temp_v = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-
+	if (zoom_index < .2f)
+		zoom_index = .2f;
+	else if (zoom_index > 2.f)
+		zoom_index = 2.f;
+	sf::Vector2f mouse_before_zoom = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	grid->setSize(original_size * zoom_index);
-	grid->move(temp_v);
+	window->setView(*grid);
+	sf::Vector2f mouse_after_zoom = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+	grid->move(mouse_before_zoom -mouse_after_zoom);
 }
