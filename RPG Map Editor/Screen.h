@@ -87,7 +87,8 @@ private:
 	//standard tile size
 	unsigned int tile_size = 16;
 
-
+	sf::RectangleShape* next;
+	sf::RectangleShape* previous;
 
 	//mouse button is currently down if true
 	bool isMouseDown = false;

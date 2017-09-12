@@ -12,6 +12,8 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	window.setFramerateLimit(60);
 	isFullscreen = false;
 	tileMap = new TileMap();
+	next = new sf::RectangleShape(sf::Vector2f(60, 20));
+	previous = new sf::RectangleShape(sf::Vector2f(62, 20));
 	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
 	arial.loadFromFile("../Resources/arial.ttf");
 }
@@ -20,7 +22,8 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 Screen::~Screen()
 {
 	delete tileMap;
-
+	delete next;
+	delete previous;
 }
 
 
@@ -58,22 +61,29 @@ void Screen::render() {
 	shape = new sf::RectangleShape(sf::Vector2f(10, 10));
 
 	//Left and Right arrow buttons to swap through textures
-	sf::RectangleShape pageRight(sf::Vector2f(60, 20));
-	pageRight.setFillColor(sf::Color(255, 242, 226));
-	pageRight.setOutlineThickness(1);
-	pageRight.setOutlineColor(sf::Color(119, 119, 119));
+	next->setFillColor(sf::Color(255, 242, 226));
+	next->setOutlineThickness(1);
+	next->setOutlineColor(sf::Color(119, 119, 119));
+	next->setPosition(244, (float)(window.getSize().y - 40));
 
+	sf::Text nextTXT("Next", arial, 16);
+	nextTXT.setPosition(255, (float)(window.getSize().y - 40));
+	nextTXT.setFillColor(sf::Color(0, 0, 0));
+	
+	
+	previous->setFillColor(sf::Color(255, 242, 226));
+	previous->setOutlineThickness(1);
+	previous->setOutlineColor(sf::Color(119, 119, 119));
+	previous->setPosition(20, (float)(window.getSize().y - 40));
 
-	pageRight.setPosition(244, (float)(window.getSize()).y - 40);
-	window.draw(pageRight);
+	sf::Text previousTXT("Previous", arial, 16);
+	previousTXT.setPosition(20, (float)(window.getSize().y - 40));
+	previousTXT.setFillColor(sf::Color(0, 0, 0));
 
-	sf::RectangleShape pageLeft(sf::Vector2f(60, 20));
-	pageLeft.setFillColor(sf::Color(255, 242, 226));
-	pageLeft.setOutlineThickness(1);
-	pageLeft.setOutlineColor(sf::Color(119, 119, 119));
-
-	pageLeft.setPosition(20, (float)(window.getSize()).y - 40);
-	window.draw(pageLeft);
+	window.draw(*next);
+	window.draw(nextTXT);
+	window.draw(*previous);
+	window.draw(previousTXT);
 
 	//Renders sections within tile viewer
 	for (unsigned int i = 25; i < height - 100; i += 100) {
@@ -160,18 +170,24 @@ void Screen::input() {
 			window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
 		}
 		
-		//Sets screen to fullscreen when f11 is pressed
-		if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F11) && isFullscreen == false) {
-			window.create(sf::VideoMode().getDesktopMode(), "My Window", sf::Style::Fullscreen);
-			isFullscreen = true;
-			std::cout << "Entering Fullscreen" << std::endl;
+		if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (next->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))))) {
+			pageNum++;
+			std::cout << pageNum << std::endl;
 		}
-		//leaves fullscreen mode on f11 or escape
-		else if (event.type == sf::Event::KeyPressed && (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F11)) && isFullscreen) {
-			window.create(sf::VideoMode(width, height), "My Window");
-			isFullscreen = false;
-			std::cout << "Leaving Fullscreen" << std::endl;
+		if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && previous->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window)))) {
+			pageNum--;
+			std::cout << pageNum << std::endl;
 		}
+	}
+	// Enter FullScreen
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && isFullscreen == false) {
+		window.create(sf::VideoMode().getDesktopMode(), "My Window", sf::Style::Fullscreen);
+		isFullscreen = true;
+	}
+	// Leave FullScreen
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) && isFullscreen == true) {
+		window.create(sf::VideoMode(width, height), "My window");
+		isFullscreen = false;
 	}
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
@@ -187,7 +203,7 @@ void Screen::input() {
 		y_offset -= OFFSET;
 	}
 
-	
+
 }
 
 bool Screen::isOpen() {
