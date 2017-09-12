@@ -44,7 +44,7 @@ void Screen::render() {
 }
 
 void Screen::update() {
-	grid->update(tileSelector->getSelected());
+	
 }
 
 
@@ -53,16 +53,9 @@ void Screen::input() {
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::MouseButtonPressed) {
-			
 			if (sf::Mouse::getPosition(window).x <= 321) {
 				tileSelector->input();
 			}
-			else {
-				grid->setMouseButton(true);
-			}
-		}
-		if (event.type == sf::Event::MouseButtonReleased) {
-			grid->setMouseButton(false);
 		}
 		if (event.type == sf::Event::MouseWheelMoved) {
 			grid->zoom(event.mouseWheel.delta);
@@ -90,7 +83,7 @@ void Screen::input() {
 		isFullscreen = false;
 	}
 
-	grid->input();
+	grid->input(tileSelector->getSelected());
 }
 
 bool Screen::isOpen() {
