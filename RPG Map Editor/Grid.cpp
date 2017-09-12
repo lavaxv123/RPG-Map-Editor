@@ -80,4 +80,5 @@ void Grid::zoom(float delta) {
 	zoom_index -= delta * ZOOM_OFFSET;
 	if (zoom_index <= ZOOM_OFFSET)
 		zoom_index = ZOOM_OFFSET;
+	
 }
