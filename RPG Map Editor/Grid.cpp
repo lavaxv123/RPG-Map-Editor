@@ -30,9 +30,7 @@ void Grid::render()
 {
 	//Creates a view for the grid
 	
-	
-	
-	
+	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0, 1.f, 1.f));
 	window->setView(*grid);
 
 	sf::Sprite sprite;
@@ -49,15 +47,19 @@ void Grid::input(unsigned short int key)
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		grid->move(OFFSET, 0.f);
+		x_offset += OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		grid->move(-OFFSET, 0.f);
+		x_offset -= OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		grid->move(0.f, OFFSET);
+		y_offset += OFFSET;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		grid->move(0.f, -OFFSET);
+		y_offset -= OFFSET;
 	}
 
 	//Changes tiles on the grid
@@ -76,8 +78,7 @@ void Grid::input(unsigned short int key)
 
 void Grid::zoom(float delta) {
 	zoom_index += (delta*ZOOM_OFFSET);
-	
-	sf::Vector2f center =grid->getCenter();
 
 	grid->setSize(original_size * zoom_index);
+	grid->move(-x_offset, -y_offset);
 }
