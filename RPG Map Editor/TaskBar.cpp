@@ -6,6 +6,7 @@
 TaskBar::TaskBar(sf::RenderWindow* window)
 {
 	file = new sf::RectangleShape(sf::Vector2f(60, 23));
+	TaskBar::window = window;
 }
 
 

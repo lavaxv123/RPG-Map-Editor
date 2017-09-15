@@ -1,7 +1,8 @@
 #ifndef TASKBAR_H
 #define TASKBAR_H
 
-#include <SFML/Graphics.hpp>
+#include "SFML\Graphics.hpp"
+
 class TaskBar
 {
 public:

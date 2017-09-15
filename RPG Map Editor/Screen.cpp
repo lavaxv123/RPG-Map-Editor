@@ -21,8 +21,9 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 Screen::~Screen()
 {
 	delete tileMap;
+	delete tileSelector;
+	delete grid;
 	delete taskBar;
-	
 }
 
 
