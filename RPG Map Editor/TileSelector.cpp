@@ -11,6 +11,7 @@ TileSelector::TileSelector(sf::RenderWindow* window, TileMap* tileMap)
 	next = new sf::RectangleShape(sf::Vector2f(60, 20));
 	previous = new sf::RectangleShape(sf::Vector2f(62, 20));
 
+
 	page_numbers = 0;
 
 }
@@ -20,6 +21,7 @@ TileSelector::~TileSelector()
 {
 	delete next;
 	delete previous;
+
 }
 
 
@@ -75,6 +77,9 @@ void TileSelector::renderButtons() {
 	nextTXT.setPosition(255, (float)(window->getSize().y - 40));
 	nextTXT.setFillColor(sf::Color(0, 0, 0));
 
+	window->draw(*next);
+	window->draw(nextTXT);
+
 	//Render previous button
 	previous->setFillColor(sf::Color(255, 242, 226));
 	previous->setOutlineThickness(1);
@@ -85,10 +90,10 @@ void TileSelector::renderButtons() {
 	previousTXT.setPosition(20, (float)(window->getSize().y - 40));
 	previousTXT.setFillColor(sf::Color(0, 0, 0));
 
-	window->draw(*next);
-	window->draw(nextTXT);
 	window->draw(*previous);
 	window->draw(previousTXT);
+
+
 }
 
 
@@ -100,12 +105,13 @@ void TileSelector::render()
 	window->setView(tileView);
 
 	//Renders tile selector rectangle
-	sf::RectangleShape tileViewer(sf::Vector2f(304, (float)(window->getSize().y - 20)));
+	sf::RectangleShape tileViewer(sf::Vector2f(315, (float)(window->getSize().y - 6)));
 	tileViewer.setFillColor(sf::Color(255, 242, 226));
 	tileViewer.setOutlineThickness(3);
 	tileViewer.setOutlineColor(sf::Color(119, 119, 119));
-	tileViewer.setPosition(10, 10);
+	tileViewer.setPosition(3, 3);
 	window->draw(tileViewer);
+
 
 	//Renders individual selectors
 	renderSelectors();

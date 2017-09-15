@@ -14,12 +14,14 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
+	taskBar = new TaskBar(&window);
 }
 
 
 Screen::~Screen()
 {
 	delete tileMap;
+	delete taskBar;
 	
 }
 
@@ -37,6 +39,7 @@ void Screen::render() {
 
 	window.clear();
 
+	taskBar->render();	
 	tileSelector->render();
 	grid->render();
 
@@ -58,7 +61,10 @@ void Screen::input() {
 			}
 		}
 		if (event.type == sf::Event::MouseWheelMoved) {
-			grid->zoom(event.mouseWheel.delta);
+			if (sf::Mouse::getPosition(window).x > 321 && sf::Mouse::getPosition(window).y > 30) {
+				grid->zoom(event.mouseWheel.delta);
+			}
+
 		}
 
 		// "close requested" event: we close the window

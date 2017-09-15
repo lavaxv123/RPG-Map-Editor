@@ -17,9 +17,13 @@ public:
 private:
 	void renderSelectors();
 	void renderButtons();
+
 	sf::RenderWindow* window;
+
 	sf::RectangleShape* next;
 	sf::RectangleShape* previous;
+
+
 	TileMap* tileMap;
 	sf::Font arial;
 	std::vector<sf::RectangleShape> shapes;

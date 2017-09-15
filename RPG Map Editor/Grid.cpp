@@ -4,6 +4,7 @@
 #define OFFSET 15.f
 #define LEFT_PANEL_SIZE 321.f
 #define ZOOM_OFFSET .2f
+#define TOP_BAR_SIZE 30.f
 
 Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): x_offset(0.f),y_offset(0.f),zoom_index(1.0f),grid_height(100),grid_width(100)
 {
@@ -11,7 +12,7 @@ Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): x_offset(0.f),y_offset(0
 	Grid::tileMap = tileMap;
 	tile_ids = (TILE_ID*)malloc((grid_height * grid_width) *sizeof(TILE_ID));
 	grid = new sf::View(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0, (float)window->getSize().x, (float)window->getSize().y));
-	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0, 1.f, 1.f));
+	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), TOP_BAR_SIZE / (float)window->getSize().y, 1.f, 1.f));
 	original_size = grid->getSize();
 	for (unsigned int i = 0; i <grid_width* grid_height; i++) {
 		tile_ids[i] = { (unsigned short int) 0x0004,0 };
@@ -32,7 +33,7 @@ void Grid::render()
 	
 	
 	
-	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0, 1.f, 1.f));
+	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), TOP_BAR_SIZE/(float)window->getSize().y, 1.f, 1.f));
 	window->setView(*grid);
 
 	sf::Sprite sprite;
@@ -42,6 +43,7 @@ void Grid::render()
 		sprite.setPosition((float)((i%grid_width) * tile.size), (float)((i / grid_width) * tile.size));
 		window->draw(sprite);
 	}
+	
 }
 
 void Grid::input(unsigned short int key)
@@ -57,7 +59,7 @@ void Grid::input(unsigned short int key)
 		grid->move(0.f, OFFSET);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		grid->move(0.f, -OFFSET);
+		grid->move(0.f, -OFFSET); 
 	}
 
 	//Changes tiles on the grid

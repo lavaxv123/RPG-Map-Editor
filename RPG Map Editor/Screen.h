@@ -1,11 +1,13 @@
 #ifndef SCREEN_H
 #define SCREEN_H
+
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "TaskBar.h"
 #include "TileMap.h"
 #include "TileSelector.h"
 #include "Grid.h"
-
+#include "Screen.h"
 
 
 class Screen
@@ -58,6 +60,7 @@ private:
 
 	TileSelector* tileSelector;
 	Grid* grid;
+	TaskBar* taskBar;
 };
 
 #endif
