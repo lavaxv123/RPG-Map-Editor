@@ -1,8 +1,7 @@
 #ifndef TASKBAR_H
 #define TASKBAR_H
 
-#include "Screen.h"
-
+#include <SFML/Graphics.hpp>
 class TaskBar
 {
 public:
