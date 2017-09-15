@@ -19,9 +19,9 @@ void TaskBar::render()
 {
 
 	//Sets view for rendering task bar
-	sf::View tileView(sf::FloatRect(0, 0, (float)window->getSize().x, 30.f));
-	tileView.setViewport(sf::FloatRect(LEFT_PANEL_SIZE/(float)window->getSize().x, TASK_BAR_SIZE/(float)window->getSize().y, 1.f, 1.f));
-	window->setView(tileView);
+	sf::View taskBarView(sf::FloatRect(0, 0, (float)window->getSize().x, 30.f));
+	taskBarView.setViewport(sf::FloatRect(LEFT_PANEL_SIZE/(float)window->getSize().x, TASK_BAR_SIZE/(float)window->getSize().y, 1.f, 1.f));
+	window->setView(taskBarView);
 
 
 
