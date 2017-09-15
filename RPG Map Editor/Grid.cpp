@@ -24,7 +24,7 @@ Grid::~Grid()
 {
 	delete grid;
 	free(tile_ids);
-	delete tile_ids;
+	
 }
 
 void Grid::render()
