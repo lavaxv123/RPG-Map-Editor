@@ -6,17 +6,17 @@ added to the map builder on start up.
 
 $  "../Resources/SpriteSheet.png"
 {
-16 0 0 normal_grass
-16 1 0 pink_flower_grass
-16 2 0 tree_top 
-16 3 0 beach_water_left
-16 2 3 orb_tile
-16 3 3 beach_left
+16 0 7 "Void"
+16 0 0 "Grass"
+16 1 0 "Pink Flowers"
+16 2 0 "Tree Top"
+16 3 0 "Rock"
+16 2 3 "Orb Tile"
+16 3 3 "Beach Water -Left"
 }
 
 $"../Resources/SpriteSheet.png"
 
 {
-
-16 4 3 normal_what
+16 4 3 "Noobo"
 }

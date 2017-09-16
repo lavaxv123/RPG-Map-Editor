@@ -12,18 +12,33 @@ SpriteSheet::~SpriteSheet()
 {
 }
 
-std::vector<std::string> split(std::string str, char splitAt) {
+std::vector<std::string> getTileData(std::string str) {
 	std::vector<std::string> data;
 	std::string curr_str;
+	std::cout << str << std::endl;
+	bool found = false;
 	for (unsigned int i = 0; i < str.length(); i++) {
-		if(str[i] != splitAt){
+		if (str[i] == '"') {
+			if (found) {
+				found = false;
+				data.push_back(curr_str);
+				curr_str = "";
+			}
+			else {
+				found = true;
+			}
+		}
+		else if (found)
 			curr_str += str[i];
+		else {
+			if (str[i] != ' ') {
+				curr_str += str[i];
+			}
+			else if (curr_str != "") {
+				data.push_back(curr_str);
+				curr_str = "";
+			}
 		}
-		else if (curr_str != "") {
-			data.push_back(curr_str);
-			curr_str = "";
-		}
-
 	}
 	if (curr_str != "") {
 		data.push_back(curr_str);
@@ -69,7 +84,7 @@ void SpriteSheet::parse(std::string txt_file) {
 				if (curr_line.length() != 0 && curr_line[0] == '}')
 					break;
 				if (spritesheet.getSize().x != 0) {
-					std::vector<std::string> data = split(curr_line, ' ');
+					std::vector<std::string> data = getTileData(curr_line);
 					if (data.size() == 4) {
 						sf::Texture* texture = new sf::Texture();
 
@@ -102,7 +117,7 @@ bool SpriteSheet::load(std::string spritesheet_path, std::string detail_path) {
 	in.open(detail_path);
 	
 	while (std::getline(in,curr_line) ) {
-		std::vector<std::string> data = split(curr_line, ' ');
+		std::vector<std::string> data = getTileData(curr_line);
 		if (data.size() != 4) {
 			return false;
 		}
