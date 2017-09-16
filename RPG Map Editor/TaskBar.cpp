@@ -22,9 +22,9 @@ void TaskBar::render()
 {
 
 	//Sets view for rendering task bar
-
-	taskView->setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 	window->setView(*taskView);
+	taskView->setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
+	
 
 
 
