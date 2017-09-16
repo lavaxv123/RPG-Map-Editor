@@ -39,9 +39,10 @@ void Screen::render() {
 
 
 	window.clear();
-
-	taskBar->render();	
+	
+	
 	tileSelector->render();
+	taskBar->render();
 	grid->render();
 
 	window.display();

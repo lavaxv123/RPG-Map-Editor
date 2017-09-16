@@ -64,7 +64,7 @@ void Grid::input(unsigned short int key)
 
 	//Changes tiles on the grid
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		if (sf::Mouse::getPosition(*window).x > 321) {
+		if (sf::Mouse::getPosition(*window).x > 321 && sf::Mouse::getPosition(*window).y > TOP_BAR_SIZE) {
 			sf::Vector2f temp_v = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 			sf::Vector2i w_v((int)temp_v.x, (int)temp_v.y);
 			TILE tile = tileMap->getTile(key);
