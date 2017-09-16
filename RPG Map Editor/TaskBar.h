@@ -14,6 +14,7 @@ public:
 	void renderButtons();
 
 private:
+	sf::View* taskBarView;
 
 	sf::RenderWindow* window;
 

@@ -5,7 +5,9 @@
 
 TaskBar::TaskBar(sf::RenderWindow* window)
 {
-	file = new sf::RectangleShape(sf::Vector2f(60, 23));
+	file = new sf::RectangleShape(sf::Vector2f(60, 22));
+	taskBarView = new sf::View(sf::FloatRect(0, LEFT_PANEL_SIZE/(float)window->getSize().y, (float)window->getSize().x, 30.f));
+
 	TaskBar::window = window;
 }
 
@@ -13,15 +15,15 @@ TaskBar::TaskBar(sf::RenderWindow* window)
 TaskBar::~TaskBar()
 {
 	delete file;
+	delete taskBarView;
 }
 
 void TaskBar::render()
 {
 
 	//Sets view for rendering task bar
-	sf::View taskBarView(sf::FloatRect(0, 0, (float)window->getSize().x, 30.f));
-	taskBarView.setViewport(sf::FloatRect(LEFT_PANEL_SIZE/(float)window->getSize().x, TASK_BAR_SIZE/(float)window->getSize().y, 1.f, 1.f));
-	window->setView(taskBarView);
+	taskBarView->setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
+	window->setView(*taskBarView);
 
 
 
