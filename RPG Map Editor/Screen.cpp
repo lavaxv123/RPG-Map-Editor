@@ -3,21 +3,17 @@
 #include "SpriteSheet.h"
 
 
-Screen::Screen(unsigned int width, unsigned int height,std::string title)
+Screen::Screen(unsigned int width, unsigned int height,std::string title): width(width), height(height), isFullscreen(false)
 {
-	Screen::width = width;
-	Screen::height = height;
 	window.create(sf::VideoMode(width, height), title);
-	window.setFramerateLimit(60);
-	isFullscreen = false;
 	tileMap = new TileMap();
-	SpriteSheet sheet(tileMap);
-	sheet.parse("../Resources/default_data.txt");
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
 	fileHelper = new FileHelper(grid, tileMap);
 	taskBar = new TaskBar(&window, fileHelper);
-
+	SpriteSheet sheet(tileMap);
+	sheet.parse("../Resources/default_data.txt");
+	grid->init(50, 50, 16);
 }
 
 
@@ -33,8 +29,6 @@ Screen::~Screen()
 
 
 void Screen::render() {
-
-
 	window.clear();
 	
 	
@@ -46,8 +40,8 @@ void Screen::render() {
 	window.display();
 }
 
-void Screen::update() {
-	
+void Screen::update(float delta) {
+	grid->update(delta);
 }
 
 
@@ -71,10 +65,7 @@ void Screen::input() {
 						tileSelector->changePage(event.mouseWheel.delta/abs(event.mouseWheel.delta));
 					}
 				}
-
-
 			}
-			
 		}
 
 		// "close requested" event: we close the window

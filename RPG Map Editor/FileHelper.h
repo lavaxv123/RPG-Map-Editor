@@ -2,6 +2,7 @@
 #define FILEHELPER_H
 #include "Grid.h"
 #include "TileMap.h"
+#include "QueryWindow.h"
 #include <string>
 
 class FileHelper
@@ -12,9 +13,11 @@ public:
 	bool loadMap();
 	bool saveMap();
 	bool importSpriteSheet();
+	void initGrid();
 private:
 	Grid* grid;
 	TileMap* tileMap;
+	QueryWindow* query;
 };
 
 #endif

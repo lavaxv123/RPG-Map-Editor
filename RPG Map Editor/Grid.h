@@ -17,7 +17,10 @@ public:
 	Grid(sf::RenderWindow* window,TileMap* tileMap);
 	~Grid();
 
+	void init(unsigned int grid_width, unsigned int grid_height, unsigned int tile_size);
+	void init(std::string filePath);
 	void render();
+	void update(float delta);
 	void input(unsigned short int key);
 	void zoom(float delta);
 private:
@@ -29,11 +32,13 @@ private:
 
 	sf::View* grid;
 
+	bool initialized;
 	sf::Vector2f original_size;
 	float x_offset;
 	float y_offset;
 	float zoom_index;
 	unsigned int grid_height;
 	unsigned int grid_width;
+	unsigned short int tile_size;
 };
 

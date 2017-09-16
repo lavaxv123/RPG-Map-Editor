@@ -8,12 +8,13 @@
 FileHelper::FileHelper(Grid * grid, TileMap * tileMap)
 {
 	FileHelper::grid = grid;
-	
 	FileHelper::tileMap = tileMap;
+
+	query = new QueryWindow(grid);
 }
 
 FileHelper::~FileHelper() {
-
+	delete query;
 }
 
 
@@ -93,4 +94,10 @@ bool FileHelper::importSpriteSheet()
 	SpriteSheet sheet(tileMap);
 	sheet.parse(fileName);
 	return false;
+}
+
+
+void FileHelper::initGrid() 
+{
+	
 }

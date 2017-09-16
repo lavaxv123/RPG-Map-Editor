@@ -10,7 +10,6 @@ public:
 	~TileSelector();
 
 	void render();
-	void update();
 	void input();
 	void changePage(int change);
 
