@@ -159,9 +159,7 @@ void TileSelector::input()
 			tile.setPosition(25, (float)i);
 
 			if (tile.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
-				unsigned short int clicked_key = (i / 100) + (page_numbers * ((window->getSize().y - 125) / 100));
-				if (page_numbers > 0)
-					clicked_key++;
+				unsigned short int clicked_key = (i / 100) + (page_numbers * ((window->getSize().y - 125) / 100)) + page_numbers;
 				std::cout << "Clicked key: " << clicked_key << std::endl;
 				if (clicked_key < tileMap->getSize()) {
 					current_selected = clicked_key;
