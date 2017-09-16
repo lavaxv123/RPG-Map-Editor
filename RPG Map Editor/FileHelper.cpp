@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include "FileHelper.h"
-
+#include "SpriteSheet.h"
 
 
 
@@ -25,14 +25,14 @@ std::string getFileName(const std::string & prompt) {
 	ofns.nMaxFile = BUFSIZE;
 	ofns.lpstrTitle = prompt.c_str();
 	//Might not work
-	ofns.lpstrFilter = "PNG Files (*.png), *.png";
+	ofns.lpstrFilter = "Text Files (*.txt), *.txt";
 	GetOpenFileName(&ofns);
 	return buffer;
 }
 
 bool FileHelper::loadMap()
 {
-	std::string fileName = getFileName("Load the png file");
+	
 	return false;
 }
 
@@ -43,5 +43,8 @@ bool FileHelper::saveMap()
 
 bool FileHelper::importSpriteSheet()
 {
+	std::string fileName = getFileName("Select the text file with spritesheet data");
+	SpriteSheet sheet(tileMap);
+	sheet.parse(fileName);
 	return false;
 }

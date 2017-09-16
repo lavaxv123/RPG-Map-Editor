@@ -1,0 +1,22 @@
+This default_data file is used to describe the spritesheets that will be automatically
+added to the map builder on start up.
+
+/You noobie
+
+
+$  "../Resources/SpriteSheet.png"
+{
+16 0 7 "Void"
+16 0 0 "Grass"
+16 1 0 "Pink Flowers"
+16 2 0 "Tree Top"
+16 3 0 "Rock"
+16 2 3 "Orb Tile"
+16 3 3 "Beach Water -Left"
+}
+
+$"../Resources/SpriteSheet.png"
+
+{
+16 4 3 "Noobo"
+}
