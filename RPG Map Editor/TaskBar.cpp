@@ -6,8 +6,8 @@
 TaskBar::TaskBar(sf::RenderWindow* window)
 {
 	file = new sf::RectangleShape(sf::Vector2f(60, 22));
-	taskBarView = new sf::View(sf::FloatRect(0, LEFT_PANEL_SIZE/(float)window->getSize().y, (float)window->getSize().x, 30.f));
-
+	taskView = new sf::View(sf::FloatRect(0, 0, (float)window->getSize().x, (float)window->getSize().y));
+	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
 }
 
@@ -15,16 +15,16 @@ TaskBar::TaskBar(sf::RenderWindow* window)
 TaskBar::~TaskBar()
 {
 	delete file;
-	delete taskBarView;
+	delete taskView;
 }
 
 void TaskBar::render()
 {
 
 	//Sets view for rendering task bar
-	sf::View tileView(sf::FloatRect(0, 0, (float)window->getSize().x, (float)window->getSize().x));
-	tileView.setViewport(sf::FloatRect(0.f,0.f,1.f,1.f));
-	window->setView(tileView);
+
+	taskView->setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
+	window->setView(*taskView);
 
 
 
@@ -42,6 +42,8 @@ void TaskBar::render()
 
 void TaskBar::renderButtons()
 {
+
+	
 	//Render file button
 	file->setFillColor(sf::Color(219, 208, 171));
 	file->setOutlineThickness(1);
