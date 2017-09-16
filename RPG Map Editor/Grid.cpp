@@ -78,11 +78,14 @@ void Grid::input(unsigned short int key)
 
 
 void Grid::zoom(float delta) {
+
+	if (zoom_index <= .2f && delta > 0) {
+		zoom_index = .2f;
+		return;
+	}
 	zoom_index -= (delta*ZOOM_OFFSET);
 	if (zoom_index < .2f)
 		zoom_index = .2f;
-	else if (zoom_index > 2.f)
-		zoom_index = 2.f;
 	sf::Vector2f mouse_before_zoom = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	grid->setSize(original_size * zoom_index);
 	window->setView(*grid);
