@@ -31,7 +31,7 @@ void Grid::render()
 {
 	//Creates a view for the grid
 	
-	
+	grid->setSize(sf::Vector2f(window->getSize().x * zoom_index,window->getSize().y * zoom_index));
 	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0.f, 1.f, 1.f));
 	
 	window->setView(*grid);
@@ -78,16 +78,19 @@ void Grid::input(unsigned short int key)
 
 
 void Grid::zoom(float delta) {
-
-	if (zoom_index <= .2f && delta > 0) {
-		zoom_index = .2f;
+	window->setView(*grid);
+	grid->setSize(grid->getSize() / zoom_index);
+	
+	//Can't not increase the size of the view any more without causing graphical glitches
+	if (zoom_index == .2f && delta > 0) 
 		return;
-	}
+
 	zoom_index -= (delta*ZOOM_OFFSET);
 	if (zoom_index < .2f)
 		zoom_index = .2f;
+
 	sf::Vector2f mouse_before_zoom = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-	grid->setSize(original_size * zoom_index);
+	grid->setSize(grid->getSize() * zoom_index);
 	window->setView(*grid);
 	sf::Vector2f mouse_after_zoom = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	grid->move(mouse_before_zoom -mouse_after_zoom);
