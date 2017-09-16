@@ -14,6 +14,7 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
+	fileHelper = new FileHelper(grid, tileMap);
 	taskBar = new TaskBar(&window);
 }
 

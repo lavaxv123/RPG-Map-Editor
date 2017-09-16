@@ -15,7 +15,7 @@ Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): x_offset(0.f),y_offset(0
 	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0.f, 1.f, 1.f));
 	original_size = grid->getSize();
 	for (unsigned int i = 0; i <grid_width* grid_height; i++) {
-		tile_ids[i] = { (unsigned short int) 0x0004,0 };
+		tile_ids[i] = { (unsigned short int) 0x0000,0 };
 	}
 }
 
@@ -48,6 +48,7 @@ void Grid::render()
 
 void Grid::input(unsigned short int key)
 {
+	
 	window->setView(*grid);
 	//Moves the grid
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {

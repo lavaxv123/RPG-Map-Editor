@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FileHelper.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="TileSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileHelper.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="SpriteSheet.h" />
