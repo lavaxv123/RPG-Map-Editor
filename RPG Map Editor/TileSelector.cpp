@@ -169,6 +169,28 @@ void TileSelector::input()
 	}
 }
 
+void TileSelector::changePage(int change)
+{
+	page_numbers += change;
+}
+
+bool TileSelector::checkPage(int delta)
+{
+	if (page_numbers == maxPageNumber && delta == -1) {
+		std::cout << delta << std::endl;
+		return true;
+	}
+	else if (page_numbers == 0 && delta == 1) {
+		std::cout << delta << std::endl;
+		return true;
+	}
+	else if (0 < page_numbers && page_numbers < maxPageNumber) {
+		return true;
+	}
+	else
+		return false;
+}
+
 unsigned short int TileSelector::getSelected()
 {
 	return current_selected;

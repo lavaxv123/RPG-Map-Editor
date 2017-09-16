@@ -20,12 +20,6 @@ public:
 	Screen(unsigned int width, unsigned int height,std::string title);
 	~Screen();
 
-	/**
-	@params1 the file path for a spritesheet
-	@params2 the file path for a text document that describes the spritesheet
-	loads tiles from the spritesheet into a tile map
-	*/
-	void load(std::string spritesheet_path, std::string data_path);
 
 	/**
 	Renders grid and left tile selector bar
@@ -45,6 +39,8 @@ public:
 	returns whether the window is open or closed, pressing the x button closes the window
 	*/
 	bool isOpen();
+
+	
 private:
 	//The sfml window created by the screen constructor
 	sf::RenderWindow window;

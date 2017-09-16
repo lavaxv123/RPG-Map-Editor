@@ -28,7 +28,8 @@ private:
 	sf::RectangleShape* saveMap;
 	sf::RectangleShape* openMap;
 	sf::RectangleShape* importSpritesheet;
-
+	sf::RectangleShape* exitProgram;
+	sf::RectangleShape* saveAs;
 
 	sf::Font arial;
 };

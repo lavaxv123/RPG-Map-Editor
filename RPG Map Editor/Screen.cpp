@@ -65,7 +65,16 @@ void Screen::input() {
 			if (sf::Mouse::getPosition(window).x > 321 && sf::Mouse::getPosition(window).y > 30) {
 				grid->zoom(event.mouseWheel.delta);
 			}
+			else if (sf::Mouse::getPosition(window).x <= 321) {
+				if (event.mouseWheel.delta != 0) {
+					if (tileSelector->checkPage(event.mouseWheel.delta / abs(event.mouseWheel.delta))) {
+						tileSelector->changePage(event.mouseWheel.delta/abs(event.mouseWheel.delta));
+					}
+				}
 
+
+			}
+			
 		}
 
 		// "close requested" event: we close the window

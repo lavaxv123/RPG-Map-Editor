@@ -12,6 +12,9 @@ public:
 	void render();
 	void update();
 	void input();
+	void changePage(int change);
+
+	bool checkPage(int delta);
 	unsigned short int getSelected();
 
 private:

@@ -4,7 +4,8 @@
 
 #define LEFT_PANEL_SIZE 321.f
 #define TASK_BAR_SIZE 30.f
-#define FILE_DROPDOWN_NUMBER 4
+#define FILE_DROPDOWN_NUMBER 6
+#define OFFSET 28
 
 TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 {
@@ -13,6 +14,8 @@ TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 	saveMap = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 	openMap = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 	importSpritesheet = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
+	exitProgram = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
+	saveAs = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 
 	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
@@ -28,6 +31,8 @@ TaskBar::~TaskBar()
 	delete saveMap;
 	delete openMap;
 	delete importSpritesheet;
+	delete exitProgram;
+	delete saveAs;
 }
 
 void TaskBar::render()
@@ -89,45 +94,65 @@ void TaskBar::renderButtons()
 	
 	//MAP
 	//Create the hitbox for creating a new map
-	fileNew->setPosition(322, 28);
+	fileNew->setPosition(322, OFFSET);
 
-	//Render the save text
+	//Render the map text
 	sf::Text newTXT("New", arial, 16);
-	newTXT.setPosition(323, 30);
+	newTXT.setPosition(323, OFFSET);
 	newTXT.setFillColor(sf::Color(0, 0, 0));
+
+	//SAVE AS
+	//Create the hitbox for saving the map
+	saveAs->setPosition(322, OFFSET + 25);
+
+	//Render the save as text
+	sf::Text saveAsTXT("Save As", arial, 16);
+	saveAsTXT.setPosition(323, OFFSET + 25);
+	saveAsTXT.setFillColor(sf::Color(0, 0, 0));
 
 	//SAVE
 	//Create the hitbox for saving the map
-	saveMap->setPosition(322, 53);
+	saveMap->setPosition(322, OFFSET + 25*2);
 
 	//Render the save text
 	sf::Text saveTXT("Save", arial, 16);
-	saveTXT.setPosition(323, 55);
+	saveTXT.setPosition(323, OFFSET + 25*2);
 	saveTXT.setFillColor(sf::Color(0, 0, 0));
 
 	//OPEN 
 	//Create the hitbox for opening a saved map
-	openMap->setPosition(322, 78);
+	openMap->setPosition(322, OFFSET + 25*3);
 
-	//Render the save text
+	//Render the open text
 	sf::Text openTXT("Open", arial, 16);
-	openTXT.setPosition(323, 80);
+	openTXT.setPosition(323, OFFSET + 25*3);
 	openTXT.setFillColor(sf::Color(0, 0, 0));
 	
 	//IMPORT SPRITESHEET
 	//Create the hitbox for importing a sprite sheet into the editor
-	importSpritesheet->setPosition(322, 103);
+	importSpritesheet->setPosition(322, OFFSET + 25*4);
 
-	//Render the save text
+	//Render the Spritesheet text
 	sf::Text importTXT("Import Spritesheet", arial, 16);
-	importTXT.setPosition(323, 105);
+	importTXT.setPosition(323, OFFSET + 25*4);
 	importTXT.setFillColor(sf::Color(0, 0, 0));
 	
+	//EXIT
+	//Create the hitbox for Exiting the program
+	exitProgram->setPosition(322, OFFSET + 25*5);
+
+	//Render the exit text
+	sf::Text exitTXT("Exit", arial, 16);
+	exitTXT.setPosition(323, OFFSET + 25*5);
+	exitTXT.setFillColor(sf::Color(0, 0, 0));
+
 	if (isFileVisible == true) {
 		window->draw(newTXT);
+		window->draw(saveAsTXT);
 		window->draw(saveTXT);
 		window->draw(openTXT);
 		window->draw(importTXT);
+		window->draw(exitTXT);
 	}
 }
 
