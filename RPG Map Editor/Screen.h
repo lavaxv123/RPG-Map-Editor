@@ -10,7 +10,6 @@
 #include "FileHelper.h"
 
 
-
 class Screen
 {
 public:
@@ -27,7 +26,7 @@ public:
 	void render();
 
 
-	void update();
+	void update(float delta);
 
 	/**
 	Checks for input

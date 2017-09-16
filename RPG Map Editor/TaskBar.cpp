@@ -162,9 +162,9 @@ void TaskBar::input()
 		isFileVisible = true;
 	}
 	if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-
+		fileHelper->initGrid();
 	}
-	else if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
+	else if (saveAs->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		std::cout << "noob" << std::endl;
 		fileHelper->saveMap();
 	}
@@ -175,6 +175,15 @@ void TaskBar::input()
 	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		std::cout << "noob" << std::endl;
 		fileHelper->importSpriteSheet();
+	}
+	else if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
+	}
+	else if (exitProgram->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
+	}
+	else if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible 
+		|| ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
+		&& sf::Keyboard::isKeyPressed(sf::Keyboard::S))) {
+
 	}
 }
 

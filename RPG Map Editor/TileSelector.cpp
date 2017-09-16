@@ -45,7 +45,7 @@ void TileSelector::renderSelectors()
 
 		sf::Sprite tile_sprite;
 			tile_sprite.setTexture(*tile_w_texture.texture);
-			tile_sprite.scale(sf::Vector2f(4.0f, 4.0f));
+			tile_sprite.scale(sf::Vector2f(64.0f / tile_sprite.getTextureRect().width, 64.0f / tile_sprite.getTextureRect().height));
 			tile_sprite.setPosition(30, (float)(i + 4));
 
 		sf::Text text;
@@ -130,9 +130,6 @@ void TileSelector::render()
 
 }
 
-void TileSelector::update()
-{
-}
 
 void TileSelector::input()
 {

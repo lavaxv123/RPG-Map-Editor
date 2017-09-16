@@ -63,7 +63,6 @@ bool SpriteSheet::parse(std::string txt_file) {
 			for (unsigned int i = 0; i < curr_line.length(); i++) {
 				if (curr_line[i] == '"') {
 					if (found) {
-						
 						if (!spritesheet.loadFromFile(spritesheet_path)) {
 							std::cout << spritesheet_path <<" Could not load spritesheet."  <<std::endl;
 							return false;
@@ -110,35 +109,3 @@ bool SpriteSheet::parse(std::string txt_file) {
 	return true;
 }
 
-
-bool SpriteSheet::load(std::string spritesheet_path, std::string detail_path) {
-	std::string curr_line;
-	std::ifstream in;
-	sf::Image spritesheet;
-	if (!spritesheet.loadFromFile(spritesheet_path)) {
-		std::cout << "COULD NOT LOAD SPRITE" << std::endl;
-	}
-	in.open(detail_path);
-	
-	while (std::getline(in,curr_line) ) {
-		std::vector<std::string> data = getTileData(curr_line);
-		if (data.size() != 4) {
-			return false;
-		}
-		sf::Texture* texture = new sf::Texture();
-
-		/**
-		data[0] = size
-		data[1] = x
-		data[2] = y
-		data[3] = name
-		*/
-		texture->loadFromImage(spritesheet, sf::IntRect(std::stoi(data[0]) * std::stoi(data[1]), 
-													   std::stoi(data[0]) * std::stoi(data[2]),
-													   std::stoi(data[0]),
-													   std::stoi(data[0])));
-		tileMap->add(data[3],texture,std::stoi(data[0]));
-	}
-	in.close();
-	return true;
-}
