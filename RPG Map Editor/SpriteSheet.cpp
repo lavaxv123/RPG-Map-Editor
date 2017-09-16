@@ -46,10 +46,12 @@ std::vector<std::string> getTileData(std::string str) {
 	return data;
 }
 
-void SpriteSheet::parse(std::string txt_file) {
+bool SpriteSheet::parse(std::string txt_file) {
 	std::string curr_line;
-	std::ifstream in;
-	in.open(txt_file);
+	std::ifstream in(txt_file);
+	if (!in.good())
+		return false;
+
 	sf::Image spritesheet;
 	while (std::getline(in, curr_line)) {
 		if (curr_line.length() == 0)
@@ -64,6 +66,7 @@ void SpriteSheet::parse(std::string txt_file) {
 						
 						if (!spritesheet.loadFromFile(spritesheet_path)) {
 							std::cout << spritesheet_path <<" Could not load spritesheet."  <<std::endl;
+							return false;
 						}
 						else {
 							std::cout << spritesheet_path << " loaded." <<std::endl;
@@ -104,6 +107,7 @@ void SpriteSheet::parse(std::string txt_file) {
 			} break;
 		}
 	}
+	return true;
 }
 
 

@@ -11,7 +11,7 @@ public:
 	SpriteSheet(TileMap* tileMap);
 	~SpriteSheet();
 
-	void parse(std::string txt_file);
+	bool parse(std::string txt_file);
 
 
 	/**
