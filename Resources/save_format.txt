@@ -1,0 +1,18 @@
+
+//"Map Name"
+
+
+$"SpriteSheet.png"
+{
+'key value' size 'x' 'y'
+'key value' size 'x' 'y'
+}
+
+
+
+
+
+
+[ 100 100
+'key value' (flag) 'key value' (flag)
+]
