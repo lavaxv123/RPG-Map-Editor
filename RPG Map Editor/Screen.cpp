@@ -42,8 +42,9 @@ void Screen::render() {
 	
 	
 	tileSelector->render();
-	taskBar->render();
 	grid->render();
+	taskBar->render();
+	
 
 	window.display();
 }
@@ -54,6 +55,7 @@ void Screen::update() {
 
 
 void Screen::input() {
+
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -90,8 +92,8 @@ void Screen::input() {
 		window.create(sf::VideoMode(width, height), "My window");
 		isFullscreen = false;
 	}
-
 	grid->input(tileSelector->getSelected());
+	
 }
 
 bool Screen::isOpen() {
