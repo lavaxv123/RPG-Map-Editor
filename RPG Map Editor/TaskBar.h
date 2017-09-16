@@ -2,11 +2,11 @@
 #define TASKBAR_H
 
 #include "SFML\Graphics.hpp"
-
+#include "FileHelper.h"
 class TaskBar
 {
 public:
-	TaskBar(sf::RenderWindow* window);
+	TaskBar(sf::RenderWindow* window, FileHelper* fileHelper);
 	~TaskBar();
 
 	void render();
@@ -17,6 +17,8 @@ public:
 private:
 
 	bool isFileVisible;
+
+	FileHelper* fileHelper;
 
 	sf::RenderWindow* window;
 

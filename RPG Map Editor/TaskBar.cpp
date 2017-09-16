@@ -6,7 +6,7 @@
 #define TASK_BAR_SIZE 30.f
 #define FILE_DROPDOWN_NUMBER 3
 
-TaskBar::TaskBar(sf::RenderWindow* window)
+TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 {
 	file = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
 	saveMap = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
@@ -15,6 +15,7 @@ TaskBar::TaskBar(sf::RenderWindow* window)
 
 	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
+	TaskBar::fileHelper = fileHelper;
 
 	isFileVisible = false;
 }
@@ -126,12 +127,15 @@ void TaskBar::input()
 	}
 	if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
 		std::cout << "noob" << std::endl;
+		fileHelper->saveMap();
 	}
 	else if (openMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
 		std::cout << "noob" << std::endl;
+		fileHelper->loadMap();
 	}
 	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
 		std::cout << "noob" << std::endl;
+		fileHelper->importSpriteSheet();
 	}
 }
 

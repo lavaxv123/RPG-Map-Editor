@@ -15,7 +15,7 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
 	fileHelper = new FileHelper(grid, tileMap);
-	taskBar = new TaskBar(&window);
+	taskBar = new TaskBar(&window, fileHelper);
 }
 
 
@@ -25,6 +25,7 @@ Screen::~Screen()
 	delete tileSelector;
 	delete grid;
 	delete taskBar;
+	delete fileHelper;
 }
 
 
