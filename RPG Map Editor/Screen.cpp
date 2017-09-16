@@ -82,6 +82,7 @@ void Screen::input() {
 			width = window.getSize().x;
 			height = window.getSize().y;
 			window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
+
 		}
 	}
 	// Enter FullScreen

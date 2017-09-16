@@ -22,7 +22,9 @@ private:
 
 	sf::RenderWindow* window;
 
+
 	sf::RectangleShape* file;
+	sf::RectangleShape* fileNew;
 	sf::RectangleShape* saveMap;
 	sf::RectangleShape* openMap;
 	sf::RectangleShape* importSpritesheet;

@@ -4,11 +4,12 @@
 
 #define LEFT_PANEL_SIZE 321.f
 #define TASK_BAR_SIZE 30.f
-#define FILE_DROPDOWN_NUMBER 3
+#define FILE_DROPDOWN_NUMBER 4
 
 TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 {
 	file = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
+	fileNew = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 	saveMap = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 	openMap = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 	importSpritesheet = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
@@ -86,34 +87,44 @@ void TaskBar::renderButtons()
 	window->draw(*file);
 	window->draw(fileTXT);
 	
+	//MAP
+	//Create the hitbox for creating a new map
+	fileNew->setPosition(322, 28);
+
+	//Render the save text
+	sf::Text newTXT("New", arial, 16);
+	newTXT.setPosition(323, 30);
+	newTXT.setFillColor(sf::Color(0, 0, 0));
+
 	//SAVE
 	//Create the hitbox for saving the map
-	saveMap->setPosition(322, 28);
+	saveMap->setPosition(322, 53);
 
 	//Render the save text
 	sf::Text saveTXT("Save", arial, 16);
-	saveTXT.setPosition(323, 30);
+	saveTXT.setPosition(323, 55);
 	saveTXT.setFillColor(sf::Color(0, 0, 0));
 
 	//OPEN 
 	//Create the hitbox for opening a saved map
-	openMap->setPosition(322, 53);
+	openMap->setPosition(322, 78);
 
 	//Render the save text
 	sf::Text openTXT("Open", arial, 16);
-	openTXT.setPosition(323, 55);
+	openTXT.setPosition(323, 80);
 	openTXT.setFillColor(sf::Color(0, 0, 0));
 	
 	//IMPORT SPRITESHEET
 	//Create the hitbox for importing a sprite sheet into the editor
-	importSpritesheet->setPosition(322, 78);
+	importSpritesheet->setPosition(322, 103);
 
 	//Render the save text
 	sf::Text importTXT("Import Spritesheet", arial, 16);
-	importTXT.setPosition(323, 80);
+	importTXT.setPosition(323, 105);
 	importTXT.setFillColor(sf::Color(0, 0, 0));
 	
 	if (isFileVisible == true) {
+		window->draw(newTXT);
 		window->draw(saveTXT);
 		window->draw(openTXT);
 		window->draw(importTXT);
@@ -125,7 +136,10 @@ void TaskBar::input()
 	if (file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
 		isFileVisible = true;
 	}
-	if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
+	if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
+
+	}
+	else if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		std::cout << "noob" << std::endl;
 		fileHelper->saveMap();
 	}

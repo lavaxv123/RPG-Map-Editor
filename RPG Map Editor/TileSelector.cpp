@@ -112,12 +112,21 @@ void TileSelector::render()
 	tileViewer.setPosition(3, 3);
 	window->draw(tileViewer);
 
+	//Render the page numbers at the bottom
+	sf::Text pageNumberTXT("", arial, 16);
+	pageNumberTXT.setString("Page: " + std::to_string(page_numbers + 1) + " of " + std::to_string(maxPageNumber + 1));
+	pageNumberTXT.setPosition(100, (float)(window->getSize().y - 40));
+	pageNumberTXT.setFillColor(sf::Color(0, 0, 0));
+	window->draw(pageNumberTXT);
 
 	//Renders individual selectors
 	renderSelectors();
 
 	//Renders all buttons
 	renderButtons();
+
+	if (page_numbers > maxPageNumber)
+		page_numbers = maxPageNumber;
 
 }
 
@@ -166,4 +175,3 @@ unsigned short int TileSelector::getSelected()
 {
 	return current_selected;
 }
-
