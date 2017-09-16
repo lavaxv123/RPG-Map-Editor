@@ -31,6 +31,67 @@ std::vector<std::string> split(std::string str, char splitAt) {
 	return data;
 }
 
+void SpriteSheet::parse(std::string txt_file) {
+	std::string curr_line;
+	std::ifstream in;
+	in.open(txt_file);
+	sf::Image spritesheet;
+	while (std::getline(in, curr_line)) {
+		if (curr_line.length() == 0)
+			continue;
+		switch (curr_line[0]) {
+		case '$': {
+			std::string spritesheet_path;
+			bool found = false;
+			for (unsigned int i = 0; i < curr_line.length(); i++) {
+				if (curr_line[i] == '"') {
+					if (found) {
+						
+						if (!spritesheet.loadFromFile(spritesheet_path)) {
+							std::cout << spritesheet_path <<" Could not load spritesheet."  <<std::endl;
+						}
+						else {
+							std::cout << spritesheet_path << " loaded." <<std::endl;
+						}
+						break;
+					}
+					else
+						found = true;
+				}
+				else if (found) {
+					spritesheet_path += curr_line[i];
+				}
+			}
+		} break;
+		case '{':
+			while (curr_line[0] != '}') {
+				std::getline(in, curr_line);
+				if (curr_line.length() != 0 && curr_line[0] == '}')
+					break;
+				if (spritesheet.getSize().x != 0) {
+					std::vector<std::string> data = split(curr_line, ' ');
+					if (data.size() == 4) {
+						sf::Texture* texture = new sf::Texture();
+
+						/**
+						data[0] = size
+						data[1] = x
+						data[2] = y
+						data[3] = name
+						*/
+						texture->loadFromImage(spritesheet, sf::IntRect(std::stoi(data[0]) * std::stoi(data[1]),
+							std::stoi(data[0]) * std::stoi(data[2]),
+							std::stoi(data[0]),
+							std::stoi(data[0])));
+						tileMap->add(data[3], texture, std::stoi(data[0]));
+					}
+				}
+			} break;
+		}
+	}
+}
+
+
 bool SpriteSheet::load(std::string spritesheet_path, std::string detail_path) {
 	std::string curr_line;
 	std::ifstream in;

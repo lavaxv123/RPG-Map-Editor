@@ -10,6 +10,10 @@ public:
 	//Just sets tileMap pointer equal to the tileMap in this constructor
 	SpriteSheet(TileMap* tileMap);
 	~SpriteSheet();
+
+	void parse(std::string txt_file);
+
+
 	/**
 	Uses text from detail_path text file to load individual sprites from spritesheet_path
 	*/

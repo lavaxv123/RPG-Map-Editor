@@ -11,11 +11,13 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title)
 	window.setFramerateLimit(60);
 	isFullscreen = false;
 	tileMap = new TileMap();
-	load("../Resources/SpriteSheet.png", "../Resources/SpriteSheet.txt");
+	SpriteSheet sheet(tileMap);
+	sheet.parse("../Resources/default_data.txt");
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
 	fileHelper = new FileHelper(grid, tileMap);
 	taskBar = new TaskBar(&window, fileHelper);
+
 }
 
 
@@ -28,13 +30,6 @@ Screen::~Screen()
 	delete fileHelper;
 }
 
-
-void Screen::load(std::string spritesheet_path, std::string data_path) {
-
-	//TODO: FIX THIS
-	SpriteSheet sheet(tileMap);
-	sheet.load(spritesheet_path, data_path);
-}
 
 
 void Screen::render() {
