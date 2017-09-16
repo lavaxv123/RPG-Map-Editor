@@ -7,6 +7,7 @@
 #include "TileMap.h"
 #include "TileSelector.h"
 #include "Grid.h"
+#include "FileHelper.h"
 
 
 
@@ -57,7 +58,7 @@ private:
 
 	//Pointer to the tile map, used to convert tile hashes into textures
 	TileMap* tileMap;
-
+	FileHelper* fileHelper;
 	TileSelector* tileSelector;
 	Grid* grid;
 	TaskBar* taskBar;
