@@ -1,19 +1,31 @@
 #include "TaskBar.h"
+#include "TileMap.h"
+#include <iostream>
 
 #define LEFT_PANEL_SIZE 321.f
 #define TASK_BAR_SIZE 30.f
+#define FILE_DROPDOWN_NUMBER 3
 
 TaskBar::TaskBar(sf::RenderWindow* window)
 {
-	file = new sf::RectangleShape(sf::Vector2f(60, 22));
+	file = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
+	saveMap = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
+	openMap = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
+	importSpritesheet = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
+
 	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
+
+	isFileVisible = false;
 }
 
 
 TaskBar::~TaskBar()
 {
 	delete file;
+	delete saveMap;
+	delete openMap;
+	delete importSpritesheet;
 }
 
 void TaskBar::render()
@@ -35,6 +47,24 @@ void TaskBar::render()
 	taskBar.setPosition(321, 3);
 	window->draw(taskBar);
 
+	//Renders the drop down menu for File
+	
+	sf::RectangleShape fileDropDown(sf::Vector2f(150.f, (float)(25*FILE_DROPDOWN_NUMBER)));
+	fileDropDown.setFillColor(sf::Color(255, 242, 226));
+	fileDropDown.setOutlineThickness(1);
+	fileDropDown.setOutlineColor(sf::Color(119, 119, 119));
+	fileDropDown.setPosition(322, 28);
+
+
+
+
+	if (isFileVisible == true) {
+		window->draw(fileDropDown);
+	}
+	if (fileDropDown.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1 && file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1) {
+		isFileVisible = false;
+	}
+
 	renderButtons();
 }
 
@@ -54,9 +84,61 @@ void TaskBar::renderButtons()
 
 	window->draw(*file);
 	window->draw(fileTXT);
+	
+	//SAVE
+	//Create the hitbox for saving the map
+	saveMap->setPosition(322, 28);
+
+	//Render the save text
+	sf::Text saveTXT("Save", arial, 16);
+	saveTXT.setPosition(323, 30);
+	saveTXT.setFillColor(sf::Color(0, 0, 0));
+
+	//OPEN 
+	//Create the hitbox for opening a saved map
+	openMap->setPosition(322, 53);
+
+	//Render the save text
+	sf::Text openTXT("Open", arial, 16);
+	openTXT.setPosition(323, 55);
+	openTXT.setFillColor(sf::Color(0, 0, 0));
+	
+	//IMPORT SPRITESHEET
+	//Create the hitbox for importing a sprite sheet into the editor
+	importSpritesheet->setPosition(322, 78);
+
+	//Render the save text
+	sf::Text importTXT("Import Spritesheet", arial, 16);
+	importTXT.setPosition(323, 80);
+	importTXT.setFillColor(sf::Color(0, 0, 0));
+	
+	if (isFileVisible == true) {
+		window->draw(saveTXT);
+		window->draw(openTXT);
+		window->draw(importTXT);
+	}
 }
 
 void TaskBar::input()
 {
+	if (file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+		isFileVisible = true;
+	}
+	if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+		std::cout << "noob" << std::endl;
+	}
+	else if (openMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+		std::cout << "noob" << std::endl;
+	}
+	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+		std::cout << "noob" << std::endl;
+	}
+}
 
+bool TaskBar::isDropDownOpen()
+{
+	if (isFileVisible == true)
+		return true;
+	else
+		return false;
 }

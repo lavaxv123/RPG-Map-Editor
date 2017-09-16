@@ -93,7 +93,14 @@ void Screen::input() {
 		window.create(sf::VideoMode(width, height), "My window");
 		isFullscreen = false;
 	}
-	grid->input(tileSelector->getSelected());
+	if (!taskBar->isDropDownOpen()) {
+		grid->input(tileSelector->getSelected());
+	}
+
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		taskBar->input();
+	}
 	
 }
 

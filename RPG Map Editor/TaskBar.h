@@ -12,12 +12,19 @@ public:
 	void render();
 	void input();
 	void renderButtons();
+	bool isDropDownOpen();
 
 private:
+
+	bool isFileVisible;
 
 	sf::RenderWindow* window;
 
 	sf::RectangleShape* file;
+	sf::RectangleShape* saveMap;
+	sf::RectangleShape* openMap;
+	sf::RectangleShape* importSpritesheet;
+
 
 	sf::Font arial;
 };
