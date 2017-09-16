@@ -124,13 +124,13 @@ void TaskBar::input()
 	if (file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
 		isFileVisible = true;
 	}
-	if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+	if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		std::cout << "noob" << std::endl;
 	}
-	else if (openMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+	else if (openMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		std::cout << "noob" << std::endl;
 	}
-	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		std::cout << "noob" << std::endl;
 	}
 }
