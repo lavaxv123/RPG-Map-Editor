@@ -8,7 +8,7 @@
 class FileHelper
 {
 public:
-	FileHelper(Grid* grid, TileMap* tileMap);
+	FileHelper(Grid* grid, TileMap* tileMap, QueryWindow* query);
 	~FileHelper();
 	bool loadMap();
 	bool saveMap();

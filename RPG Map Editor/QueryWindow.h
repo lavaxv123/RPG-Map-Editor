@@ -7,16 +7,14 @@
 class QueryWindow
 {
 public:
-	QueryWindow(Grid* grid, sf::RenderWindow* window);
+	QueryWindow();
 	~QueryWindow();
-
-	void start();
-	void closeWindow();
-	void renderSavePrompt();
-
+	void queryGrid(Grid* grid);
+	bool isInputBlocked();
+	void blockInput();
+	void unblockInput();
 private:
-
-	sf::RenderWindow* window;
+	bool isBlocked;
 	Grid* grid;
 	std::thread query;
 	unsigned short int tile_size;

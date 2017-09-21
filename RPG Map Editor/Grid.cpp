@@ -6,7 +6,7 @@
 #define ZOOM_OFFSET .2f
 #define TOP_BAR_SIZE 30.f
 
-Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): zoom_index(1.0f),grid_height(100),grid_width(100), initialized(false)
+Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): zoom_index(1.0f), initialized(false)
 {
 	Grid::window = window;
 	Grid::tileMap = tileMap;
