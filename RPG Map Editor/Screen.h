@@ -51,6 +51,7 @@ private:
 	unsigned int height;
 
 	//Pointer to the tile map, used to convert tile hashes into textures
+	QueryWindow* closeWindow;
 	TileMap* tileMap;
 	FileHelper* fileHelper;
 	TileSelector* tileSelector;

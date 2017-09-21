@@ -21,6 +21,7 @@ TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 	TaskBar::window = window;
 	TaskBar::fileHelper = fileHelper;
 
+
 	isFileVisible = false;
 }
 
@@ -165,15 +166,12 @@ void TaskBar::input()
 		fileHelper->initGrid();
 	}
 	else if (saveAs->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		std::cout << "noob" << std::endl;
 		fileHelper->saveMap();
 	}
 	else if (openMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		std::cout << "noob" << std::endl;
 		fileHelper->loadMap();
 	}
 	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		std::cout << "noob" << std::endl;
 		fileHelper->importSpriteSheet();
 	}
 	else if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
