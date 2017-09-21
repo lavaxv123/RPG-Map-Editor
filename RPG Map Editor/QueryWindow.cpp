@@ -64,9 +64,9 @@ void threadGridQuery(Grid* grid, QueryWindow* query)
 				if (event.key.code == sf::Keyboard::Tab)
 					currentFocus = (currentFocus + 1) % 3;
 				if (event.key.code == sf::Keyboard::Return){
-					grid->init(stoi((std::string)buttons[0].text.getString()),
+					grid->init(stoi((std::string)buttons[2].text.getString()),
 						stoi((std::string)buttons[1].text.getString()),
-						stoi((std::string)buttons[2].text.getString()));
+						stoi((std::string)buttons[0].text.getString()));
 					window.close();
 				}
 			}
