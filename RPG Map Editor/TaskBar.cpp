@@ -109,7 +109,7 @@ void TaskBar::renderButtons()
 	sf::Text saveAsTXT("Save As", arial, 16);
 	saveAsTXT.setPosition(323, OFFSET + 25);
 	saveAsTXT.setFillColor(sf::Color(0, 0, 0));
-
+	
 	//SAVE
 	//Create the hitbox for saving the map
 	saveMap->setPosition(322, OFFSET + 25*2);
