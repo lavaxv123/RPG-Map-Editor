@@ -15,7 +15,6 @@ public:
 	void unblockInput();
 private:
 	bool isBlocked;
-	Grid* grid;
 	std::thread query;
 	unsigned short int tile_size;
 	unsigned short int grid_width;

@@ -27,9 +27,75 @@ TEXT_BOX getTextField(int font_size, int text_length) {
 	return text_box;
 }
 
+bool threadSaveQuery(Grid* grid, TileMap* tileMap) {
+
+	sf::RenderWindow window(sf::VideoMode(600, 200), "Do you want to save?", sf::Style::Close | sf::Style::Titlebar);
+	unsigned short int grid_width;
+	unsigned short int grid_height;
+	unsigned short int tile_size;
+	sf::Font font;
+	if (!font.loadFromFile("../Resources/arial.ttf"))
+		std::cout << "Font failed to load" << std::endl;
+	TEXT_BOX buttons[3] = { getTextField(18, 10),  getTextField(18, 10), getTextField(18, 10) };
+	for (int i = 0; i < sizeof(buttons) / sizeof(TEXT_BOX); i++)
+		buttons[i].text.setFont(font);
+	buttons[0].text.setString("Yes");
+	buttons[1].text.setString("No");
+	buttons[2].text.setString("Cancel");
+	int currentFocus = 0;
+	while (window.isOpen()) {
+		//Input
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			// "close requested" event: we close the window
+			if (event.type == sf::Event::Closed)
+				window.close();
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Tab)
+					currentFocus = (currentFocus + 1) % 3;
+				if (event.key.code == sf::Keyboard::Return) {
+				}
+			}
+			if (event.type == sf::Event::MouseButtonReleased) {
+				if (buttons[0].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window)))
+					std::cout << "Save" << std::endl;
+				else if (buttons[1].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window)))
+					std::cout << "Don't save" << std::endl;
+				else if (buttons[2].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window)))
+					std::cout << "Cancel" << std::endl;
+				return true;
+			}
+		}
+
+		//Render
+		window.clear();
+
+
+		for (int i = 0; i < sizeof(buttons) / sizeof(TEXT_BOX); i++) {
+			if (i == currentFocus)
+				buttons[i].box.setOutlineColor(sf::Color(255, 0, 0));
+			else
+				buttons[i].box.setOutlineColor(sf::Color(255, 255, 0));
+			buttons[i].box.setPosition(25 + (i*(buttons[i].box.getSize().x + 25)), 100);
+			buttons[i].text.setPosition(25 + (i*(buttons[i].box.getSize().x + 25)), 100);
+			window.draw(buttons[i].box);
+			window.draw(buttons[i].text);
+		}
+
+
+		window.display();
+	}
+	return false;
+}
+
 void threadGridQuery(Grid* grid, QueryWindow* query)
 {
 	query->blockInput();
+
+	if (threadSaveQuery(grid, nullptr))
+		std::cout << true << std::endl;
+
 	sf::RenderWindow window(sf::VideoMode(600, 200), "Create a new map",sf::Style::Close | sf::Style::Titlebar);
 	unsigned short int grid_width;
 	unsigned short int grid_height;
