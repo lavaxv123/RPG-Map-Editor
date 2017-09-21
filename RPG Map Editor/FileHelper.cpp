@@ -10,7 +10,7 @@ FileHelper::FileHelper(Grid * grid, TileMap * tileMap)
 	FileHelper::grid = grid;
 	FileHelper::tileMap = tileMap;
 
-	query = new QueryWindow(grid);
+	//query = new QueryWindow(grid);
 }
 
 FileHelper::~FileHelper() {

@@ -7,7 +7,7 @@
 #define FILE_DROPDOWN_NUMBER 6
 #define OFFSET 28
 
-TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
+TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper, QueryWindow* closeWindow): closeWindow(closeWindow)
 {
 	file = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
 	fileNew = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
@@ -20,6 +20,7 @@ TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
 	TaskBar::fileHelper = fileHelper;
+
 
 	isFileVisible = false;
 }
@@ -165,20 +166,18 @@ void TaskBar::input()
 		fileHelper->initGrid();
 	}
 	else if (saveAs->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		std::cout << "noob" << std::endl;
 		fileHelper->saveMap();
 	}
 	else if (openMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		std::cout << "noob" << std::endl;
 		fileHelper->loadMap();
 	}
 	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		std::cout << "noob" << std::endl;
 		fileHelper->importSpriteSheet();
 	}
 	else if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 	}
 	else if (exitProgram->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
+		closeWindow->renderSavePrompt();
 	}
 	else if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible 
 		|| ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))

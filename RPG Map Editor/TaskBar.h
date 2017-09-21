@@ -6,7 +6,7 @@
 class TaskBar
 {
 public:
-	TaskBar(sf::RenderWindow* window, FileHelper* fileHelper);
+	TaskBar(sf::RenderWindow* window, FileHelper* fileHelper, QueryWindow* closeWindow);
 	~TaskBar();
 
 	void render();
@@ -19,7 +19,7 @@ private:
 	bool isFileVisible;
 
 	FileHelper* fileHelper;
-
+	QueryWindow* closeWindow;
 	sf::RenderWindow* window;
 
 

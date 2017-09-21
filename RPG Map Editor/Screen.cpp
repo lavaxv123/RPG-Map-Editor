@@ -10,7 +10,8 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title): width
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
 	fileHelper = new FileHelper(grid, tileMap);
-	taskBar = new TaskBar(&window, fileHelper);
+	closeWindow = new QueryWindow(grid, &window);
+	taskBar = new TaskBar(&window, fileHelper, closeWindow);
 	SpriteSheet sheet(tileMap);
 	sheet.parse("../Resources/default_data.txt");
 	grid->init(50, 50, 16);
@@ -24,6 +25,7 @@ Screen::~Screen()
 	delete grid;
 	delete taskBar;
 	delete fileHelper;
+	delete closeWindow;
 }
 
 
