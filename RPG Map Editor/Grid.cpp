@@ -24,6 +24,7 @@ Grid::~Grid()
 
 void Grid::init(unsigned int grid_width, unsigned int grid_height, unsigned int tile_size)
 {
+	lock.lock();
 	if (initialized)
 		delete tile_ids;
 	Grid::tile_size = tile_size;
@@ -33,8 +34,12 @@ void Grid::init(unsigned int grid_width, unsigned int grid_height, unsigned int 
 	for (unsigned int i = 0; i <grid_width* grid_height; i++) {
 		tile_ids[i] = { (unsigned short int) 0x0000,0 };
 	}
-
+	grid->reset(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0, (float)window->getSize().x, (float)window->getSize().y));
+	x_offset = 0;
+	y_offset = 0;
+	zoom_index = 1.0f;
 	initialized = true;
+	lock.unlock();
 }
 
 void Grid::init(std::string filePath) {
@@ -46,6 +51,7 @@ void Grid::init(std::string filePath) {
 
 void Grid::render()
 {
+	lock.lock();
 	//Creates a view for the grid
 	if (!initialized)
 		return;
@@ -54,24 +60,30 @@ void Grid::render()
 	
 	window->setView(*grid);
 
-	sf::Sprite sprite;
+	
 	for (unsigned int i = 0; i < grid_width * grid_height; i++) {
+		sf::Sprite sprite;
 		TILE tile = tileMap->getTile(tile_ids[i].TILE_HASH);
 		sprite.setTexture(*(tile.texture));
+		sprite.setScale(sf::Vector2f(tile_size / sprite.getLocalBounds().width, tile_size / sprite.getLocalBounds().height));
 		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i / grid_width) * tile_size));
 		window->draw(sprite);
 	}	
+	lock.unlock();
 }
 
 
 void Grid::update(float delta) {
+	lock.lock();
 	window->setView(*grid);
 	grid->move(OFFSET * x_offset * delta, OFFSET * y_offset * delta);
+	lock.unlock();
 }
 
 
 void Grid::input(unsigned short int key)
 {
+	lock.lock();
 	x_offset = 0;
 	y_offset = 0;
 	//Moves the grid
@@ -100,10 +112,12 @@ void Grid::input(unsigned short int key)
 			}
 		}
 	}
+	lock.unlock();
 }
 
 
 void Grid::zoom(float delta) {
+	lock.lock();
 	window->setView(*grid);
 	grid->setSize(grid->getSize() / zoom_index);
 	
@@ -120,4 +134,5 @@ void Grid::zoom(float delta) {
 	window->setView(*grid);
 	sf::Vector2f mouse_after_zoom = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	grid->move(mouse_before_zoom -mouse_after_zoom);
+	lock.unlock();
 }
