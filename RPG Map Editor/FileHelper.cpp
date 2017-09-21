@@ -5,12 +5,11 @@
 #include <fstream>
 
 
-FileHelper::FileHelper(Grid * grid, TileMap * tileMap)
+FileHelper::FileHelper(Grid * grid, TileMap * tileMap, QueryWindow* query)
 {
 	FileHelper::grid = grid;
 	FileHelper::tileMap = tileMap;
-
-	query = new QueryWindow(grid);
+	FileHelper::query = query;
 }
 
 FileHelper::~FileHelper() {
@@ -99,5 +98,5 @@ bool FileHelper::importSpriteSheet()
 
 void FileHelper::initGrid() 
 {
-	
+	query->queryGrid(grid);
 }

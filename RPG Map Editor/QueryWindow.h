@@ -7,10 +7,14 @@
 class QueryWindow
 {
 public:
-	QueryWindow(Grid* grid);
+	QueryWindow();
 	~QueryWindow();
-	void start();
+	void queryGrid(Grid* grid);
+	bool isInputBlocked();
+	void blockInput();
+	void unblockInput();
 private:
+	bool isBlocked;
 	Grid* grid;
 	std::thread query;
 	unsigned short int tile_size;

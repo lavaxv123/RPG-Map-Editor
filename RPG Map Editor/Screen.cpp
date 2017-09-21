@@ -9,7 +9,8 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title): width
 	tileMap = new TileMap();
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
-	fileHelper = new FileHelper(grid, tileMap);
+	query = new QueryWindow();
+	fileHelper = new FileHelper(grid, tileMap, query);
 	taskBar = new TaskBar(&window, fileHelper);
 	SpriteSheet sheet(tileMap);
 	sheet.parse("../Resources/default_data.txt");
@@ -46,7 +47,11 @@ void Screen::update(float delta) {
 
 
 void Screen::input() {
-
+	if (query->isInputBlocked()) {
+		sf::Event event;
+		while (window.pollEvent(event));
+		return;
+	}
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -57,7 +62,7 @@ void Screen::input() {
 		}
 		if (event.type == sf::Event::MouseWheelMoved) {
 			if (sf::Mouse::getPosition(window).x > 321 && sf::Mouse::getPosition(window).y > 30) {
-				grid->zoom(event.mouseWheel.delta);
+				grid->zoom((float)event.mouseWheel.delta);
 			}
 			else if (sf::Mouse::getPosition(window).x <= 321) {
 				if (event.mouseWheel.delta != 0) {
@@ -76,7 +81,7 @@ void Screen::input() {
 		if (event.type == sf::Event::Resized) {
 			width = window.getSize().x;
 			height = window.getSize().y;
-			window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
+			window.setView(sf::View(sf::FloatRect(0.f, 0.f, (float)window.getSize().x, (float)window.getSize().y)));
 
 		}
 	}

@@ -39,7 +39,6 @@ public:
 	*/
 	bool isOpen();
 
-	
 private:
 	//The sfml window created by the screen constructor
 	sf::RenderWindow window;
@@ -57,6 +56,7 @@ private:
 	TileSelector* tileSelector;
 	Grid* grid;
 	TaskBar* taskBar;
+	QueryWindow* query;
 };
 
 #endif
