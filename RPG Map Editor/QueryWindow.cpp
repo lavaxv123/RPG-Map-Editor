@@ -118,3 +118,7 @@ void QueryWindow::unblockInput()
 {
 	isBlocked = false;
 }
+void QueryWindow::querySave(Grid* grid)
+{
+
+}
