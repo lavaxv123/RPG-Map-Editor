@@ -7,7 +7,7 @@
 #define FILE_DROPDOWN_NUMBER 6
 #define OFFSET 28
 
-TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper, QueryWindow* closeWindow): closeWindow(closeWindow)
+TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 {
 	file = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
 	fileNew = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
@@ -177,7 +177,6 @@ void TaskBar::input()
 	else if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 	}
 	else if (exitProgram->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		closeWindow->renderSavePrompt();
 	}
 	else if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible 
 		|| ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))

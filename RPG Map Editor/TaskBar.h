@@ -6,7 +6,7 @@
 class TaskBar
 {
 public:
-	TaskBar(sf::RenderWindow* window, FileHelper* fileHelper, QueryWindow* closeWindow);
+	TaskBar(sf::RenderWindow* window, FileHelper* fileHelper);
 	~TaskBar();
 
 	void render();
