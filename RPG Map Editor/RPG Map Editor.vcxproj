@@ -22,7 +22,6 @@
     <ClCompile Include="FileHelper.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="QueryWindow.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="TaskBar.cpp" />
@@ -32,7 +31,6 @@
   <ItemGroup>
     <ClInclude Include="FileHelper.h" />
     <ClInclude Include="Grid.h" />
-    <ClInclude Include="QueryWindow.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="TaskBar.h" />

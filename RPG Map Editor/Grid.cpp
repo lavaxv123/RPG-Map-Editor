@@ -117,8 +117,9 @@ void Grid::input(unsigned short int key)
 
 
 void Grid::zoom(float delta) {
-	lock.lock();
 	window->setView(*grid);
+	if (zoom_index == 0)
+		zoom_index = .2f;
 	grid->setSize(grid->getSize() / zoom_index);
 	
 	//Can't not increase the size of the view any more without causing graphical glitches
@@ -134,5 +135,17 @@ void Grid::zoom(float delta) {
 	window->setView(*grid);
 	sf::Vector2f mouse_after_zoom = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	grid->move(mouse_before_zoom -mouse_after_zoom);
-	lock.unlock();
+}
+
+
+TILE_ID* Grid::getTileIDs() {
+	return tile_ids;
+}
+
+unsigned int Grid::getWidth() {
+	return grid_width;
+}
+
+unsigned int Grid::getHeight() {
+	return grid_height;
 }

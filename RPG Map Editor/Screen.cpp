@@ -9,12 +9,13 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title): width
 	tileMap = new TileMap();
 	tileSelector = new TileSelector(&window, tileMap);
 	grid = new Grid(&window,tileMap);
-	query = new QueryWindow();
-	fileHelper = new FileHelper(grid, tileMap, query);
+	fileHelper = new FileHelper(grid, tileMap);
 	taskBar = new TaskBar(&window, fileHelper);
 	SpriteSheet sheet(tileMap);
 	sheet.parse("../Resources/default_data.txt");
 	grid->init(50, 50, 16);
+	sf::RectangleShape shape(sf::Vector2f(1.f, 1.f));
+	shape.getGlobalBounds().contains(sf::Vector2f(1.f, 1.f));
 }
 
 
@@ -47,7 +48,7 @@ void Screen::update(float delta) {
 
 
 void Screen::input() {
-	if (query->isInputBlocked()) {
+	if (fileHelper->isInputBlocked()) {
 		sf::Event event;
 		while (window.pollEvent(event));
 		return;

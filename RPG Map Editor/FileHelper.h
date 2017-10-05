@@ -1,23 +1,44 @@
 #ifndef FILEHELPER_H
 #define FILEHELPER_H
-#include "Grid.h"
-#include "TileMap.h"
-#include "QueryWindow.h"
+
+#include <SFML\Graphics.hpp>
 #include <string>
+#include <thread>
+#include <iostream>
+#include <fstream>
+#include <Windows.h>
+#include "SpriteSheet.h"
+#include "Grid.h"
+
+struct TEXT_BOX {
+	sf::RectangleShape box;
+	sf::Text text;
+};
+
+enum QUERY_TYPE {
+	NEW, SAVE
+};
 
 class FileHelper
 {
 public:
-	FileHelper(Grid* grid, TileMap* tileMap, QueryWindow* query);
+	FileHelper(Grid* grid, TileMap* tileMap);
 	~FileHelper();
 	bool loadMap();
 	bool saveMap();
 	bool importSpriteSheet();
-	void initGrid();
+	bool querySave();
+	void queryNewGrid();
+	void openQuery(QUERY_TYPE q);
+	bool isInputBlocked();
+
 private:
 	Grid* grid;
 	TileMap* tileMap;
-	QueryWindow* query;
+
+	std::thread query;
+
+	bool isBlocked;
 };
 
 #endif

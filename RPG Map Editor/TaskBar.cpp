@@ -163,7 +163,7 @@ void TaskBar::input()
 		isFileVisible = true;
 	}
 	if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		fileHelper->initGrid();
+		fileHelper->openQuery(NEW);
 	}
 	else if (saveAs->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		fileHelper->saveMap();

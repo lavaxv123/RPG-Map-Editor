@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TILESELECTOR_H
+#define TILESELECTOR_H
 #include <vector>
 #include "TileMap.h"
 
@@ -35,3 +36,4 @@ private:
 	unsigned short int current_selected;
 };
 
+#endif
