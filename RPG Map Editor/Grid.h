@@ -28,6 +28,7 @@ public:
 	TILE_ID* getTileIDs();
 	unsigned int getWidth();
 	unsigned int getHeight();
+	unsigned short int getTileSize();
 private:
 	sf::RenderWindow* window;
 	TileMap* tileMap;

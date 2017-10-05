@@ -141,3 +141,7 @@ unsigned int Grid::getWidth() {
 unsigned int Grid::getHeight() {
 	return grid_height;
 }
+
+unsigned short int Grid::getTileSize() {
+	return tile_size;
+}

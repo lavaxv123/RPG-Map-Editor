@@ -169,10 +169,10 @@ void TaskBar::input()
 		fileHelper->openQuery(SAVE_AS);
 	}
 	else if (openMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		fileHelper->loadMap();
+		fileHelper->openQuery(LOAD);
 	}
 	else if (importSpritesheet->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
-		fileHelper->importSpriteSheet();
+		fileHelper->openQuery(IMPORT);
 	}
 	else if (exitProgram->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		if (fileHelper->openQuery(EXIT))

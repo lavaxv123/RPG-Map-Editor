@@ -51,7 +51,7 @@ bool SpriteSheet::parse(std::string txt_file) {
 	std::ifstream in(txt_file);
 	if (!in.good())
 		return false;
-
+	std::string path;
 	sf::Image spritesheet;
 	while (std::getline(in, curr_line)) {
 		if (curr_line.length() == 0)
@@ -68,6 +68,7 @@ bool SpriteSheet::parse(std::string txt_file) {
 							return false;
 						}
 						else {
+							path = spritesheet_path;
 							std::cout << spritesheet_path << " loaded." <<std::endl;
 						}
 						break;
@@ -100,7 +101,8 @@ bool SpriteSheet::parse(std::string txt_file) {
 							std::stoi(data[0]) * std::stoi(data[2]),
 							std::stoi(data[0]),
 							std::stoi(data[0])));
-						tileMap->add(data[3], texture, std::stoi(data[0]));
+						tileMap->add(data[3], texture, std::stoi(data[0]), std::stoi(data[1]),
+							std::stoi(data[2]), path);
 					}
 				}
 			} break;

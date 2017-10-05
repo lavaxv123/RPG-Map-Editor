@@ -71,9 +71,8 @@ void Screen::input() {
 
 		// "close requested" event: we close the window
 		if (event.type == sf::Event::Closed)
-			window.close();
-		
-		
+			if (fileHelper->openQuery(EXIT))
+				window.close();
 		if (event.type == sf::Event::Resized) {
 			width = window.getSize().x;
 			height = window.getSize().y;

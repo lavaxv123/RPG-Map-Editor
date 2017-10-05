@@ -11,11 +11,11 @@ FileHelper::FileHelper(Grid * grid, TileMap * tileMap)
 FileHelper::~FileHelper() {
 }
 
-std::string getFileName(const std::string & prompt, const LPCSTR &filter) {
+std::string getFileName(const std::string & prompt) {
 	const int BUFSIZE = 1024;
 	char buffer[BUFSIZE] = { 0 };
 	OPENFILENAME ofns = { 0 };
-	ofns.lpstrFilter = filter;
+	ofns.lpstrFilter = "Text Files\0 *.txt";
 	ofns.Flags = OFN_EXPLORER | OFN_ENABLEHOOK;
 	ofns.lStructSize = sizeof(ofns);
 	ofns.lpstrFile = buffer;
@@ -58,13 +58,56 @@ std::string getSaveFile(const std::string &prompt) {
 
 bool FileHelper::loadMap()
 {
-	std::string fileName = getFileName("Select the text file with map data", "PNG Files\0 *.png");
+	/*
+	std::string fileName = getFileName("Select the text file with map data");
 	if (fileName.length() == 0)
 		return false;
 	SpriteSheet sheet(tileMap);
 	sheet.parse(fileName);
 	return false;
+	*/
+	return true;
 }
+
+void FileHelper::saveData(std::string savePath) {
+	std::ofstream outfile;
+	outfile.open(savePath, std::ios::out | std::ios::trunc);
+	outfile << "$DETAIL" << std::endl;
+	outfile << '{' << std::endl;
+	outfile << "SIZE "  <<grid->getTileSize() << std::endl;
+	outfile << '}' << std::endl;
+
+	outfile << "$SPRITES" << std::endl;
+	outfile << '{' << std::endl;
+	TILE_ID* tiles = grid->getTileIDs();
+	//Create a list of unique tiles
+	std::map<unsigned short int, TILE> used;
+	for (int i = 0; i < grid->getHeight()*grid->getWidth(); i++) {
+		used[tiles[i].TILE_HASH] = tileMap->getTile(tiles[i].TILE_HASH);
+	}
+	for (std::map<unsigned short int, TILE>::iterator it = used.begin(); it != used.end(); it++) {
+		outfile << "%" << it->first << std::endl;
+		outfile << it->second.path << std::endl;
+		outfile << it->second.x << std::endl;
+		outfile << it->second.y << std::endl;
+		outfile << it->second.name << std::endl;
+	}
+	outfile << '}' << std::endl;
+
+	outfile << "$GRID" << std::endl;
+	outfile << '{' << std::endl;
+	
+	for (int y = 0; y < grid->getHeight(); y++) {
+		for (int x = 0; x < grid->getWidth(); x++) {
+			outfile << tiles[x + (y * grid->getWidth())].TILE_HASH << " ";
+		}
+		outfile << std::endl;
+	}
+	outfile << '}' << std::endl;
+	currentFile = savePath;
+	outfile.close();
+}
+
 
 bool FileHelper::saveAs()
 {
@@ -72,17 +115,7 @@ bool FileHelper::saveAs()
 	if (savePath.length() == 0)
 		return false;
 	std::cout << "Saving file name: " << savePath << std::endl;
-	std::ofstream outfile;
-	outfile.open(savePath, std::ios::out | std::ios::trunc);
-	TILE_ID* tiles = grid->getTileIDs();
-	for (int y = 0; y < grid->getHeight(); y++) {
-		for (int x = 0; x < grid->getWidth(); x++) {
-			outfile << tiles[x + (y * grid->getWidth())].TILE_HASH << " ";
-		}
-		outfile << std::endl;
-	}
-	currentFile = savePath;
-	outfile.close();
+	saveData(savePath);
 	return true;
 }
 
@@ -90,29 +123,18 @@ bool FileHelper::save() {
 	if (currentFile.compare("") == 0)
 		return saveAs();
 	else {
-		std::cout << "Saving file name: " << currentFile << std::endl;
-		std::ofstream outfile;
-		outfile.open(currentFile, std::ios::out | std::ios::trunc);
-		TILE_ID* tiles = grid->getTileIDs();
-		for (int y = 0; y < grid->getHeight(); y++) {
-			for (int x = 0; x < grid->getWidth(); x++) {
-				outfile << tiles[x + (y * grid->getWidth())].TILE_HASH << " ";
-			}
-			outfile << std::endl;
-		}
-		outfile.close();
+		saveData(currentFile);
 		return true;
 	}
 }
 
 bool FileHelper::importSpriteSheet()
 {
-	std::string fileName = getFileName("Select the text file with spritesheet data", "Text Files\0 *.txt");
+	std::string fileName = getFileName("Select the text file with spritesheet data");
 	if (fileName.length() == 0)
 		return false;
 	SpriteSheet sheet(tileMap);
-	sheet.parse(fileName);
-	return false;
+	return sheet.parse(fileName);
 }
 
 TEXT_BOX getTextField(int font_size, int text_length) {
@@ -269,6 +291,13 @@ bool FileHelper::openQuery(QUERY_TYPE q)
 		break;
 	case SAVE_AS:
 		saveAs();
+		break;
+	case LOAD:
+		if (querySave())
+			loadMap();
+		break;
+	case IMPORT:
+		importSpriteSheet();
 		break;
 	case EXIT:
 		return querySave();

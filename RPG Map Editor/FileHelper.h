@@ -15,7 +15,7 @@ struct TEXT_BOX {
 };
 
 enum QUERY_TYPE {
-	NEW, SAVE, SAVE_AS, EXIT
+	NEW, SAVE, SAVE_AS, LOAD, IMPORT, EXIT
 };
 
 class FileHelper
@@ -32,6 +32,8 @@ public:
 	bool openQuery(QUERY_TYPE q);
 
 private:
+	void saveData(std::string savePath);
+
 	Grid* grid;
 	TileMap* tileMap;
 	std::string currentFile;

@@ -13,6 +13,9 @@ struct TILE {
 	std::string name;
 	sf::Texture* texture;
 	unsigned short int size;
+	unsigned int x;
+	unsigned int y; 
+	std::string path;
 };
 
 class TileMap
@@ -32,7 +35,7 @@ public:
 	unsigned short int getSize();
 
 	//adds a new TILE struct to the map
-	void add(std::string name, sf::Texture* texture, unsigned short int size);
+	void add(std::string name, sf::Texture* texture, unsigned short int size, unsigned int x, unsigned int y, std::string path);
 
 private:
 	//Next key to be used
