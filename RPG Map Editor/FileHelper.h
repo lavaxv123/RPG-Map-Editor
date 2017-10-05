@@ -3,7 +3,6 @@
 
 #include <SFML\Graphics.hpp>
 #include <string>
-#include <thread>
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
@@ -30,15 +29,11 @@ public:
 	bool querySave();
 	void queryNewGrid();
 	void openQuery(QUERY_TYPE q);
-	bool isInputBlocked();
 
 private:
 	Grid* grid;
 	TileMap* tileMap;
-
-	std::thread query;
-
-	bool isBlocked;
+	std::string currentFile;
 };
 
 #endif

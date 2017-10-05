@@ -1,7 +1,7 @@
 #include "FileHelper.h"
 
 
-FileHelper::FileHelper(Grid * grid, TileMap * tileMap): isBlocked(false)
+FileHelper::FileHelper(Grid * grid, TileMap * tileMap)
 {
 	FileHelper::grid = grid;
 	FileHelper::tileMap = tileMap;
@@ -9,15 +9,13 @@ FileHelper::FileHelper(Grid * grid, TileMap * tileMap): isBlocked(false)
 }
 
 FileHelper::~FileHelper() {
-
 }
 
-
-std::string getFileName(const std::string & prompt) {
+std::string getFileName(const std::string & prompt, const LPCSTR &filter) {
 	const int BUFSIZE = 1024;
 	char buffer[BUFSIZE] = { 0 };
 	OPENFILENAME ofns = { 0 };
-	ofns.lpstrFilter = "Text Files\0 *.txt";
+	ofns.lpstrFilter = filter;
 	ofns.Flags = OFN_EXPLORER | OFN_ENABLEHOOK;
 	ofns.lStructSize = sizeof(ofns);
 	ofns.lpstrFile = buffer;
@@ -60,7 +58,7 @@ std::string getSaveFile(const std::string &prompt) {
 
 bool FileHelper::loadMap()
 {
-	std::string fileName = getFileName("Select the text file with spritesheet data");
+	std::string fileName = getFileName("Select the text file with map data", "PNG Files\0 *.png");
 	if (fileName.length() == 0)
 		return false;
 	SpriteSheet sheet(tileMap);
@@ -90,7 +88,7 @@ bool FileHelper::saveMap()
 
 bool FileHelper::importSpriteSheet()
 {
-	std::string fileName = getFileName("Select the text file with spritesheet data");
+	std::string fileName = getFileName("Select the text file with spritesheet data", "Text Files\0 *.txt");
 	if (fileName.length() == 0)
 		return false;
 	SpriteSheet sheet(tileMap);
@@ -129,7 +127,6 @@ bool FileHelper::querySave()
 			// "close requested" event: we close the window
 			if (event.type == sf::Event::Closed) {
 				window.close();
-				isBlocked = false;
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Tab)
@@ -176,7 +173,6 @@ bool FileHelper::querySave()
 
 void FileHelper::queryNewGrid()
 {
-	isBlocked = true;
 
 	if (!querySave())
 		return;
@@ -245,7 +241,6 @@ void FileHelper::queryNewGrid()
 
 		window.display();
 	}
-	isBlocked = false;
 }
 
 void FileHelper::openQuery(QUERY_TYPE q) 
@@ -254,8 +249,3 @@ void FileHelper::openQuery(QUERY_TYPE q)
 }
 
 
-
-bool FileHelper::isInputBlocked()
-{
-	return isBlocked;
-}

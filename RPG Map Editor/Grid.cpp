@@ -24,7 +24,6 @@ Grid::~Grid()
 
 void Grid::init(unsigned int grid_width, unsigned int grid_height, unsigned int tile_size)
 {
-	lock.lock();
 	if (initialized)
 		delete tile_ids;
 	Grid::tile_size = tile_size;
@@ -39,7 +38,6 @@ void Grid::init(unsigned int grid_width, unsigned int grid_height, unsigned int 
 	y_offset = 0;
 	zoom_index = 1.0f;
 	initialized = true;
-	lock.unlock();
 }
 
 void Grid::init(std::string filePath) {
@@ -51,7 +49,6 @@ void Grid::init(std::string filePath) {
 
 void Grid::render()
 {
-	lock.lock();
 	//Creates a view for the grid
 	if (!initialized)
 		return;
@@ -69,21 +66,17 @@ void Grid::render()
 		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i / grid_width) * tile_size));
 		window->draw(sprite);
 	}	
-	lock.unlock();
 }
 
 
 void Grid::update(float delta) {
-	lock.lock();
 	window->setView(*grid);
 	grid->move(OFFSET * x_offset * delta, OFFSET * y_offset * delta);
-	lock.unlock();
 }
 
 
 void Grid::input(unsigned short int key)
 {
-	lock.lock();
 	x_offset = 0;
 	y_offset = 0;
 	//Moves the grid
@@ -112,7 +105,6 @@ void Grid::input(unsigned short int key)
 			}
 		}
 	}
-	lock.unlock();
 }
 
 

@@ -2,7 +2,6 @@
 #define GRID_H
 
 #include "TileMap.h"
-#include <mutex>
 
 /**
 each tile in the grid is contained as a tile_id which is a hash and a flag
@@ -46,7 +45,6 @@ private:
 	unsigned int grid_height;
 	unsigned int grid_width;
 	unsigned short int tile_size;
-	std::mutex lock;
 };
 
 #endif

@@ -48,11 +48,6 @@ void Screen::update(float delta) {
 
 
 void Screen::input() {
-	if (fileHelper->isInputBlocked()) {
-		sf::Event event;
-		while (window.pollEvent(event));
-		return;
-	}
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
