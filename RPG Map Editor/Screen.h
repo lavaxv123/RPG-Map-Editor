@@ -1,13 +1,14 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include <SFML/Graphics.hpp>
 #include <vector>
-#include "TaskBar.h"
 #include "TileMap.h"
-#include "TileSelector.h"
 #include "Grid.h"
+#include "TaskBar.h"
 #include "FileHelper.h"
+
+#include "TileSelector.h"
+
 
 
 class Screen
@@ -51,13 +52,11 @@ private:
 	unsigned int height;
 
 	//Pointer to the tile map, used to convert tile hashes into textures
-	QueryWindow* closeWindow;
 	TileMap* tileMap;
 	FileHelper* fileHelper;
 	TileSelector* tileSelector;
 	Grid* grid;
 	TaskBar* taskBar;
-	QueryWindow* query;
 };
 
 #endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GRID_H
+#define GRID_H
+
 #include "TileMap.h"
 #include <mutex>
 
@@ -24,6 +26,9 @@ public:
 	void update(float delta);
 	void input(unsigned short int key);
 	void zoom(float delta);
+	TILE_ID* getTileIDs();
+	unsigned int getWidth();
+	unsigned int getHeight();
 private:
 	sf::RenderWindow* window;
 	TileMap* tileMap;
@@ -44,3 +49,4 @@ private:
 	std::mutex lock;
 };
 
+#endif

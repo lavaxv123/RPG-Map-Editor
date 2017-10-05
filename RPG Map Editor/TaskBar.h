@@ -19,7 +19,6 @@ private:
 	bool isFileVisible;
 
 	FileHelper* fileHelper;
-	QueryWindow* closeWindow;
 	sf::RenderWindow* window;
 
 
