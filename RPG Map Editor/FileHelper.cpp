@@ -119,6 +119,8 @@ TEXT_BOX getTextField(int font_size, int text_length) {
 	TEXT_BOX text_box = { sf::RectangleShape(sf::Vector2f(text_length * font_size * 1.0f, font_size + (font_size / 2)* 1.0f))
 		, sf::Text() };
 	text_box.text.setCharacterSize(font_size);
+	text_box.text.setFillColor(sf::Color::Black);
+
 	text_box.box.setFillColor(sf::Color(219, 208, 171));
 	text_box.box.setOutlineThickness(3);
 
@@ -133,9 +135,6 @@ bool FileHelper::querySave()
 	sf::RectangleShape windowBackground(sf::Vector2f(window.getSize()));
 	windowBackground.setFillColor(sf::Color(255, 242, 226));
 	
-	
-
-
 	if (!font.loadFromFile("../Resources/arial.ttf"))
 		std::cout << "Font failed to load" << std::endl;
 	TEXT_BOX buttons[3] = { getTextField(18, 10),  getTextField(18, 10), getTextField(18, 10) };
@@ -189,7 +188,6 @@ bool FileHelper::querySave()
 
 			buttons[i].box.setPosition(25 + (i*(buttons[i].box.getSize().x + 25)), 100);
 
-			buttons[i].text.setFillColor(sf::Color(0, 0, 0));
 			buttons[i].text.setPosition(30 + (i*(buttons[i].box.getSize().x + 25)), 100);
 
 			window.draw(buttons[i].box);
@@ -205,13 +203,29 @@ bool FileHelper::querySave()
 
 void FileHelper::queryNewGrid()
 {
-	sf::RenderWindow window(sf::VideoMode(600, 200), "Create a new map", sf::Style::Close | sf::Style::Titlebar);
+	sf::RenderWindow window(sf::VideoMode(640, 200), "Create a new map.", sf::Style::Close | sf::Style::Titlebar);
 	sf::Font font;
+
+	sf::RectangleShape windowBackground(sf::Vector2f(window.getSize()));
+	windowBackground.setFillColor(sf::Color(255, 242, 226));
+
+	sf::Text descriptor[3];
+	descriptor[0].setString("Tile Size:");
+	descriptor[1].setString("Grid Width:");
+	descriptor[2].setString("Grid Height:");
+
 	if (!font.loadFromFile("../Resources/arial.ttf"))
 		std::cout << "Font failed to load" << std::endl;
 	TEXT_BOX buttons[3] = { getTextField(18, 10),  getTextField(18, 10), getTextField(18, 10) };
-	for (int i = 0; i < sizeof(buttons) / sizeof(TEXT_BOX); i++)
+	for (int i = 0; i < sizeof(buttons) / sizeof(TEXT_BOX); i++) {
 		buttons[i].text.setFont(font);
+
+		descriptor[i].setFillColor(sf::Color::Black);
+		descriptor[i].setFont(font);
+		descriptor[i].setCharacterSize(24);
+
+		descriptor[i].setPosition(30 + (i*(buttons[i].box.getSize().x + 25)), 60);
+	}
 
 	int currentFocus = 0;
 	while (window.isOpen()) {
@@ -253,14 +267,19 @@ void FileHelper::queryNewGrid()
 
 		//Render
 		window.clear();
+		window.draw(windowBackground);
 
 		for (int i = 0; i < sizeof(buttons) / sizeof(TEXT_BOX); i++) {
 			if (i == currentFocus)
 				buttons[i].box.setOutlineColor(sf::Color(255, 0, 0));
 			else
-				buttons[i].box.setOutlineColor(sf::Color(255, 255, 0));
+				buttons[i].box.setOutlineColor(sf::Color(0, 0, 0));
+
 			buttons[i].box.setPosition(25 + (i*(buttons[i].box.getSize().x + 25)), 100);
-			buttons[i].text.setPosition(25 + (i*(buttons[i].box.getSize().x + 25)), 100);
+
+			buttons[i].text.setPosition(30 + (i*(buttons[i].box.getSize().x + 25)), 100);
+
+			window.draw(descriptor[i]);
 			window.draw(buttons[i].box);
 			window.draw(buttons[i].text);
 		}
