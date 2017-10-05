@@ -100,7 +100,7 @@ TEXT_BOX getTextField(int font_size, int text_length) {
 	TEXT_BOX text_box = { sf::RectangleShape(sf::Vector2f(text_length * font_size * 1.0f, font_size + (font_size / 2)* 1.0f))
 		, sf::Text() };
 	text_box.text.setCharacterSize(font_size);
-	text_box.box.setFillColor(sf::Color::Black);
+	text_box.box.setFillColor(sf::Color(219, 208, 171));
 	text_box.box.setOutlineThickness(3);
 
 	return text_box;
@@ -108,8 +108,15 @@ TEXT_BOX getTextField(int font_size, int text_length) {
 
 bool FileHelper::querySave() 
 {
-	sf::RenderWindow window(sf::VideoMode(600, 200), "Do you want to save?", sf::Style::Close | sf::Style::Titlebar);
+	sf::RenderWindow window(sf::VideoMode(640, 200), "Would you like to save?", sf::Style::Close | sf::Style::Titlebar);
 	sf::Font font;
+
+	sf::RectangleShape windowBackground(sf::Vector2f(window.getSize()));
+	windowBackground.setFillColor(sf::Color(255, 242, 226));
+	
+	
+
+
 	if (!font.loadFromFile("../Resources/arial.ttf"))
 		std::cout << "Font failed to load" << std::endl;
 	TEXT_BOX buttons[3] = { getTextField(18, 10),  getTextField(18, 10), getTextField(18, 10) };
@@ -153,13 +160,19 @@ bool FileHelper::querySave()
 		//Render
 		window.clear();
 
+		window.draw(windowBackground);
+
 		for (int i = 0; i < sizeof(buttons) / sizeof(TEXT_BOX); i++) {
 			if (i == currentFocus)
 				buttons[i].box.setOutlineColor(sf::Color(255, 0, 0));
 			else
-				buttons[i].box.setOutlineColor(sf::Color(255, 255, 0));
+				buttons[i].box.setOutlineColor(sf::Color(0, 0, 0));
+
 			buttons[i].box.setPosition(25 + (i*(buttons[i].box.getSize().x + 25)), 100);
-			buttons[i].text.setPosition(25 + (i*(buttons[i].box.getSize().x + 25)), 100);
+
+			buttons[i].text.setFillColor(sf::Color(0, 0, 0));
+			buttons[i].text.setPosition(30 + (i*(buttons[i].box.getSize().x + 25)), 100);
+
 			window.draw(buttons[i].box);
 			window.draw(buttons[i].text);
 		}
