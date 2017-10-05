@@ -66,7 +66,7 @@ bool FileHelper::loadMap()
 	return false;
 }
 
-bool FileHelper::saveMap()
+bool FileHelper::saveAs()
 {
 	std::string savePath = getSaveFile("Where to should this map be saved?");
 	if (savePath.length() == 0)
@@ -81,9 +81,28 @@ bool FileHelper::saveMap()
 		}
 		outfile << std::endl;
 	}
-
+	currentFile = savePath;
 	outfile.close();
 	return true;
+}
+
+bool FileHelper::save() {
+	if (currentFile.compare("") == 0)
+		return saveAs();
+	else {
+		std::cout << "Saving file name: " << currentFile << std::endl;
+		std::ofstream outfile;
+		outfile.open(currentFile, std::ios::out | std::ios::trunc);
+		TILE_ID* tiles = grid->getTileIDs();
+		for (int y = 0; y < grid->getHeight(); y++) {
+			for (int x = 0; x < grid->getWidth(); x++) {
+				outfile << tiles[x + (y * grid->getWidth())].TILE_HASH << " ";
+			}
+			outfile << std::endl;
+		}
+		outfile.close();
+		return true;
+	}
 }
 
 bool FileHelper::importSpriteSheet()
@@ -127,6 +146,7 @@ bool FileHelper::querySave()
 			// "close requested" event: we close the window
 			if (event.type == sf::Event::Closed) {
 				window.close();
+				return false;
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Tab)
@@ -137,8 +157,7 @@ bool FileHelper::querySave()
 			if (event.type == sf::Event::MouseButtonReleased) {
 				if (buttons[0].box.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y))) {
 					std::cout << "Save" << std::endl;
-
-					return saveMap();
+					return save();
 				}
 				else if (buttons[1].box.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y))) {
 					std::cout << "Don't save" << std::endl;
@@ -173,9 +192,6 @@ bool FileHelper::querySave()
 
 void FileHelper::queryNewGrid()
 {
-
-	if (!querySave())
-		return;
 	sf::RenderWindow window(sf::VideoMode(600, 200), "Create a new map", sf::Style::Close | sf::Style::Titlebar);
 	sf::Font font;
 	if (!font.loadFromFile("../Resources/arial.ttf"))
@@ -210,6 +226,7 @@ void FileHelper::queryNewGrid()
 					grid->init(stoi((std::string)buttons[2].text.getString()),
 						stoi((std::string)buttons[1].text.getString()),
 						stoi((std::string)buttons[0].text.getString()));
+					currentFile = "";
 					window.close();
 				}
 			}
@@ -221,11 +238,8 @@ void FileHelper::queryNewGrid()
 					currentFocus = i;
 		}
 
-
-
 		//Render
 		window.clear();
-
 
 		for (int i = 0; i < sizeof(buttons) / sizeof(TEXT_BOX); i++) {
 			if (i == currentFocus)
@@ -238,14 +252,27 @@ void FileHelper::queryNewGrid()
 			window.draw(buttons[i].text);
 		}
 
-
 		window.display();
 	}
 }
 
 void FileHelper::openQuery(QUERY_TYPE q) 
 {
-	FileHelper::queryNewGrid();
+	switch (q) {
+	case NEW:
+		if (querySave()) {
+			queryNewGrid();
+		}
+		break;
+	case SAVE:
+		save();
+		break;
+	case SAVE_AS:
+		saveAs();
+		break;
+	}
+	
+	
 }
 
 
