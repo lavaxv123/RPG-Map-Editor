@@ -13,7 +13,7 @@ public:
 	bool isInputBlocked();
 	void blockInput();
 	void unblockInput();
-	void querySave(Grid* grid);
+
 
 private:
 	bool isBlocked;

@@ -58,12 +58,16 @@ bool threadSaveQuery(Grid* grid, TileMap* tileMap) {
 				}
 			}
 			if (event.type == sf::Event::MouseButtonReleased) {
-				if (buttons[0].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window)))
+				if (buttons[0].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window))) {
 					std::cout << "Save" << std::endl;
+					
+				}
 				else if (buttons[1].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window)))
 					std::cout << "Don't save" << std::endl;
-				else if (buttons[2].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window)))
+				else if (buttons[2].box.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(window))) {
 					std::cout << "Cancel" << std::endl;
+					window.close();
+				}
 				return true;
 			}
 		}
@@ -183,8 +187,4 @@ void QueryWindow::blockInput()
 void QueryWindow::unblockInput()
 {
 	isBlocked = false;
-}
-void QueryWindow::querySave(Grid* grid)
-{
-
 }
