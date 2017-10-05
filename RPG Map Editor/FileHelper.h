@@ -15,7 +15,7 @@ struct TEXT_BOX {
 };
 
 enum QUERY_TYPE {
-	NEW, SAVE, SAVE_AS
+	NEW, SAVE, SAVE_AS, EXIT
 };
 
 class FileHelper
@@ -29,7 +29,7 @@ public:
 	bool importSpriteSheet();
 	bool querySave();
 	void queryNewGrid();
-	void openQuery(QUERY_TYPE q);
+	bool openQuery(QUERY_TYPE q);
 
 private:
 	Grid* grid;

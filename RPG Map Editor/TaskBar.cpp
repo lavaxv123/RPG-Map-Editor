@@ -175,8 +175,10 @@ void TaskBar::input()
 		fileHelper->importSpriteSheet();
 	}
 	else if (exitProgram->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
+		if (fileHelper->openQuery(EXIT))
+			window->close();
 	}
-	else if (saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible 
+	else if ((saveMap->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) 
 		|| ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::S))) {
 		fileHelper->openQuery(SAVE);

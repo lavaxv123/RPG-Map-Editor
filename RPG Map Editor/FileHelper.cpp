@@ -256,7 +256,7 @@ void FileHelper::queryNewGrid()
 	}
 }
 
-void FileHelper::openQuery(QUERY_TYPE q) 
+bool FileHelper::openQuery(QUERY_TYPE q) 
 {
 	switch (q) {
 	case NEW:
@@ -270,9 +270,11 @@ void FileHelper::openQuery(QUERY_TYPE q)
 	case SAVE_AS:
 		saveAs();
 		break;
+	case EXIT:
+		return querySave();
 	}
 	
-	
+	return false;
 }
 
 
