@@ -26,7 +26,7 @@ public:
 	bool loadMap();
 	bool saveAs();
 	bool save();
-	bool importSpriteSheet();
+	bool importSpriteSheet(std::string path);
 	bool querySave();
 	void queryNewGrid();
 	bool openQuery(QUERY_TYPE q);
@@ -37,6 +37,8 @@ private:
 	Grid* grid;
 	TileMap* tileMap;
 	std::string currentFile;
+
+	std::vector<std::string> spritesheet_vect;
 };
 
 #endif

@@ -66,6 +66,8 @@ bool FileHelper::loadMap()
 	sheet.parse(fileName);
 	return false;
 	*/
+	std::ifstream infile;
+
 	return true;
 }
 
@@ -76,7 +78,14 @@ void FileHelper::saveData(std::string savePath) {
 	outfile << '{' << std::endl;
 	outfile << "SIZE "  <<grid->getTileSize() << std::endl;
 	outfile << '}' << std::endl;
+	outfile << std::endl;
+	outfile << "$DATA" << std::endl;
+	outfile << '{' << std::endl;
+	for (std::vector<std::string>::iterator it = spritesheet_vect.begin(); it != spritesheet_vect.end(); it++)
+		outfile << *it << std::endl;
 
+	outfile << '}' << std::endl;
+	outfile << std::endl;
 	outfile << "$SPRITES" << std::endl;
 	outfile << '{' << std::endl;
 	TILE_ID* tiles = grid->getTileIDs();
@@ -93,7 +102,7 @@ void FileHelper::saveData(std::string savePath) {
 		outfile << it->second.name << std::endl;
 	}
 	outfile << '}' << std::endl;
-
+	outfile << std::endl;
 	outfile << "$GRID" << std::endl;
 	outfile << '{' << std::endl;
 	
@@ -128,11 +137,24 @@ bool FileHelper::save() {
 	}
 }
 
-bool FileHelper::importSpriteSheet()
+bool FileHelper::importSpriteSheet(std::string path)
 {
-	std::string fileName = getFileName("Select the text file with spritesheet data");
+	std::string fileName;
+	if (path.compare("") == 0)
+		fileName = getFileName("Select the text file with spritesheet data");
+	else
+		fileName = path;
 	if (fileName.length() == 0)
 		return false;
+	std::string file = "";
+	for (int i = 1; i <= fileName.size(); i++) {
+		if (fileName.at(fileName.size() - i) != '\\' && fileName.at(fileName.size() - i) != '/') {
+			file = fileName.at(fileName.size() - i) + file;
+		}
+		else
+			break;
+	}
+	spritesheet_vect.push_back(file);
 	SpriteSheet sheet(tileMap);
 	return sheet.parse(fileName);
 }
@@ -276,6 +298,7 @@ void FileHelper::queryNewGrid()
 						stoi((std::string)buttons[1].text.getString()),
 						stoi((std::string)buttons[0].text.getString()));
 					currentFile = "";
+					spritesheet_vect.clear();
 					window.close();
 				}
 			}
@@ -329,7 +352,7 @@ bool FileHelper::openQuery(QUERY_TYPE q)
 			loadMap();
 		break;
 	case IMPORT:
-		importSpriteSheet();
+		importSpriteSheet("");
 		break;
 	case EXIT:
 		return querySave();
