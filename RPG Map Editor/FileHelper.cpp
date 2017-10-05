@@ -255,8 +255,8 @@ void FileHelper::queryNewGrid()
 
 	sf::Text descriptor[3];
 	descriptor[0].setString("Tile Size:");
-	descriptor[1].setString("Grid Width:");
-	descriptor[2].setString("Grid Height:");
+	descriptor[1].setString("Grid Height:");
+	descriptor[2].setString("Grid Width:");
 
 	if (!font.loadFromFile("../Resources/arial.ttf"))
 		std::cout << "Font failed to load" << std::endl;
