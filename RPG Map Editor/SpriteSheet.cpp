@@ -49,8 +49,10 @@ std::vector<std::string> getTileData(std::string str) {
 bool SpriteSheet::parse(std::string txt_file) {
 	std::string curr_line;
 	std::ifstream in(txt_file);
-	if (!in.good())
+	if (!in.good()) {
+		std::cout << "Could not find file" << std::endl;
 		return false;
+	}
 	std::string path;
 	sf::Image spritesheet;
 	while (std::getline(in, curr_line)) {

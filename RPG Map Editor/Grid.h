@@ -25,7 +25,6 @@ public:
 	~Grid();
 
 	void init(unsigned int grid_width, unsigned int grid_height, unsigned int tile_size);
-	void init(std::string filePath);
 	void render();
 	void update(float delta);
 	void input(unsigned short int key);

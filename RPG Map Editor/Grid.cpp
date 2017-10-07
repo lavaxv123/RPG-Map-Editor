@@ -40,14 +40,6 @@ void Grid::init(unsigned int grid_width, unsigned int grid_height, unsigned int 
 	initialized = true;
 }
 
-void Grid::init(std::string filePath) {
-	if (initialized)
-		delete tile_ids;
-	initialized = true;
-	
-}
-
-
 void Grid::render()
 {
 	//Creates a view for the grid
@@ -167,6 +159,8 @@ void Grid::setTiles(std::vector<unsigned short int> &vect) {
 	int count = 0;
 	for (std::vector<unsigned short int>::iterator it = vect.begin(); it != vect.end(); it++) {
 		tile_ids[count] = { *it,0x00000000 };
+		if (count >= grid_width * grid_height)
+			std::cout << "ln 147 grid" << std::endl;
 		count++;
 	}
 }

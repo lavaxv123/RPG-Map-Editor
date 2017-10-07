@@ -35,4 +35,5 @@ void TileMap::clear() {
 	for (std::map<unsigned short int, TILE>::iterator it = tiles.begin(); it != tiles.end(); it++)
 		delete it->second.texture;
 	tiles.clear();
+	std::cout << tiles.size() << std::endl;
 }
