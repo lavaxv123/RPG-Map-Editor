@@ -56,16 +56,69 @@ std::string getSaveFile(const std::string &prompt) {
 	}
 }
 
+std::vector<unsigned short int> split(const std::string &line, const char splitChar) {
+	
+	std::vector<unsigned short int> splitVect;
+	std::string current = "";
+	for (int i = 0; i < line.size(); i++) {
+		if (line.at(i) == ' ') {
+			splitVect.push_back(stoi(current));
+			current = "";
+		}
+		else
+			current += line.at(i);
+	}
+	if (current.size() != 0)
+		splitVect.push_back(stoi(current));
+	return splitVect;
+}
+
 bool FileHelper::loadMap()
 {
-	/*
 	std::string fileName = getFileName("Select the text file with map data");
 	if (fileName.length() == 0)
 		return false;
-	SpriteSheet sheet(tileMap);
-	sheet.parse(fileName);
-	return false;
-	*/
+	std::ifstream infile(fileName);
+	std::string ln;
+	unsigned short int tile_size = 0;
+	unsigned short int grid_width;
+	unsigned short int grid_height;
+	std::vector<unsigned short int> tiles;
+	while (std::getline(infile, ln)) {
+		if (ln.substr(0, 7).compare("$DETAIL") == 0) {
+			std::getline(infile, ln);
+			tile_size = stoi(ln);
+		}
+		else if (ln.substr(0, 5).compare("$DATA") == 0) {
+			tileMap->clear();
+			while (std::getline(infile, ln)) {
+				if (ln.compare("") == 0) {
+					std::cout << "EMPTY" << std::endl;
+					break;
+				}
+				else
+					importSpriteSheet("../Resources/" + ln);
+			}
+		}
+		else if (ln.substr(0, 5).compare("$GRID") == 0) {
+			std::cout << ln << std::endl;
+			while (std::getline(infile, ln)) {
+				if (ln.compare("") == 0) {
+					std::cout << "EMPTY" << std::endl;
+					break;
+				}
+				else {
+					std::vector<unsigned short int> temp = split(ln, ' ');
+					grid_width = temp.size();
+					tiles.insert(tiles.end(),temp.begin(),temp.end());
+				}
+			}
+			
+		}
+	}
+	grid_height = tiles.size() / grid_width;
+	grid->init(grid_width, grid_height, tile_size);
+	grid->setTiles(tiles);
 	return true;
 }
 
@@ -73,12 +126,13 @@ void FileHelper::saveData(std::string savePath) {
 	std::ofstream outfile;
 	outfile.open(savePath, std::ios::out | std::ios::trunc);
 	outfile << "$DETAIL" << std::endl;
-	outfile << '{' << std::endl;
-	outfile << "SIZE "  <<grid->getTileSize() << std::endl;
-	outfile << '}' << std::endl;
-
+	outfile << grid->getTileSize() << std::endl;
+	outfile << std::endl;
+	outfile << "$DATA" << std::endl;
+	for (std::vector<std::string>::iterator it = spritesheet_vect.begin(); it != spritesheet_vect.end(); it++)
+		outfile << *it << std::endl;
+	outfile << std::endl;
 	outfile << "$SPRITES" << std::endl;
-	outfile << '{' << std::endl;
 	TILE_ID* tiles = grid->getTileIDs();
 	//Create a list of unique tiles
 	std::map<unsigned short int, TILE> used;
@@ -86,28 +140,23 @@ void FileHelper::saveData(std::string savePath) {
 		used[tiles[i].TILE_HASH] = tileMap->getTile(tiles[i].TILE_HASH);
 	}
 	for (std::map<unsigned short int, TILE>::iterator it = used.begin(); it != used.end(); it++) {
-		outfile << "%" << it->first << std::endl;
+		outfile << it->first << std::endl;
 		outfile << it->second.path << std::endl;
 		outfile << it->second.x << std::endl;
 		outfile << it->second.y << std::endl;
 		outfile << it->second.name << std::endl;
 	}
-	outfile << '}' << std::endl;
-
+	outfile << std::endl;
 	outfile << "$GRID" << std::endl;
-	outfile << '{' << std::endl;
-	
 	for (int y = 0; y < grid->getHeight(); y++) {
 		for (int x = 0; x < grid->getWidth(); x++) {
 			outfile << tiles[x + (y * grid->getWidth())].TILE_HASH << " ";
 		}
 		outfile << std::endl;
 	}
-	outfile << '}' << std::endl;
 	currentFile = savePath;
 	outfile.close();
 }
-
 
 bool FileHelper::saveAs()
 {
@@ -128,11 +177,24 @@ bool FileHelper::save() {
 	}
 }
 
-bool FileHelper::importSpriteSheet()
+bool FileHelper::importSpriteSheet(std::string path)
 {
-	std::string fileName = getFileName("Select the text file with spritesheet data");
+	std::string fileName;
+	if (path.compare("") == 0)
+		fileName = getFileName("Select the text file with spritesheet data");
+	else
+		fileName = path;
 	if (fileName.length() == 0)
 		return false;
+	std::string file = "";
+	for (int i = 1; i <= fileName.size(); i++) {
+		if (fileName.at(fileName.size() - i) != '\\' && fileName.at(fileName.size() - i) != '/') {
+			file = fileName.at(fileName.size() - i) + file;
+		}
+		else
+			break;
+	}
+	spritesheet_vect.push_back(file);
 	SpriteSheet sheet(tileMap);
 	return sheet.parse(fileName);
 }
@@ -276,6 +338,7 @@ void FileHelper::queryNewGrid()
 						stoi((std::string)buttons[1].text.getString()),
 						stoi((std::string)buttons[0].text.getString()));
 					currentFile = "";
+					spritesheet_vect.clear();
 					window.close();
 				}
 			}
@@ -329,7 +392,7 @@ bool FileHelper::openQuery(QUERY_TYPE q)
 			loadMap();
 		break;
 	case IMPORT:
-		importSpriteSheet();
+		importSpriteSheet("");
 		break;
 	case EXIT:
 		return querySave();

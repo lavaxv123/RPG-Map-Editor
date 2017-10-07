@@ -37,6 +37,7 @@ public:
 	//adds a new TILE struct to the map
 	void add(std::string name, sf::Texture* texture, unsigned short int size, unsigned int x, unsigned int y, std::string path);
 
+	void clear();
 private:
 	//Next key to be used
 	unsigned short int top_unused_key;

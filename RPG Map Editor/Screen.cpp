@@ -11,8 +11,7 @@ Screen::Screen(unsigned int width, unsigned int height,std::string title): width
 	grid = new Grid(&window,tileMap);
 	fileHelper = new FileHelper(grid, tileMap);
 	taskBar = new TaskBar(&window, fileHelper);
-	SpriteSheet sheet(tileMap);
-	sheet.parse("../Resources/default_data.txt");
+	fileHelper->importSpriteSheet("../Resources/default_data.txt");
 	grid->init(50, 50, 16);
 	sf::RectangleShape shape(sf::Vector2f(1.f, 1.f));
 	shape.getGlobalBounds().contains(sf::Vector2f(1.f, 1.f));
