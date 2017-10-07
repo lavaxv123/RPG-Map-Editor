@@ -78,6 +78,14 @@ void Screen::input() {
 			window.setView(sf::View(sf::FloatRect(0.f, 0.f, (float)window.getSize().x, (float)window.getSize().y)));
 
 		}
+		if (event.type == sf::Event::KeyPressed) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+				grid->setMouseMode(PEN);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+				grid->setMouseMode(FILLED_RECT);
+
+		}
 	}
 	// Enter FullScreen
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && isFullscreen == false) {

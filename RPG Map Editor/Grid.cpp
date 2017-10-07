@@ -128,6 +128,8 @@ void Grid::zoom(float delta) {
 
 void Grid::setMouseMode(unsigned short int mode) {
 	mouseMode = mode;
+	if (mode == PEN)
+		std::cout << "Mouse mode set to Pen" << std::endl;
 }
 
 void Grid::penMode(unsigned short int key) {
@@ -168,7 +170,7 @@ void Grid::setTiles(std::vector<unsigned short int> &vect) {
 		count++;
 	}
 }
-}
+
 
 unsigned short int Grid::getMouseMode() {
 	return mouseMode;

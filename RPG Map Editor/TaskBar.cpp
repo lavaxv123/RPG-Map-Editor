@@ -177,6 +177,11 @@ void TaskBar::renderButtons()
 	exitTXT.setPosition(323, OFFSET + 25*5);
 	exitTXT.setFillColor(sf::Color(0, 0, 0));
 
+	//TOOLS
+	//Creating the button for the Pen tool
+
+
+
 	if (isFileVisible == true) {
 		window->draw(newTXT);
 		window->draw(saveAsTXT);
@@ -217,6 +222,7 @@ void TaskBar::input()
 		fileHelper->openQuery(SAVE);
 		isFileVisible = false;
 	}
+	
 }
 
 bool TaskBar::isDropDownOpen()

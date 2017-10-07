@@ -1,0 +1,17 @@
+$  "Basic RPG Spritesheet.png"
+{
+16 0 0 "Void"
+16 1 0 "Grass TL"
+16 2 0 "Grass Top"
+16 3 0 "Grass TR"
+16 4 0 "Grass Corner"
+16 5 0 "Grass Corner"
+16 1 1 "Grass Left"
+16 2 1 "Grass"
+16 3 1 "Grass Right"
+16 4 1 "Grass Corner"
+16 5 1 "Grass Corner"
+16 1 2 "Grass BL"
+16 2 2 "Grass Bottom"
+16 3 2 "Grass BR"
+}
