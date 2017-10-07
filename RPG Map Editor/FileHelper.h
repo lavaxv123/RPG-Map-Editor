@@ -18,6 +18,7 @@ enum QUERY_TYPE {
 	NEW, SAVE, SAVE_AS, LOAD, IMPORT, EXIT
 };
 
+
 class FileHelper
 {
 public:
@@ -30,7 +31,7 @@ public:
 	bool querySave();
 	void queryNewGrid();
 	bool openQuery(QUERY_TYPE q);
-
+	void mouseModeToGrid(unsigned short int mode);
 private:
 	void saveData(std::string savePath);
 

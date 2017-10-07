@@ -404,4 +404,6 @@ bool FileHelper::openQuery(QUERY_TYPE q)
 	return false;
 }
 
-
+void FileHelper::mouseModeToGrid(unsigned short int mode) {
+	grid->setMouseMode(mode);
+}

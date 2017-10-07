@@ -187,10 +187,18 @@ void TaskBar::renderButtons()
 	//Creating the button for the Pen tool
 	toolsPen->setPosition(385, OFFSET);
 
-	//Render the map text
+	//Render the Pen text
 	sf::Text penTXT("Pen", arial, 16);
 	penTXT.setPosition(386, OFFSET);
 	penTXT.setFillColor(sf::Color(0, 0, 0));
+
+	//Creating the button for the Filled Rect tool
+	toolsFilledRect->setPosition(385, OFFSET + 25);
+
+	//Render the text
+	sf::Text fRectTXT("Filled Rectangle", arial, 16);
+	fRectTXT.setPosition(386, OFFSET + 25);
+	fRectTXT.setFillColor(sf::Color(0, 0, 0));
 
 
 	if (isFileVisible == true) {
@@ -203,6 +211,7 @@ void TaskBar::renderButtons()
 	}
 	else if (isToolsVisible) {
 		window->draw(penTXT);
+		window->draw(fRectTXT);
 	}
 }
 
@@ -210,9 +219,6 @@ void TaskBar::input()
 {
 	if (file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
 		isFileVisible = true;
-	}
-	else if (tools->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
-		isToolsVisible = true;
 	}
 	else if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		fileHelper->openQuery(NEW);
@@ -236,7 +242,15 @@ void TaskBar::input()
 		fileHelper->openQuery(SAVE);
 		isFileVisible = false;
 	}
-	
+	else if (tools->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+		isToolsVisible = true;
+	}
+	else if (toolsPen->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isToolsVisible) {
+		fileHelper->mouseModeToGrid(PEN);
+	}
+	else if (toolsFilledRect->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isToolsVisible) {
+		fileHelper->mouseModeToGrid(FILLED_RECT);
+	}
 }
 
 bool TaskBar::isDropDownOpen()

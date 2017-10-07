@@ -20,6 +20,7 @@ private:
 	bool isToolsVisible;
 
 	FileHelper* fileHelper;
+
 	sf::RenderWindow* window;
 
 
