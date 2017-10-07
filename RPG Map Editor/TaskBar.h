@@ -17,6 +17,7 @@ public:
 private:
 
 	bool isFileVisible;
+	bool isToolsVisible;
 
 	FileHelper* fileHelper;
 	sf::RenderWindow* window;
@@ -29,6 +30,8 @@ private:
 	sf::RectangleShape* importSpritesheet;
 	sf::RectangleShape* exitProgram;
 	sf::RectangleShape* saveAs;
+
+	sf::RectangleShape* tools;
 
 	sf::Font arial;
 };

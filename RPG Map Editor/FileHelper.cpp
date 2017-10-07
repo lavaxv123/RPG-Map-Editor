@@ -153,7 +153,7 @@ bool FileHelper::querySave()
 {
 	sf::RenderWindow window(sf::VideoMode(640, 200), "Would you like to save?", sf::Style::Close | sf::Style::Titlebar);
 	sf::Font font;
-
+	
 	sf::RectangleShape windowBackground(sf::Vector2f(window.getSize()));
 	windowBackground.setFillColor(sf::Color(255, 242, 226));
 	

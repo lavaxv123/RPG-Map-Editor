@@ -6,7 +6,7 @@
 #define ZOOM_OFFSET .2f
 #define TOP_BAR_SIZE 30.f
 
-Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): zoom_index(1.0f), initialized(false)
+Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): zoom_index(1.0f), initialized(false), mouseMode(PEN)
 {
 	Grid::window = window;
 	Grid::tileMap = tileMap;
@@ -95,15 +95,11 @@ void Grid::input(unsigned short int key)
 
 	window->setView(*grid);
 	//Changes tiles on the grid
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		if (sf::Mouse::getPosition(*window).x > 321 && sf::Mouse::getPosition(*window).y > TOP_BAR_SIZE) {
-			sf::Vector2f temp_v = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-			sf::Vector2i w_v((int)temp_v.x, (int)temp_v.y);
-			TILE tile = tileMap->getTile(key);
-			if (w_v.x / tile_size >= 0 && w_v.y / tile_size >= 0 && w_v.x / tile_size < grid_width && w_v.y / tile_size < grid_height && w_v.x >= 0 && w_v.y >= 0) {
-				tile_ids[(((w_v.y / tile_size) * grid_width) + (w_v.x / tile_size))].TILE_HASH = key;
-			}
-		}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseMode == PEN) {
+		penMode(key);
+	}
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseMode == FILLED_RECT) {
+		filledRectMode();
 	}
 }
 
@@ -129,6 +125,24 @@ void Grid::zoom(float delta) {
 	grid->move(mouse_before_zoom -mouse_after_zoom);
 }
 
+void Grid::setMouseMode(unsigned short int mode) {
+	mouseMode = mode;
+}
+
+void Grid::penMode(unsigned short int key) {
+	if (sf::Mouse::getPosition(*window).x > 321 && sf::Mouse::getPosition(*window).y > TOP_BAR_SIZE) {
+		sf::Vector2f temp_v = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+		sf::Vector2i w_v((int)temp_v.x, (int)temp_v.y);
+		TILE tile = tileMap->getTile(key);
+		if (w_v.x / tile_size >= 0 && w_v.y / tile_size >= 0 && w_v.x / tile_size < grid_width && w_v.y / tile_size < grid_height && w_v.x >= 0 && w_v.y >= 0) {
+			tile_ids[(((w_v.y / tile_size) * grid_width) + (w_v.x / tile_size))].TILE_HASH = key;
+		}
+	}
+}
+
+void Grid::filledRectMode() {
+
+}
 
 TILE_ID* Grid::getTileIDs() {
 	return tile_ids;
@@ -144,4 +158,8 @@ unsigned int Grid::getHeight() {
 
 unsigned short int Grid::getTileSize() {
 	return tile_size;
+}
+
+unsigned short int Grid::getMouseMode() {
+	return mouseMode;
 }

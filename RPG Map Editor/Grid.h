@@ -13,6 +13,11 @@ struct TILE_ID {
 	char flag;
 };
 
+// Only Pen has been implemented
+enum MOUSE_MODE {
+	PEN, FILLED_RECT, OUTER_RECT, FILLED_CIRCLE, OUTER_CIRCLE, LINE, MOVE
+};
+
 class Grid
 {
 public:
@@ -25,10 +30,14 @@ public:
 	void update(float delta);
 	void input(unsigned short int key);
 	void zoom(float delta);
+	void setMouseMode(unsigned short int mode);
+	void penMode(unsigned short int key);
+	void filledRectMode();
 	TILE_ID* getTileIDs();
 	unsigned int getWidth();
 	unsigned int getHeight();
 	unsigned short int getTileSize();
+	unsigned short int getMouseMode();
 private:
 	sf::RenderWindow* window;
 	TileMap* tileMap;
@@ -46,6 +55,7 @@ private:
 	unsigned int grid_height;
 	unsigned int grid_width;
 	unsigned short int tile_size;
+	unsigned short int mouseMode;
 };
 
 #endif

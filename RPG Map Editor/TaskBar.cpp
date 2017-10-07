@@ -5,6 +5,7 @@
 #define LEFT_PANEL_SIZE 321.f
 #define TASK_BAR_SIZE 30.f
 #define FILE_DROPDOWN_NUMBER 6
+#define TOOLS_DROPDOWN_NUMBER 7
 #define OFFSET 28
 
 TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
@@ -17,12 +18,15 @@ TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 	exitProgram = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 	saveAs = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 
+	tools = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
+
 	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
 	TaskBar::fileHelper = fileHelper;
 
 
 	isFileVisible = false;
+	isToolsVisible = false;
 }
 
 
@@ -34,6 +38,8 @@ TaskBar::~TaskBar()
 	delete importSpritesheet;
 	delete exitProgram;
 	delete saveAs;
+
+	delete tools;
 }
 
 void TaskBar::render()
@@ -63,14 +69,25 @@ void TaskBar::render()
 	fileDropDown.setOutlineColor(sf::Color(119, 119, 119));
 	fileDropDown.setPosition(322, 28);
 
+	//Renders the drop down menu for Tools
 
-
+	sf::RectangleShape toolsDropDown(sf::Vector2f(150.f, (float)(25 * TOOLS_DROPDOWN_NUMBER)));
+	toolsDropDown.setFillColor(sf::Color(255, 242, 226));
+	toolsDropDown.setOutlineThickness(1);
+	toolsDropDown.setOutlineColor(sf::Color(119, 119, 119));
+	toolsDropDown.setPosition(385, 28);
 
 	if (isFileVisible == true) {
 		window->draw(fileDropDown);
 	}
+	else if (isToolsVisible) {
+		window->draw(toolsDropDown);
+	}
 	if (fileDropDown.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1 && file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1) {
 		isFileVisible = false;
+	}
+	else if (toolsDropDown.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1 && tools->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1) {
+		isToolsVisible = false;
 	}
 
 	renderButtons();
@@ -93,6 +110,19 @@ void TaskBar::renderButtons()
 	window->draw(*file);
 	window->draw(fileTXT);
 	
+	//Render tools button
+	tools->setFillColor(sf::Color(219, 208, 171));
+	tools->setOutlineThickness(1);
+	tools->setOutlineColor(sf::Color(110, 110, 110));
+	tools->setPosition(384, 4);
+
+	sf::Text toolsTXT("Tools", arial, 16);
+	toolsTXT.setPosition(386, 4);
+	toolsTXT.setFillColor(sf::Color(0, 0, 0));
+
+	window->draw(*tools);
+	window->draw(toolsTXT);
+
 	//MAP
 	//Create the hitbox for creating a new map
 	fileNew->setPosition(322, OFFSET);
@@ -162,6 +192,9 @@ void TaskBar::input()
 	if (file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
 		isFileVisible = true;
 	}
+	else if (tools->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window)))) {
+		isToolsVisible = true;
+	}
 	else if (fileNew->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isFileVisible) {
 		fileHelper->openQuery(NEW);
 	}
@@ -189,6 +222,8 @@ void TaskBar::input()
 bool TaskBar::isDropDownOpen()
 {
 	if (isFileVisible == true)
+		return true;
+	else if (isToolsVisible == true)
 		return true;
 	else
 		return false;
