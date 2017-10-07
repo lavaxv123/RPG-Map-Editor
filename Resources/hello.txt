@@ -3,27 +3,33 @@ $DETAIL
 
 $DATA
 default_data.txt
+test_data.txt
 
 $SPRITES
+0
+../Resources/SpriteSheet.png
+0
+7
+Void
 2
 ../Resources/SpriteSheet.png
 1
 0
 Pink Flowers
-3
-../Resources/SpriteSheet.png
-2
+8
+SpriteSheet.png
 0
-Tree Top
+6
+Test_tile
 
 $GRID
-2 2 2 2 2 2 3 3 2 2 
-2 2 2 2 2 3 3 2 2 2 
-2 2 2 2 3 3 2 2 2 2 
-2 2 3 3 3 2 2 2 2 2 
-3 3 3 2 2 2 2 2 2 2 
-2 2 2 2 2 2 2 2 2 2 
-2 2 2 2 2 2 2 2 2 2 
-2 2 2 2 2 2 2 2 2 2 
-2 2 2 2 2 2 2 2 2 2 
-2 2 2 2 2 2 2 2 2 2 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 2 2 
+2 2 2 0 0 0 0 0 2 0 
+2 0 2 2 0 0 0 2 2 2 
+0 8 8 2 2 0 0 2 2 2 
+0 8 8 8 2 2 2 2 0 2 
+0 8 8 8 0 2 2 2 0 2 
+8 8 2 8 0 2 2 0 0 2 
+0 8 8 8 2 2 2 2 2 2 
+0 0 8 8 2 0 0 0 2 2 

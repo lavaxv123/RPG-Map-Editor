@@ -16,7 +16,6 @@ std::string getFileName(const std::string & prompt) {
 	char buffer[BUFSIZE] = { 0 };
 	OPENFILENAME ofns = { 0 };
 	ofns.lpstrFilter = "Text Files\0 *.txt";
-	ofns.Flags = OFN_EXPLORER | OFN_ENABLEHOOK;
 	ofns.lStructSize = sizeof(ofns);
 	ofns.lpstrFile = buffer;
 	ofns.nMaxFile = BUFSIZE;
@@ -33,7 +32,6 @@ std::string getSaveFile(const std::string &prompt) {
 	const int BUFSIZE = 1024;
 	char buffer[BUFSIZE] = { 0 };
 	OPENFILENAME ofns = { 0 };
-	ofns.Flags = OFN_EXPLORER | OFN_ENABLEHOOK;
 	ofns.lStructSize = sizeof(ofns);
 	ofns.lpstrFile = buffer;
 	ofns.nMaxFile = BUFSIZE;
@@ -341,8 +339,9 @@ void FileHelper::queryNewGrid()
 						stoi((std::string)buttons[1].text.getString()),
 						stoi((std::string)buttons[0].text.getString()));
 					currentFile = "";
+					tileMap->clear();
 					spritesheet_vect.clear();
-					spritesheet_vect.push_back("default_data.txt");
+					importSpriteSheet("../Resources/default_data.txt");
 					window.close();
 				}
 			}
