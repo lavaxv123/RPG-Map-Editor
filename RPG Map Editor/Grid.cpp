@@ -121,7 +121,9 @@ void Grid::zoom(float delta) {
 void Grid::setMouseMode(unsigned short int mode) {
 	mouseMode = mode;
 	if (mode == PEN)
-		std::cout << "Mouse mode set to Pen" << std::endl;
+		std::cout << "Mouse mode set to Pen." << std::endl;
+	else if (mode == FILLED_RECT)
+		std::cout << "Mouse mode set to Filled Rectangle." << std::endl;
 }
 
 void Grid::penMode(unsigned short int key) {

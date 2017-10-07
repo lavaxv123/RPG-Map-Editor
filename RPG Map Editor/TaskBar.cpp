@@ -19,6 +19,8 @@ TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 	saveAs = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 
 	tools = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
+	toolsPen = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
+	toolsFilledRect = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 
 	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
@@ -40,6 +42,8 @@ TaskBar::~TaskBar()
 	delete saveAs;
 
 	delete tools;
+	delete toolsPen;
+	delete toolsFilledRect;
 }
 
 void TaskBar::render()
@@ -80,13 +84,13 @@ void TaskBar::render()
 	if (isFileVisible == true) {
 		window->draw(fileDropDown);
 	}
-	else if (isToolsVisible) {
+	if (isToolsVisible) {
 		window->draw(toolsDropDown);
 	}
 	if (fileDropDown.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1 && file->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1) {
 		isFileVisible = false;
 	}
-	else if (toolsDropDown.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1 && tools->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1) {
+	if (toolsDropDown.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1 && tools->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) != 1) {
 		isToolsVisible = false;
 	}
 
@@ -177,9 +181,16 @@ void TaskBar::renderButtons()
 	exitTXT.setPosition(323, OFFSET + 25*5);
 	exitTXT.setFillColor(sf::Color(0, 0, 0));
 
+	/******************************************************/
+
 	//TOOLS
 	//Creating the button for the Pen tool
+	toolsPen->setPosition(385, OFFSET);
 
+	//Render the map text
+	sf::Text penTXT("Pen", arial, 16);
+	penTXT.setPosition(386, OFFSET);
+	penTXT.setFillColor(sf::Color(0, 0, 0));
 
 
 	if (isFileVisible == true) {
@@ -189,6 +200,9 @@ void TaskBar::renderButtons()
 		window->draw(openTXT);
 		window->draw(importTXT);
 		window->draw(exitTXT);
+	}
+	else if (isToolsVisible) {
+		window->draw(penTXT);
 	}
 }
 
