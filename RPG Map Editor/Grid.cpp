@@ -1,6 +1,6 @@
 #include "Grid.h"
 #include <stdlib.h>
-
+#include <fstream>
 #define OFFSET .5f
 #define LEFT_PANEL_SIZE 321.f
 #define ZOOM_OFFSET .2f
@@ -44,6 +44,7 @@ void Grid::init(std::string filePath) {
 	if (initialized)
 		delete tile_ids;
 	initialized = true;
+	
 }
 
 
@@ -144,4 +145,12 @@ unsigned int Grid::getHeight() {
 
 unsigned short int Grid::getTileSize() {
 	return tile_size;
+}
+
+void Grid::setTiles(std::vector<unsigned short int> &vect) {
+	int count = 0;
+	for (std::vector<unsigned short int>::iterator it = vect.begin(); it != vect.end(); it++) {
+		tile_ids[count] = { *it,0x00000000 };
+		count++;
+	}
 }

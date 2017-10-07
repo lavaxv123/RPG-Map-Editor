@@ -29,6 +29,7 @@ public:
 	unsigned int getWidth();
 	unsigned int getHeight();
 	unsigned short int getTileSize();
+	void setTiles(std::vector<unsigned short int> &vect);
 private:
 	sf::RenderWindow* window;
 	TileMap* tileMap;

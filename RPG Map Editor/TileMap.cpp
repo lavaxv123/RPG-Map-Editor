@@ -29,3 +29,10 @@ void TileMap::add(std::string name, sf::Texture* texture, unsigned short int siz
 unsigned short int TileMap::getSize() {
 	return top_unused_key;
 }
+
+void TileMap::clear() {
+	top_unused_key = 0;
+	for (std::map<unsigned short int, TILE>::iterator it = tiles.begin(); it != tiles.end(); it++)
+		delete it->second.texture;
+	tiles.clear();
+}
