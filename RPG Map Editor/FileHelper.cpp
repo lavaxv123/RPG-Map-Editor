@@ -75,11 +75,14 @@ std::vector<unsigned short int> split(const std::string &line, const char splitC
 
 bool FileHelper::loadMap()
 {
+	
 	std::string fileName = getFileName("Select the text file with map data");
 	if (fileName.length() == 0)
 		return false;
 	std::ifstream infile(fileName);
 	std::string ln;
+	spritesheet_vect.clear();
+	tileMap->clear();
 	unsigned short int tile_size = 0;
 	unsigned short int grid_width;
 	unsigned short int grid_height;
@@ -90,7 +93,7 @@ bool FileHelper::loadMap()
 			tile_size = stoi(ln);
 		}
 		else if (ln.substr(0, 5).compare("$DATA") == 0) {
-			tileMap->clear();
+			
 			while (std::getline(infile, ln)) {
 				if (ln.compare("") == 0) {
 					std::cout << "EMPTY" << std::endl;
@@ -339,6 +342,7 @@ void FileHelper::queryNewGrid()
 						stoi((std::string)buttons[0].text.getString()));
 					currentFile = "";
 					spritesheet_vect.clear();
+					spritesheet_vect.push_back("default_data.txt");
 					window.close();
 				}
 			}
