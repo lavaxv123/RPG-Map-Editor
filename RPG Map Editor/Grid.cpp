@@ -1,18 +1,26 @@
 #include "Grid.h"
 #include <stdlib.h>
 #include <fstream>
+#include <windows.h>
+
 #define OFFSET .5f
 #define LEFT_PANEL_SIZE 321.f
 #define ZOOM_OFFSET .2f
 #define TOP_BAR_SIZE 30.f
+#define TICK_DELAY 150
 
-Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): zoom_index(1.0f), initialized(false), mouseMode(PEN)
+Grid::Grid(sf::RenderWindow* window, TileMap* tileMap): zoom_index(1.0f), initialized(false), mouseMode(PEN), fillRectbool(false)
 {
 	Grid::window = window;
 	Grid::tileMap = tileMap;
 	grid = new sf::View(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0, (float)window->getSize().x, (float)window->getSize().y));
 	grid->setViewport(sf::FloatRect((LEFT_PANEL_SIZE / window->getSize().x), 0.f, 1.f, 1.f));
 	original_size = grid->getSize();
+
+	fillRectOutline = new sf::RectangleShape(sf::Vector2f(16, 16));;
+	fillRectOutline->setOutlineColor(sf::Color::Red);
+	fillRectOutline->setFillColor(sf::Color::Transparent);
+	fillRectOutline->setOutlineThickness(1);
 }
 
 
@@ -20,6 +28,7 @@ Grid::~Grid()
 {
 	delete grid;
 	delete tile_ids;
+	delete fillRectOutline;
 }
 
 void Grid::init(unsigned int grid_width, unsigned int grid_height, unsigned int tile_size)
@@ -59,6 +68,10 @@ void Grid::render()
 		sprite.setPosition((float)((i%grid_width) * tile_size), (float)((i / grid_width) * tile_size));
 		window->draw(sprite);
 	}	
+	if (fillRectbool) {
+		fillRectOutline->setSize(sf::Vector2f(tile_size, tile_size));
+		window->draw(*fillRectOutline);
+	}
 }
 
 
@@ -88,11 +101,15 @@ void Grid::input(unsigned short int key)
 
 	window->setView(*grid);
 	//Changes tiles on the grid
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseMode == PEN) {
-		penMode(key);
-	}
-	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseMode == FILLED_RECT) {
-		filledRectMode();
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		switch (mouseMode) {
+		case PEN:
+			penMode(key);
+			break;
+		case FILLED_RECT:
+			filledRectMode(key);
+			break;
+		}
 	}
 }
 
@@ -120,6 +137,9 @@ void Grid::zoom(float delta) {
 
 void Grid::setMouseMode(unsigned short int mode) {
 	mouseMode = mode;
+	fillRectbool = false;
+
+
 	if (mode == PEN)
 		std::cout << "Mouse mode set to Pen." << std::endl;
 	else if (mode == FILLED_RECT)
@@ -137,8 +157,63 @@ void Grid::penMode(unsigned short int key) {
 	}
 }
 
-void Grid::filledRectMode() {
+void Grid::filledRectMode(unsigned short int key) {
+	
 
+	sf::Vector2i tlCorner;
+	sf::Vector2i size; // length, height
+
+	if (sf::Mouse::getPosition(*window).x > 321 && sf::Mouse::getPosition(*window).y > TOP_BAR_SIZE) {
+		sf::Vector2f temp_v = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+		sf::Vector2i w_v(floor(temp_v.x / tile_size), floor(temp_v.y / tile_size)*tile_size);
+		TILE tile = tileMap->getTile(key);
+		
+		if (w_v.x / tile_size >= 0 && w_v.y / tile_size >= 0 && w_v.x / tile_size < grid_width && w_v.y / tile_size < grid_height && w_v.x >= 0 && w_v.y >= 0) {
+			if (!fillRectbool) {
+				c1 = sf::Vector2i(floor(temp_v.x / tile_size), floor(temp_v.y / tile_size));
+
+				std::cout << "Corner 1 Selected at Position: " << c1.x << ", " << c1.y << std::endl;
+				fillRectOutline->setPosition(c1.x*tile_size, c1.y*tile_size);
+				fillRectbool = true;
+				std::cout.flush();
+				Sleep(TICK_DELAY);
+				
+			}
+			else if (fillRectbool) {
+				c2 = sf::Vector2i(floor(temp_v.x / tile_size), floor(temp_v.y / tile_size));
+				std::cout << "Corner 2 Selected at Position: " << c2.x << ", " << c2.y << std::endl;
+
+				if (c1.x >= c2.x) {
+					tlCorner.x = c2.x;
+					size.x = c1.x - c2.x + 1;
+				}
+				else {
+					tlCorner.x = c1.x;
+					size.x = c2.x - c1.x + 1;
+				}
+				if (c1.y >= c2.y) {
+					tlCorner.y = c2.y;
+					size.y = c1.y - c2.y + 1;
+				}
+				else {
+					tlCorner.y = c1.y;
+					size.y = c2.y - c1.y + 1;
+				}
+
+				for (unsigned int i = tlCorner.y; i < tlCorner.y + size.y; i++) {
+					for (unsigned int j = tlCorner.x; j < tlCorner.x + size.x; j++) {
+						tile_ids[i*grid_width + j].TILE_HASH = key;
+					}
+				}
+				std::cout.flush();
+				Sleep(TICK_DELAY);
+
+				fillRectbool = false;
+			}
+			
+
+		}
+	}
 }
 
 TILE_ID* Grid::getTileIDs() {

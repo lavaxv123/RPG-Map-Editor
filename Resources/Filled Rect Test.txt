@@ -1,0 +1,32 @@
+$DETAIL
+16
+
+$DATA
+default_data.txt
+
+$SPRITES
+0
+../Resources/SpriteSheet.png
+0
+7
+Void
+1
+../Resources/SpriteSheet.png
+0
+0
+Grass
+5
+../Resources/SpriteSheet.png
+2
+3
+Orb Tile
+
+$GRID
+1 0 1 0 1 0 1 0 
+0 1 0 1 0 1 0 1 
+1 0 1 0 1 0 1 0 
+0 1 0 1 0 5 0 1 
+1 0 1 0 1 0 1 0 
+0 1 5 1 0 1 0 1 
+1 0 1 0 1 0 1 0 
+0 1 0 1 0 1 0 1 

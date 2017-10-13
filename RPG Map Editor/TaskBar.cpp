@@ -7,6 +7,7 @@
 #define FILE_DROPDOWN_NUMBER 6
 #define TOOLS_DROPDOWN_NUMBER 7
 #define OFFSET 28
+#define TICK_DELAY 75
 
 TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 {
@@ -247,9 +248,13 @@ void TaskBar::input()
 	}
 	else if (toolsPen->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isToolsVisible) {
 		fileHelper->mouseModeToGrid(PEN);
+		std::cout.flush();
+		Sleep(TICK_DELAY);
 	}
 	else if (toolsFilledRect->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isToolsVisible) {
 		fileHelper->mouseModeToGrid(FILLED_RECT);
+		std::cout.flush();
+		Sleep(TICK_DELAY);
 	}
 }
 
