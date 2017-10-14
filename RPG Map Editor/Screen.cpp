@@ -79,11 +79,12 @@ void Screen::input() {
 
 		}
 		if (event.type == sf::Event::KeyPressed) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 				grid->setMouseMode(PEN);
-			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 				grid->setMouseMode(FILLED_RECT);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+				grid->setMouseMode(OUTER_RECT);
 
 		}
 	}

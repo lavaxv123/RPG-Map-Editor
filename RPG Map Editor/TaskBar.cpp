@@ -22,6 +22,7 @@ TaskBar::TaskBar(sf::RenderWindow* window, FileHelper* fileHelper)
 	tools = new sf::RectangleShape(sf::Vector2f(60.f, 22.f));
 	toolsPen = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 	toolsFilledRect = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
+	toolsOuterRect = new sf::RectangleShape(sf::Vector2f(150.f, 25.f));
 
 	arial.loadFromFile("../Resources/arial.ttf");
 	TaskBar::window = window;
@@ -201,6 +202,14 @@ void TaskBar::renderButtons()
 	fRectTXT.setPosition(386, OFFSET + 25);
 	fRectTXT.setFillColor(sf::Color(0, 0, 0));
 
+	//Creating the button for the Outline Rect tool
+	toolsOuterRect->setPosition(385, OFFSET + 50);
+
+	//Render the text
+	sf::Text oRectTXT("Rectangle Outline", arial, 16);
+	oRectTXT.setPosition(386, OFFSET + 50);
+	oRectTXT.setFillColor(sf::Color(0, 0, 0));
+
 
 	if (isFileVisible == true) {
 		window->draw(newTXT);
@@ -213,6 +222,7 @@ void TaskBar::renderButtons()
 	else if (isToolsVisible) {
 		window->draw(penTXT);
 		window->draw(fRectTXT);
+		window->draw(oRectTXT);
 	}
 }
 
@@ -253,6 +263,11 @@ void TaskBar::input()
 	}
 	else if (toolsFilledRect->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isToolsVisible) {
 		fileHelper->mouseModeToGrid(FILLED_RECT);
+		std::cout.flush();
+		Sleep(TICK_DELAY);
+	}
+	else if (toolsOuterRect->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(*window))) && isToolsVisible) {
+		fileHelper->mouseModeToGrid(OUTER_RECT);
 		std::cout.flush();
 		Sleep(TICK_DELAY);
 	}

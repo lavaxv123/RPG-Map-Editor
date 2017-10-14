@@ -13,7 +13,7 @@ struct TILE_ID {
 	char flag;
 };
 
-// PEN and FILLED_RECT have been implemented
+// PEN, FILLED_RECT, OUTER_RECT have been implemented
 enum MOUSE_MODE {
 	PEN, FILLED_RECT, OUTER_RECT, FILLED_CIRCLE, OUTER_CIRCLE, LINE, MOVE
 };
@@ -32,6 +32,7 @@ public:
 	void setMouseMode(unsigned short int mode);
 	void penMode(unsigned short int key);
 	void filledRectMode(unsigned short int key);
+	void outerRectMode(unsigned short int key);
 	TILE_ID* getTileIDs();
 	unsigned int getWidth();
 	unsigned int getHeight();
@@ -41,7 +42,7 @@ public:
 private:
 	sf::RenderWindow* window;
 	TileMap* tileMap;
-	sf::RectangleShape* fillRectOutline;
+	sf::RectangleShape* toolOutline;
 
 	//Holds the tile identifiers in the tile grid
 	TILE_ID* tile_ids;
@@ -61,6 +62,7 @@ private:
 	unsigned short int tile_size;
 	unsigned short int mouseMode;
 	bool fillRectbool;
+	bool outerRectbool;
 };
 
 #endif

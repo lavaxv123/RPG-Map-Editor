@@ -35,6 +35,7 @@ private:
 	sf::RectangleShape* tools;
 	sf::RectangleShape* toolsPen;
 	sf::RectangleShape* toolsFilledRect;
+	sf::RectangleShape* toolsOuterRect;
 
 	sf::Font arial;
 };
