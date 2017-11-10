@@ -33,6 +33,7 @@ public:
 	void penMode(unsigned short int key);
 	void filledRectMode(unsigned short int key);
 	void outerRectMode(unsigned short int key);
+	void lineMode(unsigned short int key);
 	TILE_ID* getTileIDs();
 	unsigned int getWidth();
 	unsigned int getHeight();

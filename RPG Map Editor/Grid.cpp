@@ -154,6 +154,9 @@ void Grid::setMouseMode(unsigned short int mode) {
 	case(OUTER_RECT):
 		std::cout << "Mouse mode set to Rectangle Outline." << std::endl;
 		break;
+	case(LINE):
+		std::cout << "Mouse mode set to Line." << std::endl;
+		break;
 	}
 }
 
@@ -283,6 +286,9 @@ void Grid::outerRectMode(unsigned short int key) {
 			}
 		}
 	}
+}
+void Grid::lineMode(unsigned short int key) {
+
 }
 
 TILE_ID* Grid::getTileIDs() {
